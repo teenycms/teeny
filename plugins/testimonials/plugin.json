@@ -1,0 +1,30 @@
+{
+  "id": "testimonials",
+  "name": "Testimonials",
+  "description": "Kind words from clients, with optional photos.",
+  "version": "1.0",
+  "author": "Teeny CMS",
+  "section": {
+    "label": "Testimonials",
+    "desc": "Quotes from happy clients",
+    "fields": {
+      "items": {
+        "type": "list", "label": "Testimonials", "max": 12,
+        "item": {
+          "quote": { "type": "textarea", "label": "Quote", "max": 600 },
+          "name":  { "type": "text", "label": "Name", "max": 80 },
+          "role":  { "type": "text", "label": "Role or company", "max": 80 },
+          "photo": { "type": "image", "label": "Photo" }
+        }
+      },
+      "columns": { "type": "select", "label": "Columns", "options": { "2": "2 columns", "3": "3 columns", "1": "1 column" } }
+    },
+    "defaults": {
+      "items": [
+        { "quote": "Working with them was a joy from start to finish.", "name": "Amira Lee", "role": "Founder, Studio North", "photo": "" },
+        { "quote": "Calm, clear and beautifully done. Highly recommended.", "name": "Daniel Ong", "role": "Photographer", "photo": "" }
+      ],
+      "columns": "2"
+    }
+  }
+}

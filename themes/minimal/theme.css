@@ -1,0 +1,11 @@
+/* Teeny CMS: Minimal theme */
+.theme-minimal h1, .theme-minimal h2, .theme-minimal h3 { font-weight: 650; letter-spacing: -.028em; }
+.theme-minimal .tc-hero__title { font-weight: 700; letter-spacing: -.045em; }
+.theme-minimal .tc-brand { font-weight: 700; letter-spacing: -.03em; }
+.theme-minimal .tc-eyebrow { letter-spacing: .14em; font-size: .72em; }
+.theme-minimal .tc-btn { font-weight: 600; letter-spacing: 0; }
+.theme-minimal .tc-link { background: transparent; }
+.theme-minimal .tc-link:hover { background: var(--tc-text); color: var(--tc-bg); border-color: var(--tc-text); }
+.theme-minimal .tc-quote__text { font-weight: 500; letter-spacing: -.02em; }
+.theme-minimal .tc-col { border-top-width: 2px; border-top-color: var(--tc-text); }
+.theme-minimal .tc-nav a[aria-current="page"] { border-bottom-width: 2px; }

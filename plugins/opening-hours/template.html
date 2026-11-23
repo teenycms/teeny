@@ -1,0 +1,9 @@
+<section class="hours">
+  {{#title}}<h2 class="hours__title">{{title}}</h2>{{/title}}
+  <dl class="hours__list">
+    {{#days}}
+    <div class="hours__row"><dt>{{day}}</dt><dd>{{hours}}</dd></div>
+    {{/days}}
+  </dl>
+  {{#note}}<p class="hours__note">{{note}}</p>{{/note}}
+</section>

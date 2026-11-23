@@ -1,0 +1,29 @@
+{
+    "name": "Luxury",
+    "description": "Ivory, bronze and elegant serif type",
+    "order": 3,
+    "defaults": {
+        "bg": "#f7f3ec",
+        "surface": "#efe8dc",
+        "text": "#1f1b16",
+        "muted": "#7b7064",
+        "accent": "#9a7b4f",
+        "accentText": "#fbf8f2",
+        "border": "#e0d6c6",
+        "headingFont": "didone",
+        "bodyFont": "classic",
+        "radius": 0,
+        "width": 1120,
+        "fontSize": 18
+    },
+    "dark": false,
+    "alt": {
+        "bg": "#14110d",
+        "surface": "#1e1a15",
+        "text": "#efe7da",
+        "muted": "#a89a86",
+        "accent": "#c9a46b",
+        "accentText": "#14110d",
+        "border": "#302a21"
+    }
+}

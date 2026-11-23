@@ -1,0 +1,18 @@
+{
+  "title": "Landing page",
+  "blocks": [
+    {"type": "hero", "eyebrow": "Introducing", "title": "Something quietly remarkable", "text": "One clear sentence about what you offer and who it is for. Keep it calm and confident.", "button": "Get started", "url": "#contact", "style": "side"},
+    {"type": "divider", "style": "space-s"},
+    {"type": "heading", "text": "Why people choose us", "level": "h2"},
+    {"type": "columns", "items": [
+      {"title": "Thoughtful", "text": "Every detail considered, nothing unnecessary."},
+      {"title": "Reliable", "text": "Works beautifully, day after day."},
+      {"title": "Personal", "text": "Made for you, with care and attention."}
+    ]},
+    {"type": "quote", "text": "The best decision we made this year. Simple, elegant and it just works.", "cite": "A happy customer"},
+    {"type": "divider", "style": "ornament"},
+    {"type": "heading", "text": "Ready when you are", "level": "h2"},
+    {"type": "text", "html": "<p>Tell visitors what to do next: book a call, send an email or visit your shop.</p>"},
+    {"type": "button", "text": "Contact us", "url": "mailto:hello@example.com", "style": "solid"}
+  ]
+}

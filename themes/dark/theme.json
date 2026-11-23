@@ -1,0 +1,29 @@
+{
+    "name": "Dark",
+    "description": "Deep charcoal with soft, glowing contrast",
+    "order": 2,
+    "defaults": {
+        "bg": "#0f0f11",
+        "surface": "#18181c",
+        "text": "#ededee",
+        "muted": "#9b9ba3",
+        "accent": "#c7b9ff",
+        "accentText": "#120f1f",
+        "border": "#26262c",
+        "headingFont": "geometric",
+        "bodyFont": "modern",
+        "radius": 12,
+        "width": 1080,
+        "fontSize": 17
+    },
+    "dark": true,
+    "alt": {
+        "bg": "#fafafa",
+        "surface": "#f0eff4",
+        "text": "#17161c",
+        "muted": "#64626e",
+        "accent": "#5b45d6",
+        "accentText": "#ffffff",
+        "border": "#e4e2ea"
+    }
+}

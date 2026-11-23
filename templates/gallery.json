@@ -1,0 +1,11 @@
+{
+  "title": "Gallery",
+  "blocks": [
+    {"type": "heading", "text": "Gallery", "level": "h1"},
+    {"type": "text", "html": "<p>A small collection of moments. Click any image to see it larger.</p>"},
+    {"type": "gallery", "columns": "3", "images": [
+      {"src": "", "alt": "", "caption": ""}, {"src": "", "alt": "", "caption": ""}, {"src": "", "alt": "", "caption": ""},
+      {"src": "", "alt": "", "caption": ""}, {"src": "", "alt": "", "caption": ""}, {"src": "", "alt": "", "caption": ""}
+    ]}
+  ]
+}

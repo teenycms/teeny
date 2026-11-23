@@ -1,0 +1,22 @@
+/* Teeny CMS: Dark theme */
+.theme-dark { color-scheme: dark; }
+.theme-dark.tc { background-attachment: fixed; background-image:
+  radial-gradient(900px 480px at 85% -10%, color-mix(in srgb, var(--tc-accent) 12%, transparent), transparent 70%),
+  radial-gradient(700px 400px at -10% 30%, color-mix(in srgb, var(--tc-accent) 6%, transparent), transparent 70%); }
+.theme-dark h1, .theme-dark h2, .theme-dark h3 { font-weight: 600; letter-spacing: -.02em; }
+@supports (color: color-mix(in srgb, red 50%, blue)) {
+  .theme-dark .tc-hero__title { background: linear-gradient(180deg, var(--tc-text) 30%, color-mix(in srgb, var(--tc-text) 55%, var(--tc-accent))); -webkit-background-clip: text; background-clip: text; color: transparent; }
+}
+.theme-dark .tc-hero--cover .tc-hero__title { background: none; color: #fff; }
+.theme-dark .tc-eyebrow { color: var(--tc-accent); }
+.theme-dark .tc-header { background: var(--tc-bg); background: color-mix(in srgb, var(--tc-bg) 70%, transparent); backdrop-filter: blur(12px); }
+.theme-dark.align-normal .tc-header { position: sticky; top: 0; z-index: 20; }
+.theme-dark .tc-btn--solid { box-shadow: 0 8px 30px -10px color-mix(in srgb, var(--tc-accent) 70%, transparent); }
+.theme-dark .tc-link { background: color-mix(in srgb, var(--tc-surface) 85%, transparent); }
+.theme-dark .tc-link:hover { box-shadow: 0 10px 30px -12px color-mix(in srgb, var(--tc-accent) 60%, transparent); }
+.theme-dark .tc-col { padding: 26px; border: 1px solid var(--tc-border); border-radius: var(--tc-radius); background: var(--tc-surface); }
+.theme-dark .tc-image img, .theme-dark .tc-hero__media img { box-shadow: 0 30px 60px -30px rgba(0,0,0,.8); }
+.theme-dark .tc-profile__avatar { box-shadow: 0 0 0 3px var(--tc-bg), 0 0 0 4px color-mix(in srgb, var(--tc-accent) 60%, transparent); }
+.theme-dark .tc-prose a { text-decoration-color: color-mix(in srgb, var(--tc-accent) 50%, transparent); }
+:root[data-scheme="alt"] .theme-dark.tc { background-image: none; }
+:root[data-scheme="alt"] .theme-dark .tc-image img, :root[data-scheme="alt"] .theme-dark .tc-hero__media img { box-shadow: 0 30px 60px -36px rgba(0,0,0,.35); }

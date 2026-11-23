@@ -1,0 +1,17 @@
+{
+  "title": "Portfolio",
+  "blocks": [
+    {"type": "hero", "eyebrow": "Designer & photographer", "title": "Hello, I'm Alex. I make calm, considered work.", "text": "Based somewhere lovely. Available for selected projects.", "button": "See my work", "url": "#work", "style": "none"},
+    {"type": "heading", "text": "Selected work", "level": "h2"},
+    {"type": "gallery", "columns": "2", "images": [
+      {"src": "", "alt": "", "caption": "Project one: Brand identity"},
+      {"src": "", "alt": "", "caption": "Project two: Editorial"},
+      {"src": "", "alt": "", "caption": "Project three: Photography"},
+      {"src": "", "alt": "", "caption": "Project four: Packaging"}
+    ]},
+    {"type": "divider", "style": "line"},
+    {"type": "heading", "text": "About", "level": "h2"},
+    {"type": "text", "html": "<p>A few sentences about you, your approach and the kind of clients you love working with.</p><p>Previously at <strong>Studio Name</strong>. Clients include Company A, Company B and Company C.</p>"},
+    {"type": "button", "text": "Say hello", "url": "mailto:you@example.com", "style": "outline"}
+  ]
+}

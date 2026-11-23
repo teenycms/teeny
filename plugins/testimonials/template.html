@@ -1,0 +1,11 @@
+<div class="t-grid t-cols-{{columns}}">
+  {{#items}}
+  <figure class="t-card">
+    <blockquote class="t-quote">{{quote}}</blockquote>
+    <figcaption class="t-person">
+      {{#photo}}<img class="t-photo" src="{{photo}}" alt="{{name}}" loading="lazy">{{/photo}}
+      <span><strong>{{name}}</strong>{{#role}}<small>{{role}}</small>{{/role}}</span>
+    </figcaption>
+  </figure>
+  {{/items}}
+</div>

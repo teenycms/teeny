@@ -1,0 +1,6 @@
+/* Teeny CMS: base styles inside sandboxed plugin widgets (theme variables are provided) */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; background: transparent; }
+body.tc-widget-body { color: var(--tc-text); font-family: var(--tc-font-body); font-size: var(--tc-font-size, 17px); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4 { font-family: var(--tc-font-heading); line-height: 1.15; margin: 0 0 .5em; }
+img { max-width: 100%; height: auto; display: block; }

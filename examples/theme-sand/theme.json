@@ -1,0 +1,18 @@
+{
+  "id": "sand",
+  "name": "Sand",
+  "description": "Warm sand, terracotta accent and soft rounded shapes",
+  "author": "Teeny CMS",
+  "version": "1.0",
+  "dark": false,
+  "defaults": {
+    "bg": "#f4ede3", "surface": "#ebe1d3", "text": "#2b2420", "muted": "#7d6e62",
+    "accent": "#b5562f", "accentText": "#fff8f2", "border": "#dfd2c1",
+    "headingFont": "humanist", "bodyFont": "humanist",
+    "radius": 18, "width": 1080, "fontSize": 17
+  },
+  "alt": {
+    "bg": "#1c1714", "surface": "#26201b", "text": "#f1e7dc", "muted": "#a8988a",
+    "accent": "#e07a4f", "accentText": "#1c1714", "border": "#3a3029"
+  }
+}

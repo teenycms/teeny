@@ -1,0 +1,31 @@
+{
+  "id": "opening-hours",
+  "name": "Opening hours",
+  "description": "A tidy list of the days and times you are open.",
+  "version": "1.0",
+  "author": "Teeny CMS",
+  "section": {
+    "label": "Opening hours",
+    "desc": "Days and times you are open",
+    "fields": {
+      "title": { "type": "text", "label": "Title", "max": 80 },
+      "days": {
+        "type": "list", "label": "Days", "max": 14,
+        "item": {
+          "day":   { "type": "text", "label": "Day", "max": 40 },
+          "hours": { "type": "text", "label": "Hours", "max": 60 }
+        }
+      },
+      "note": { "type": "textarea", "label": "Note", "max": 300 }
+    },
+    "defaults": {
+      "title": "Opening hours",
+      "days": [
+        { "day": "Monday to Friday", "hours": "9:00 to 18:00" },
+        { "day": "Saturday", "hours": "10:00 to 16:00" },
+        { "day": "Sunday", "hours": "Closed" }
+      ],
+      "note": "Hours may differ on public holidays."
+    }
+  }
+}

@@ -1,0 +1,21 @@
+# Your content and settings: never commit these
+data/*
+!data/.htaccess
+!data/index.html
+!data/web.config
+
+# Uploaded images
+uploads/*
+!uploads/.htaccess
+!uploads/index.html
+!uploads/web.config
+
+# Your own settings file (may contain paths or options for your server)
+config.php
+
+# Release zips and system files
+*.zip
+!examples/*.zip
+.DS_Store
+Thumbs.db
+error_log

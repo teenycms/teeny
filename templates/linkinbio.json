@@ -1,0 +1,15 @@
+{
+  "title": "Link in bio",
+  "hideHeader": true,
+  "blocks": [
+    {"type": "profile", "avatar": "", "name": "Your Name", "bio": "Creator · Writer · Coffee enthusiast"},
+    {"type": "links", "items": [
+      {"label": "Latest project", "url": "#"},
+      {"label": "Shop", "url": "#"},
+      {"label": "Instagram", "url": "https://instagram.com/"},
+      {"label": "YouTube", "url": "https://youtube.com/"},
+      {"label": "Email me", "url": "mailto:you@example.com"}
+    ]},
+    {"type": "divider", "style": "ornament"}
+  ]
+}

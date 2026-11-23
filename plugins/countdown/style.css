@@ -1,0 +1,8 @@
+.cd { text-align: center; padding: 6px 0; }
+.cd__title { margin: 0 0 14px; font-size: .78em; letter-spacing: .22em; text-transform: uppercase; color: var(--tc-muted); }
+.cd__grid { display: flex; justify-content: center; gap: clamp(10px, 3vw, 26px); }
+.cd__grid div { min-width: 74px; padding: 14px 10px; background: var(--tc-surface); border: 1px solid var(--tc-border); border-radius: var(--tc-radius); }
+.cd__grid b { display: block; font-family: var(--tc-font-heading); font-size: 2.2em; line-height: 1; font-weight: 500; font-variant-numeric: tabular-nums; }
+.cd__grid span { display: block; margin-top: 6px; font-size: .72em; letter-spacing: .14em; text-transform: uppercase; color: var(--tc-muted); }
+.cd__done { margin: 0; font-family: var(--tc-font-heading); font-size: 1.6em; }
+.cd__done[hidden], .cd__grid[hidden] { display: none; }

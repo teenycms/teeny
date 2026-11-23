@@ -1,0 +1,9 @@
+/* Sand: an example theme. Every selector starts with .theme-sand (the theme id). */
+.theme-sand h1, .theme-sand h2, .theme-sand h3 { font-weight: 600; letter-spacing: -.02em; }
+.theme-sand .tc-eyebrow { color: var(--tc-accent); letter-spacing: .16em; }
+.theme-sand .tc-btn { border-radius: 999px; }
+.theme-sand .tc-link { border-radius: 999px; background: var(--tc-bg); }
+.theme-sand .tc-link:hover { background: var(--tc-accent); color: var(--tc-accent-text); border-color: var(--tc-accent); }
+.theme-sand .tc-col { padding: 24px; border: 0; border-radius: var(--tc-radius); background: var(--tc-surface); }
+.theme-sand .tc-quote__text { font-style: italic; }
+.theme-sand.align-normal .tc-header { border-bottom: 0; }

@@ -1,0 +1,18 @@
+{
+  "id": "countdown",
+  "name": "Countdown",
+  "description": "A live countdown to a launch, sale or event. Interactive, and runs in a secure sandbox.",
+  "version": "1.0",
+  "author": "Teeny CMS",
+  "section": {
+    "label": "Countdown",
+    "desc": "Live timer to a date",
+    "fields": {
+      "title": { "type": "text", "label": "Title", "max": 100 },
+      "date":  { "type": "text", "label": "Date and time (YYYY-MM-DD HH:MM)", "max": 16 },
+      "done":  { "type": "text", "label": "Message when the time is up", "max": 120 }
+    },
+    "defaults": { "title": "We open in", "date": "2027-01-01 09:00", "done": "We are open. Come on in!" }
+  },
+  "widget": { "height": 190 }
+}

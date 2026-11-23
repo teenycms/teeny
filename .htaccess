@@ -1,0 +1,31 @@
+# Teeny CMS: Apache / LiteSpeed configuration
+Options -Indexes -MultiViews
+DirectoryIndex index.php
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+</IfModule>
+
+# Block direct access to internal files
+<FilesMatch "(^\.|\.(json|md|lock|tmp|log|ini|sh|sample\.php|bak|old|orig|swp|sql|zip|tar|gz)$|~$|^config\.php$|^web\.config$|^error_log$)">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Deny internal folders entirely
+    RewriteRule ^(core|data|templates)(/|$) - [F,L]
+    RewriteRule ^(themes|plugins)/.*\.(php\d?|phtml|phar|json|html?|svg|txt|md)$ - [F,L]
+    RewriteRule ^(examples|brand)(/|$) - [F,L]
+    RewriteRule ^admin/views(/|$) - [F,L]
+    # Clean URLs: send everything that is not a real file to index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [L,QSA]
+</IfModule>

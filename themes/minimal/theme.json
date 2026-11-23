@@ -1,0 +1,29 @@
+{
+    "name": "Minimal",
+    "description": "Clean white space, crisp sans-serif type",
+    "order": 1,
+    "defaults": {
+        "bg": "#ffffff",
+        "surface": "#f6f6f4",
+        "text": "#141414",
+        "muted": "#6b6b6b",
+        "accent": "#141414",
+        "accentText": "#ffffff",
+        "border": "#e7e7e4",
+        "headingFont": "modern",
+        "bodyFont": "modern",
+        "radius": 8,
+        "width": 1080,
+        "fontSize": 17
+    },
+    "dark": false,
+    "alt": {
+        "bg": "#111111",
+        "surface": "#1b1b1b",
+        "text": "#f2f2f0",
+        "muted": "#a0a09c",
+        "accent": "#f2f2f0",
+        "accentText": "#111111",
+        "border": "#2b2b2b"
+    }
+}

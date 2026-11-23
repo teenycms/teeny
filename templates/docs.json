@@ -1,0 +1,15 @@
+{
+  "title": "Documentation",
+  "blocks": [
+    {"type": "heading", "text": "Getting started", "level": "h1"},
+    {"type": "text", "html": "<p>Welcome! This guide walks you through everything you need to know in a few minutes.</p>"},
+    {"type": "heading", "text": "1. Installation", "level": "h2"},
+    {"type": "text", "html": "<p>Download the package and follow these steps:</p><ol><li>Unzip the file.</li><li>Upload it to your server.</li><li>Open it in your browser.</li></ol>"},
+    {"type": "code", "lang": "Terminal", "code": "unzip package.zip\ncd package\n./install"},
+    {"type": "heading", "text": "2. Configuration", "level": "h2"},
+    {"type": "text", "html": "<p>Open the settings file and change the values you need. <strong>Tip:</strong> keep a copy of the original.</p>"},
+    {"type": "code", "lang": "settings", "code": "name = \"My project\"\ntheme = \"light\""},
+    {"type": "heading", "text": "Need help?", "level": "h2"},
+    {"type": "text", "html": "<p>Write to <a href=\"mailto:support@example.com\">support@example.com</a> and we will get back to you.</p>"}
+  ]
+}
