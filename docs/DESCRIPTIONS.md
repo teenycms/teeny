@@ -2,23 +2,6 @@
 
 ---
 
-## Tagline
-
-Your whole website is just a folder.
-
-Other options:
-
-- Upload a folder. Click to edit. Done.
-- No database. No setup. Just your website.
-- Just files. Just websites.
-- Plain-file publishing, simplified.
-- Tiny CMS. Zero database.
-- Teeny footprint. Full control.
-- Big enough for your site. Small enough to zip.
-- Your website, in plain files.
-- The website builder that fits in a folder.
-- All the website. None of the bloat.
-
 ## One line
 
 A simple website builder anyone can use. No database, dead easy setup, and your whole site is just a folder.
@@ -84,3 +67,19 @@ Teeny CMS is free and open source under the Apache License 2.0. Use it for your 
 - Teeny is a website builder where your whole site is just a folder. No database, dead easy setup. Click any text to edit it.
 - Built a site on the cheapest shared hosting? Teeny needs only PHP. No database, no migrations, and updates are just new files.
 - Back up your website by zipping a folder. Teeny keeps everything in plain files, and visitors get fast, ready-made pages.
+
+---
+
+## Taglines
+
+- Your whole website is just a folder.
+- Upload a folder. Click to edit. Done.
+- No database. No setup. Just your website.
+- Just files. Just websites.
+- Plain-file publishing, simplified.
+- Tiny CMS. Zero database.
+- Teeny footprint. Full control.
+- Big enough for your site. Small enough to zip.
+- Your website, in plain files.
+- The website builder that fits in a folder.
+- All the website. None of the bloat.
