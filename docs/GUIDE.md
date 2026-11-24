@@ -243,6 +243,8 @@ The footer is the small line at the bottom of every page. New sites start with `
 - **Footer text:** the same on every page. Shortcuts: `{year}` shows the current year, `{site}` your site name, and `{teeny}` a "Teeny CMS" link. Change or remove any of them.
 - **Links:** add up to 6, such as Privacy or Contact. Pick one of your pages or paste any web address.
 - **Social icons:** add up to 8 (Instagram, Facebook, X, LinkedIn and more) with your profile address.
+- **Order:** use the ↑ and ↓ buttons next to a link or icon to move it.
+- **Show first:** links and icons each get their own row under the footer text. Choose whether the links row or the icons row comes first.
 - **Position:** Auto follows the page's alignment, or choose Left, Center or Right.
 - **Hide the footer on this page:** only this page. In the editor it stays visible but faded, so you can still click it.
 

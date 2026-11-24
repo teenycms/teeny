@@ -705,6 +705,8 @@ input[type="file"] { max-width: 100%; }
 /* editor footer panel: link and icon rows */
 .footer-rows { display: grid; gap: 8px; margin-bottom: 8px; }
 .footer-rows:empty { display: none; }
-.footer-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) auto; gap: 6px; align-items: center; }
+.footer-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) auto auto auto; gap: 4px; align-items: center; }
 .footer-row input, .footer-row select { width: 100%; min-width: 0; height: 36px; padding: 0 10px; border: 1px solid var(--line); border-radius: 8px; background: #fff; font: 13px var(--sans); color: var(--ink); }
-.footer-row__del { width: 30px; height: 30px; font-size: 18px; }
+.footer-row__btn { width: 26px; height: 30px; font-size: 15px; }
+.footer-row__btn:disabled { opacity: .3; cursor: default; }
+.footer-row__del { font-size: 18px; }

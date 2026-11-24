@@ -7,6 +7,28 @@ Never overwrite your `data/` and `uploads/` folders (or your own `config.php`).
 
 ---
 
+## 1.4.3 · 2026-11-24
+
+### Changed
+- **Tidier footer.** Footer links and social icons now each sit on their own row under the footer text, so the footer stays short and neat, also on phones.
+- **Show first.** In the editor's **Footer** panel, choose whether the links or the social icons come first.
+
+### Added
+- **Reorder footer links and icons.** Use the ↑ and ↓ buttons next to each link or icon to change the order.
+
+### Files to upload
+```
+admin/api.php
+admin/index.php
+admin/views/editor.php
+admin/assets/editor.js
+admin/assets/admin.css
+assets/site.css
+core/Renderer.php
+core/bootstrap.php
+```
+---
+
 ## 1.4.2 · 2026-11-24
 
 ### Added

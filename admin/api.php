@@ -71,6 +71,7 @@ try {
                 $fa = (string)($b['footer']['align'] ?? '');
                 $site['footerAlign'] = isset(Renderer::FOOTER_ALIGN[$fa]) ? $fa : '';
                 [$site['footerLinks'], $site['footerSocial']] = Renderer::cleanFooterLists($b['footer']['links'] ?? [], $b['footer']['social'] ?? []);
+                $site['footerOrder'] = ($b['footer']['order'] ?? '') === 'social' ? 'social' : 'links';
                 Store::write('site', $site);
                 site($site);
             }

@@ -753,6 +753,7 @@ switch ($p) {
             }
             if (isset($in['footerAlign']) && isset(Renderer::FOOTER_ALIGN[(string)$in['footerAlign']])) $keep['footerAlign'] = (string)$in['footerAlign'];
             if (isset($in['footerLinks']) || isset($in['footerSocial'])) [$keep['footerLinks'], $keep['footerSocial']] = Renderer::cleanFooterLists($in['footerLinks'] ?? [], $in['footerSocial'] ?? []);
+            if (isset($in['footerOrder'])) $keep['footerOrder'] = $in['footerOrder'] === 'social' ? 'social' : 'links';
             foreach (['logo', 'favicon', 'shareImage'] as $k) {
                 $keep[$k] = Media::validRef($in[$k] ?? '') ? $in[$k] : '';
             }

@@ -764,6 +764,7 @@
     }
     if (footerInput && document.activeElement !== footerInput) footerInput.value = FT.text;
     $$('[data-footer-align] [data-v]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.v === FT.align)));
+    $$('[data-footer-order] [data-v]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.v === (FT.order || 'links'))));
   }
   function footerChanged() { footerDirty = true; markDirty(); }
 
@@ -772,14 +773,20 @@
   function footerExtrasHtml() {
     const links = FT.links.filter(l => l.label && l.url).map(l => `<a href="#">${esc(l.label)}</a>`).join('');
     const icons = FT.social.filter(s => s.url && SOCIAL[s.network]).map(s => `<a href="#" title="${esc(SOCIAL[s.network].label)}">${SOCIAL[s.network].svg}</a>`).join('');
-    return (links ? `<nav class="tc-footer__links">${links}</nav>` : '') + (icons ? `<nav class="tc-footer__social">${icons}</nav>` : '');
+    const l = links ? `<nav class="tc-footer__links">${links}</nav>` : '';
+    const s = icons ? `<nav class="tc-footer__social">${icons}</nav>` : '';
+    return FT.order === 'social' ? s + l : l + s;
   }
   const linkBox = $('[data-footer-links]');
   const socialBox = $('[data-footer-social]');
-  const removeBtn = '<button type="button" class="icon-btn footer-row__del" data-del aria-label="Remove" title="Remove">×</button>';
+  // ↑ ↓ move a link or icon within its row; × removes it
+  const rowBtns = (i, n) => `<button type="button" class="icon-btn footer-row__btn" data-move="-1" aria-label="Move up" title="Move up"${i === 0 ? ' disabled' : ''}>↑</button>`
+    + `<button type="button" class="icon-btn footer-row__btn" data-move="1" aria-label="Move down" title="Move down"${i === n - 1 ? ' disabled' : ''}>↓</button>`
+    + '<button type="button" class="icon-btn footer-row__btn footer-row__del" data-del aria-label="Remove" title="Remove">×</button>';
+  $$('[data-footer-order] [data-v]').forEach(b => b.addEventListener('click', () => { FT.order = b.dataset.v; syncFooter(); footerChanged(); }));
   function buildFooterLists() {
-    if (linkBox) linkBox.innerHTML = FT.links.map((l, i) => `<div class="footer-row" data-i="${i}"><input data-k="label" maxlength="40" placeholder="Label" aria-label="Link label" value="${esc(l.label)}"><input data-k="url" maxlength="500" list="page-links" placeholder="https://… or /page" aria-label="Link address" value="${esc(l.url)}">${removeBtn}</div>`).join('');
-    if (socialBox) socialBox.innerHTML = FT.social.map((s, i) => `<div class="footer-row" data-i="${i}"><select data-k="network" aria-label="Network">${Object.entries(SOCIAL).map(([k, v]) => `<option value="${esc(k)}"${k === s.network ? ' selected' : ''}>${esc(v.label)}</option>`).join('')}</select><input data-k="url" maxlength="500" placeholder="https://…" aria-label="Profile address" value="${esc(s.url)}">${removeBtn}</div>`).join('');
+    if (linkBox) linkBox.innerHTML = FT.links.map((l, i) => `<div class="footer-row" data-i="${i}"><input data-k="label" maxlength="40" placeholder="Label" aria-label="Link label" value="${esc(l.label)}"><input data-k="url" maxlength="500" list="page-links" placeholder="https://… or /page" aria-label="Link address" value="${esc(l.url)}">${rowBtns(i, FT.links.length)}</div>`).join('');
+    if (socialBox) socialBox.innerHTML = FT.social.map((s, i) => `<div class="footer-row" data-i="${i}"><select data-k="network" aria-label="Network">${Object.entries(SOCIAL).map(([k, v]) => `<option value="${esc(k)}"${k === s.network ? ' selected' : ''}>${esc(v.label)}</option>`).join('')}</select><input data-k="url" maxlength="500" placeholder="https://…" aria-label="Profile address" value="${esc(s.url)}">${rowBtns(i, FT.social.length)}</div>`).join('');
     const addLink = $('[data-footer-add-link]'), addSocial = $('[data-footer-add-social]');
     if (addLink) addLink.disabled = FT.links.length >= 6;
     if (addSocial) addSocial.disabled = FT.social.length >= 8;
@@ -796,9 +803,21 @@
     box.addEventListener('input', update);
     box.addEventListener('change', update);
     box.addEventListener('click', e => {
-      if (!e.target.closest('[data-del]')) return;
-      FT[list].splice(+e.target.closest('.footer-row').dataset.i, 1);
-      buildFooterLists();
+      const row = e.target.closest('.footer-row');
+      if (!row) return;
+      const i = +row.dataset.i;
+      const mv = e.target.closest('[data-move]');
+      if (mv) {
+        const j = i + Number(mv.dataset.move);
+        if (j < 0 || j >= FT[list].length) return;
+        [FT[list][i], FT[list][j]] = [FT[list][j], FT[list][i]];
+        buildFooterLists();
+        const btn = box.querySelector(`.footer-row[data-i="${j}"] [data-move="${mv.dataset.move}"]`);
+        (btn && !btn.disabled ? btn : box.querySelector(`.footer-row[data-i="${j}"] input`)).focus();
+      } else if (e.target.closest('[data-del]')) {
+        FT[list].splice(i, 1);
+        buildFooterLists();
+      } else return;
       syncFooter();
       footerChanged();
     });
@@ -891,7 +910,7 @@
     $('[data-save-state]').textContent = 'Saving…';
     const payload = { page };
     const sentFooter = footerDirty;
-    if (sentFooter) payload.footer = { text: FT.text, align: FT.align, links: FT.links, social: FT.social };
+    if (sentFooter) payload.footer = { text: FT.text, align: FT.align, links: FT.links, social: FT.social, order: FT.order === 'social' ? 'social' : 'links' };
     footerDirty = false;
     const r = await T.api('save_page', payload);
     saving = false;

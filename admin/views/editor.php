@@ -21,7 +21,7 @@ $editorData = [
     'pageLinks' => $pageLinks,
     'baseUrl'   => url(''),
     'pretty'    => !empty($site['prettyUrls']),
-    'footer'    => ['text' => (string)($site['footer'] ?? ''), 'align' => (string)($site['footerAlign'] ?? ''), 'site' => (string)($site['title'] ?? ''),
+    'footer'    => ['text' => (string)($site['footer'] ?? ''), 'align' => (string)($site['footerAlign'] ?? ''), 'site' => (string)($site['title'] ?? ''), 'order' => ($site['footerOrder'] ?? '') === 'social' ? 'social' : 'links',
                     'links' => is_array($site['footerLinks'] ?? null) ? $site['footerLinks'] : [], 'social' => is_array($site['footerSocial'] ?? null) ? $site['footerSocial'] : []],
     'social'    => array_map(static fn($k) => ['label' => Blocks::SOCIAL[$k]['label'], 'svg' => Blocks::socialSvg($k)], array_combine(array_keys(Blocks::SOCIAL), array_keys(Blocks::SOCIAL))),
 ];
@@ -127,6 +127,12 @@ $editorData = [
         <div class="footer-rows" data-footer-social></div>
         <button type="button" class="btn btn-ghost btn-sm" data-footer-add-social>+ Add icon</button>
         <small class="hint">Up to 8.</small>
+      </div>
+      <div class="field"><span>Show first</span>
+        <div class="seg" role="radiogroup" aria-label="Show first" data-footer-order>
+          <button type="button" role="radio" data-v="links">Links</button><button type="button" role="radio" data-v="social">Social icons</button>
+        </div>
+        <small class="hint">Links and icons each get their own row under the footer text.</small>
       </div>
       <p class="hint">Leave the text, links and icons empty to hide the footer on every page.</p>
       <?php else: ?>

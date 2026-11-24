@@ -573,8 +573,10 @@ final class Renderer
             $label = Blocks::SOCIAL[$s['network']]['label'];
             $icons .= '<a href="' . e($s['url']) . '" aria-label="' . e($label) . '" title="' . e($label) . '" rel="me noopener">' . Blocks::socialSvg($s['network']) . '</a>';
         }
-        return ($links !== '' ? '<nav class="tc-footer__links" aria-label="Footer">' . $links . '</nav>' : '')
-            . ($icons !== '' ? '<nav class="tc-footer__social" aria-label="Social media">' . $icons . '</nav>' : '');
+        $links = $links !== '' ? '<nav class="tc-footer__links" aria-label="Footer">' . $links . '</nav>' : '';
+        $icons = $icons !== '' ? '<nav class="tc-footer__social" aria-label="Social media">' . $icons . '</nav>' : '';
+        // Two rows, in the order the owner chose ("Show first" in the editor's Footer panel)
+        return ($site['footerOrder'] ?? '') === 'social' ? $icons . $links : $links . $icons;
     }
 
     /** Clean footer links and social icons from the editor (both lists are short and fully checked). */
