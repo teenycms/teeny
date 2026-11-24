@@ -11,7 +11,7 @@ if (PHP_VERSION_ID < 80100) {
     exit('Teeny CMS needs PHP 8.1 or newer.');
 }
 
-define('TEENY_VERSION', '1.4.1');
+define('TEENY_VERSION', '1.4.2');
 define('TEENY_REPO', 'https://github.com/webzing/teeny'); // project home: releases, wiki and help
 define('TEENY_ROOT', dirname(__DIR__));
 

@@ -702,3 +702,9 @@ input[type="file"] { max-width: 100%; }
 @media (max-width: 760px) { .appbar .teeny-mark { width: 30px; height: 30px; } }
 .studio-foot a { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
 .studio-foot a:hover { color: var(--ink); text-decoration-color: currentColor; }
+/* editor footer panel: link and icon rows */
+.footer-rows { display: grid; gap: 8px; margin-bottom: 8px; }
+.footer-rows:empty { display: none; }
+.footer-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) auto; gap: 6px; align-items: center; }
+.footer-row input, .footer-row select { width: 100%; min-width: 0; height: 36px; padding: 0 10px; border: 1px solid var(--line); border-radius: 8px; background: #fff; font: 13px var(--sans); color: var(--ink); }
+.footer-row__del { width: 30px; height: 30px; font-size: 18px; }

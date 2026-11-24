@@ -533,11 +533,66 @@ final class Renderer
         $raw = (string)($site['footer'] ?? '');
         $align = (string)($site['footerAlign'] ?? '');
         $cls = 'tc-footer' . (isset(self::FOOTER_ALIGN[$align]) && $align !== '' ? ' tc-footer--' . $align : '');
+        $extra = self::footerExtras($site);
         if ($editor) {
-            return '<footer class="' . $cls . ' tce-footer" data-footer><div class="tc-footer__inner" data-footer-text data-ph="Footer text" contenteditable="' . ($canEdit ? 'true' : 'false') . '" spellcheck="true">' . e($raw) . '</div></footer>';
+            return '<footer class="' . $cls . ' tce-footer" data-footer><div class="tc-footer__inner">'
+                . '<div class="tc-footer__text" data-footer-text data-ph="Footer text" contenteditable="' . ($canEdit ? 'true' : 'false') . '" spellcheck="true">' . e($raw) . '</div>'
+                . '<div class="tc-footer__extra" data-footer-extra contenteditable="false">' . $extra . '</div></div></footer>';
         }
-        if (!empty($page['hideFooter']) || trim($raw) === '') return '';
-        return '<footer class="' . $cls . '"><div class="tc-footer__inner">' . e(str_replace('{year}', date('Y'), $raw)) . '</div></footer>';
+        if (!empty($page['hideFooter']) || (trim($raw) === '' && $extra === '')) return '';
+        return '<footer class="' . $cls . '"><div class="tc-footer__inner">'
+            . (trim($raw) !== '' ? '<div class="tc-footer__text">' . self::footerText($raw, $site) . '</div>' : '')
+            . ($extra !== '' ? '<div class="tc-footer__extra">' . $extra . '</div>' : '')
+            . '</div></footer>';
+    }
+
+    /**
+     * Footer text placeholders: {year} → this year, {site} → the site name, {teeny} → a "Teeny CMS" link.
+     * The text is escaped first; only the fixed Teeny link is added as HTML.
+     */
+    public static function footerText(string $raw, array $site): string
+    {
+        return strtr(e($raw), [
+            '{year}'  => date('Y'),
+            '{site}'  => e($site['title'] ?? ''),
+            '{teeny}' => '<a href="https://teenycms.github.io" rel="noopener">Teeny CMS</a>',
+        ]);
+    }
+
+    /** The footer's links and social icons (empty string when there are none). */
+    public static function footerExtras(array $site): string
+    {
+        $links = '';
+        foreach (is_array($site['footerLinks'] ?? null) ? $site['footerLinks'] : [] as $l) {
+            if (!is_array($l) || ($l['label'] ?? '') === '' || ($l['url'] ?? '') === '') continue;
+            $links .= '<a href="' . e($l['url']) . '">' . e($l['label']) . '</a>';
+        }
+        $icons = '';
+        foreach (is_array($site['footerSocial'] ?? null) ? $site['footerSocial'] : [] as $s) {
+            if (!is_array($s) || ($s['url'] ?? '') === '' || !isset(Blocks::SOCIAL[$s['network'] ?? ''])) continue;
+            $label = Blocks::SOCIAL[$s['network']]['label'];
+            $icons .= '<a href="' . e($s['url']) . '" aria-label="' . e($label) . '" title="' . e($label) . '" rel="me noopener">' . Blocks::socialSvg($s['network']) . '</a>';
+        }
+        return ($links !== '' ? '<nav class="tc-footer__links" aria-label="Footer">' . $links . '</nav>' : '')
+            . ($icons !== '' ? '<nav class="tc-footer__social" aria-label="Social media">' . $icons . '</nav>' : '');
+    }
+
+    /** Clean footer links and social icons from the editor (both lists are short and fully checked). */
+    public static function cleanFooterLists(mixed $links, mixed $social): array
+    {
+        $outLinks = [];
+        foreach (array_slice(is_array($links) ? array_values($links) : [], 0, 6) as $l) {
+            if (!is_array($l)) continue;
+            $label = Sanitizer::text($l['label'] ?? '', 40);
+            $url = Sanitizer::url(is_string($l['url'] ?? null) ? $l['url'] : '');
+            if ($label !== '' || $url !== '') $outLinks[] = ['label' => $label, 'url' => $url];
+        }
+        $outSocial = [];
+        foreach (array_slice(is_array($social) ? array_values($social) : [], 0, 8) as $s) {
+            if (!is_array($s) || !isset(Blocks::SOCIAL[(string)($s['network'] ?? '')])) continue;
+            $outSocial[] = ['network' => (string)$s['network'], 'url' => Sanitizer::url(is_string($s['url'] ?? null) ? $s['url'] : '')];
+        }
+        return [$outLinks, $outSocial];
     }
 
     /**

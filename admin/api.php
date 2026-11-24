@@ -70,6 +70,7 @@ try {
                 $site['footer'] = Sanitizer::text($b['footer']['text'] ?? '', 300);
                 $fa = (string)($b['footer']['align'] ?? '');
                 $site['footerAlign'] = isset(Renderer::FOOTER_ALIGN[$fa]) ? $fa : '';
+                [$site['footerLinks'], $site['footerSocial']] = Renderer::cleanFooterLists($b['footer']['links'] ?? [], $b['footer']['social'] ?? []);
                 Store::write('site', $site);
                 site($site);
             }

@@ -13,6 +13,8 @@
   let cdoc = null, root = null, selected = null;
   // The site footer: one text for every page, edited in place (see "footer" further down).
   const FT = Object.assign({ text: '', align: '' }, D.footer || {});
+  FT.links = Array.isArray(FT.links) ? FT.links.map(l => ({ label: String(l.label || ''), url: String(l.url || '') })) : [];
+  FT.social = Array.isArray(FT.social) ? FT.social.map(s => ({ network: String(s.network || 'website'), url: String(s.url || '') })) : [];
   let footerDirty = false;
   const footerInput = document.querySelector('[data-footer-input]');
   let dirty = false, saving = false, version = 0;
@@ -757,11 +759,65 @@
       ['left', 'center', 'right'].forEach(a => el.classList.toggle('tc-footer--' + a, FT.align === a));
       const t = el.querySelector('[data-footer-text]');
       if (!fromCanvas && t && t.textContent !== FT.text) t.textContent = FT.text;
+      const x = el.querySelector('[data-footer-extra]');
+      if (x) x.innerHTML = footerExtrasHtml();
     }
     if (footerInput && document.activeElement !== footerInput) footerInput.value = FT.text;
     $$('[data-footer-align] [data-v]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.v === FT.align)));
   }
   function footerChanged() { footerDirty = true; markDirty(); }
+
+  // Footer links and social icons (mirrors Renderer::footerExtras; the server cleans everything again on save)
+  const SOCIAL = D.social || {};
+  function footerExtrasHtml() {
+    const links = FT.links.filter(l => l.label && l.url).map(l => `<a href="#">${esc(l.label)}</a>`).join('');
+    const icons = FT.social.filter(s => s.url && SOCIAL[s.network]).map(s => `<a href="#" title="${esc(SOCIAL[s.network].label)}">${SOCIAL[s.network].svg}</a>`).join('');
+    return (links ? `<nav class="tc-footer__links">${links}</nav>` : '') + (icons ? `<nav class="tc-footer__social">${icons}</nav>` : '');
+  }
+  const linkBox = $('[data-footer-links]');
+  const socialBox = $('[data-footer-social]');
+  const removeBtn = '<button type="button" class="icon-btn footer-row__del" data-del aria-label="Remove" title="Remove">×</button>';
+  function buildFooterLists() {
+    if (linkBox) linkBox.innerHTML = FT.links.map((l, i) => `<div class="footer-row" data-i="${i}"><input data-k="label" maxlength="40" placeholder="Label" aria-label="Link label" value="${esc(l.label)}"><input data-k="url" maxlength="500" list="page-links" placeholder="https://… or /page" aria-label="Link address" value="${esc(l.url)}">${removeBtn}</div>`).join('');
+    if (socialBox) socialBox.innerHTML = FT.social.map((s, i) => `<div class="footer-row" data-i="${i}"><select data-k="network" aria-label="Network">${Object.entries(SOCIAL).map(([k, v]) => `<option value="${esc(k)}"${k === s.network ? ' selected' : ''}>${esc(v.label)}</option>`).join('')}</select><input data-k="url" maxlength="500" placeholder="https://…" aria-label="Profile address" value="${esc(s.url)}">${removeBtn}</div>`).join('');
+    const addLink = $('[data-footer-add-link]'), addSocial = $('[data-footer-add-social]');
+    if (addLink) addLink.disabled = FT.links.length >= 6;
+    if (addSocial) addSocial.disabled = FT.social.length >= 8;
+  }
+  [[linkBox, 'links'], [socialBox, 'social']].forEach(([box, list]) => {
+    if (!box) return;
+    const update = e => {
+      const row = e.target.closest('.footer-row');
+      if (!row || !e.target.dataset.k) return;
+      FT[list][+row.dataset.i][e.target.dataset.k] = e.target.value;
+      syncFooter();
+      footerChanged();
+    };
+    box.addEventListener('input', update);
+    box.addEventListener('change', update);
+    box.addEventListener('click', e => {
+      if (!e.target.closest('[data-del]')) return;
+      FT[list].splice(+e.target.closest('.footer-row').dataset.i, 1);
+      buildFooterLists();
+      syncFooter();
+      footerChanged();
+    });
+  });
+  const addLinkBtn = $('[data-footer-add-link]');
+  if (addLinkBtn) addLinkBtn.addEventListener('click', () => {
+    if (FT.links.length >= 6) return;
+    FT.links.push({ label: '', url: '' });
+    buildFooterLists();
+    $('.footer-row:last-child input', linkBox).focus();
+  });
+  const addSocialBtn = $('[data-footer-add-social]');
+  if (addSocialBtn) addSocialBtn.addEventListener('click', () => {
+    if (FT.social.length >= 8) return;
+    FT.social.push({ network: 'instagram', url: '' });
+    buildFooterLists();
+    $('.footer-row:last-child input', socialBox).focus();
+  });
+  buildFooterLists();
   if (footerInput) footerInput.addEventListener('input', () => {
     FT.text = footerInput.value.replace(/\s*\n\s*/g, ' ').slice(0, 300);
     syncFooter(false);
@@ -835,7 +891,7 @@
     $('[data-save-state]').textContent = 'Saving…';
     const payload = { page };
     const sentFooter = footerDirty;
-    if (sentFooter) payload.footer = { text: FT.text, align: FT.align };
+    if (sentFooter) payload.footer = { text: FT.text, align: FT.align, links: FT.links, social: FT.social };
     footerDirty = false;
     const r = await T.api('save_page', payload);
     saving = false;

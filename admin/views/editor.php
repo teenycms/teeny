@@ -21,7 +21,8 @@ $editorData = [
     'pageLinks' => $pageLinks,
     'baseUrl'   => url(''),
     'pretty'    => !empty($site['prettyUrls']),
-    'footer'    => ['text' => (string)($site['footer'] ?? ''), 'align' => (string)($site['footerAlign'] ?? '')],
+    'footer'    => ['text' => (string)($site['footer'] ?? ''), 'align' => (string)($site['footerAlign'] ?? ''), 'site' => (string)($site['title'] ?? ''),
+                    'links' => is_array($site['footerLinks'] ?? null) ? $site['footerLinks'] : [], 'social' => is_array($site['footerSocial'] ?? null) ? $site['footerSocial'] : []],
     'social'    => array_map(static fn($k) => ['label' => Blocks::SOCIAL[$k]['label'], 'svg' => Blocks::socialSvg($k)], array_combine(array_keys(Blocks::SOCIAL), array_keys(Blocks::SOCIAL))),
 ];
 ?><!doctype html>
@@ -110,13 +111,24 @@ $editorData = [
       <p class="pane-label">Footer</p>
       <p class="hint">The footer is the same on every page. Click it at the bottom of the page to type, or use the box below.</p>
       <?php if (Auth::can('appearance')): ?>
-      <label class="field"><span>Footer text</span><input data-footer-input maxlength="300" placeholder="© {year} Your name"><small class="hint">Type {year} to always show the current year. Leave it empty to hide the footer on every page.</small></label>
+      <label class="field"><span>Footer text</span><input data-footer-input maxlength="300" placeholder="© {year} {site} · Built with {teeny}"><small class="hint">Shortcuts: <code>{year}</code> this year, <code>{site}</code> your site name, <code>{teeny}</code> a “Teeny CMS” link. Remove anything you don’t want.</small></label>
       <div class="field"><span>Position</span>
         <div class="seg" role="radiogroup" aria-label="Footer position" data-footer-align>
           <?php foreach (Renderer::FOOTER_ALIGN as $k => $label): ?><button type="button" role="radio" data-v="<?= e($k) ?>"><?= e($label) ?></button><?php endforeach; ?>
         </div>
         <small class="hint">Auto follows the page alignment.</small>
       </div>
+      <div class="field"><span>Links</span>
+        <div class="footer-rows" data-footer-links></div>
+        <button type="button" class="btn btn-ghost btn-sm" data-footer-add-link>+ Add link</button>
+        <small class="hint">For example Privacy, Contact or Instagram. Up to 6.</small>
+      </div>
+      <div class="field"><span>Social icons</span>
+        <div class="footer-rows" data-footer-social></div>
+        <button type="button" class="btn btn-ghost btn-sm" data-footer-add-social>+ Add icon</button>
+        <small class="hint">Up to 8.</small>
+      </div>
+      <p class="hint">Leave the text, links and icons empty to hide the footer on every page.</p>
       <?php else: ?>
       <p class="hint">Only owners can change the footer text and position.</p>
       <?php endif; ?>

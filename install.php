@@ -99,7 +99,8 @@ if (!$installed && $canInstall && is_post()) {
                 'description' => '',
                 'lang'        => 'en',
                 'timezone'    => 'UTC',
-                'footer'      => '© {year} ' . $in['title'],
+                'footer'      => '© {year} {site} · Built with {teeny}', // {site} follows the site name, {teeny} is a Teeny CMS link
+                'footerLinks' => [], 'footerSocial' => [],
                 'home'        => '',
                 'prettyUrls'  => $in['pretty'] === '1',
                 'siteUrl'     => $detectedUrl,

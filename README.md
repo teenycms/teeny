@@ -7,7 +7,7 @@
 
 # Teeny CMS
 
-**Version 1.4.1** · [Website](https://teenycms.github.io) · [Apache License 2.0](LICENSE) · [Changelog](CHANGELOG.md) · [Installation & user guide](docs/GUIDE.md)
+**Version 1.4.2** · [Website](https://teenycms.github.io) · [Apache License 2.0](LICENSE) · [Changelog](CHANGELOG.md) · [Installation & user guide](docs/GUIDE.md)
 
 A small, secure website builder that keeps everything in plain files. There's no database to set up.
 Upload it to almost any web host, open your browser, and edit your pages by clicking on the text.
@@ -379,4 +379,4 @@ You may use it for personal and commercial websites, change it and share it. If 
 
 **Name and logo.** "Teeny", "Teeny CMS", "Teeny Studio" and the Teeny CMS logo are not covered by the software license. You're welcome to say your site is "built with Teeny CMS", but modified or redistributed versions must use their own name and logo.
 
-© 2026 Teeny CMS · Version 1.4.1 · Made to stay small.
+© 2026 Teeny CMS · Version 1.4.2 · Made to stay small.

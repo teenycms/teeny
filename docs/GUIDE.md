@@ -238,13 +238,15 @@ Click any image, or any **Choose image** box, to open your library. You can uplo
 
 ### The footer
 
-The footer is the small line at the bottom of every page, for example `© 2026 Your name`. Click it in the editor to type in it. The **Footer** panel opens on the left:
+The footer is the small line at the bottom of every page. New sites start with `© 2026 Your Site · Built with Teeny CMS`. Click it in the editor to type in it. The **Footer** panel opens on the left:
 
-- **Footer text:** the same on every page. Type `{year}` to always show the current year. Leave it empty to hide the footer on every page.
+- **Footer text:** the same on every page. Shortcuts: `{year}` shows the current year, `{site}` your site name, and `{teeny}` a "Teeny CMS" link. Change or remove any of them.
+- **Links:** add up to 6, such as Privacy or Contact. Pick one of your pages or paste any web address.
+- **Social icons:** add up to 8 (Instagram, Facebook, X, LinkedIn and more) with your profile address.
 - **Position:** Auto follows the page's alignment, or choose Left, Center or Right.
 - **Hide the footer on this page:** only this page. In the editor it stays visible but faded, so you can still click it.
 
-Changes to the footer are saved when you save the page. Only owners can change the text and position; editors can hide it on a page.
+Leave the text, links and icons empty to hide the footer on every page. Changes to the footer are saved when you save the page. Only owners can change the text and position; editors can hide it on a page.
 
 ### Saving
 

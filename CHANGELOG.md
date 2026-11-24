@@ -7,6 +7,29 @@ Never overwrite your `data/` and `uploads/` folders (or your own `config.php`).
 
 ---
 
+## 1.4.2 · 2026-11-24
+
+### Added
+- **Footer links and social icons.** In the editor's **Footer** panel, add up to 6 links (for example Privacy or Contact) and up to 8 social media icons. They show under the footer text and follow the footer's position.
+- **New footer shortcuts:** `{site}` shows your site name and stays correct if you rename the site, and `{teeny}` adds a "Teeny CMS" link. `{year}` still shows the current year.
+
+### Changed
+- **New sites start with this footer:** © {year} {site} · Built with {teeny}, which shows as "© 2026 Your Site · Built with Teeny CMS". You can change or remove it any time. Existing sites keep their footer.
+
+### Files to upload
+```
+install.php                      (only if you still need it, for new installs)
+admin/api.php
+admin/index.php
+admin/views/editor.php
+admin/assets/editor.js
+admin/assets/admin.css
+assets/site.css
+core/Renderer.php
+core/bootstrap.php
+```
+---
+
 ## 1.4.1 · 2026-11-24
 
 ### Added
