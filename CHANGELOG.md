@@ -7,6 +7,20 @@ Never overwrite your `data/` and `uploads/` folders (or your own `config.php`).
 
 ---
 
+## 1.4.1 · 2026-11-24
+
+### Added
+- **Help and GitHub links in the Studio footer.** The version number now links to its release notes, **Help** opens the wiki, and **GitHub** opens the project page, each in a new tab. Nothing is checked or sent in the background.
+
+### Files to upload
+```
+admin/views/_layout.php
+admin/assets/admin.css
+core/bootstrap.php
+```
+
+---
+
 ## 1.4.0 · 2026-11-24
 
 ### Added
