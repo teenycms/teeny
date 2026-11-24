@@ -53,6 +53,10 @@ It's made for landing pages, portfolios, simple documentation, galleries and lin
 
 See every screen of the Studio, from Library and Messages to Team and Vault, on the [Teeny website](https://teenycms.github.io/#inside).
 
+Want to click around yourself? Open your own private copy of Teeny in the browser, ready to install:
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/webzing/teeny?quickstart=1)
+
 ## Requirements
 
 - PHP **8.1 or newer** (almost every shared host has this)
