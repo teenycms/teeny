@@ -112,7 +112,7 @@ Put these rules **above** your PHP `location` block. If Teeny lives in a subfold
 
 You can try Teeny without a web host. Pick whichever suits you.
 
-**In your browser (nothing to install).** Open <https://codespaces.new/webzing/teeny?quickstart=1> and sign in to GitHub (a free account is fine). After about a minute Teeny opens in a preview tab with the installer. The test site lives in your own Codespace. GitHub gives free accounts a monthly allowance of Codespaces hours; stop or delete the Codespace when you're done.
+**In your browser (nothing to install).** Open <https://codespaces.new/webzing/teeny?quickstart=1> and sign in to GitHub (a free account is fine). After about a minute Teeny opens in a preview tab with the installer. If VS Code asks whether you trust the authors of the files, click **Trust Folder & Continue** so Teeny can start. The test site lives in your own Codespace. GitHub gives free accounts a monthly allowance of Codespaces hours; stop or delete the Codespace when you're done.
 
 **With PHP installed (version 8.1 or newer):**
 
