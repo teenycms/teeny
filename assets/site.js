@@ -1,4 +1,4 @@
-/* Teeny CMS: tiny public script: lightbox, light/dark toggle, form timing */
+/* Teeny CMS: tiny public script: lightbox, light/dark toggle, form timing, popups */
 (() => {
   // Gallery lightbox
   const links = document.querySelectorAll('[data-lightbox]');
@@ -102,4 +102,100 @@
       if (t) t.value = String(Math.round((Date.now() - started) / 1000));
     });
   });
+
+  // Popups: each one waits for its trigger and is remembered in this browser only ("how often"),
+  // with no cookies and nothing sent to the server. Never more than one centered box at a time.
+  const popups = Array.from(document.querySelectorAll('[data-popup]'));
+  if (popups.length) {
+    const WAIT = { day: 864e5, week: 6048e5, month: 2592e6 };
+    const key = p => 'tc-popup-' + p.dataset.popup;
+    const storage = often => { try { return often === 'visit' ? sessionStorage : localStorage; } catch (e) { return null; } };
+    const due = p => {
+      const often = p.dataset.often;
+      if (often === 'always') return true;
+      let last = null;
+      try { const st = storage(often); last = st ? st.getItem(key(p)) : null; } catch (e) { return true; }
+      if (last === null) return true;
+      if (often === 'visit' || often === 'once') return false;
+      return Date.now() - Number(last) > (WAIT[often] || WAIT.week);
+    };
+    const remember = p => {
+      if (p.dataset.often === 'always') return;
+      try { const st = storage(p.dataset.often); if (st) st.setItem(key(p), String(Date.now())); } catch (e) {}
+    };
+    const reduced = () => window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const open = [];
+    let modal = null, lastFocus = null;
+    const focusables = p => Array.from(p.querySelectorAll('.tc-popup__box a[href], .tc-popup__box button'));
+
+    const show = p => {
+      if (!p.hidden || !due(p)) return;
+      const isModal = p.classList.contains('tc-popup--modal');
+      if (isModal && modal) return;
+      p.hidden = false;
+      open.push(p);
+      void p.offsetWidth;            // apply the hidden-state styles first, so the fade-in can run
+      p.classList.add('is-open');
+      if (isModal) {
+        modal = p;
+        lastFocus = document.activeElement;
+        document.documentElement.classList.add('tc-popup-lock');
+        const f = focusables(p);
+        const first = f.find(x => x.classList.contains('tc-popup__btn')) || f[0];
+        if (first) first.focus({ preventScroll: true });
+      }
+    };
+    const hide = p => {
+      if (p.hidden) return;
+      remember(p);
+      p.classList.remove('is-open');
+      open.splice(open.indexOf(p), 1);
+      setTimeout(() => { p.hidden = true; }, reduced() ? 0 : 220);
+      if (p === modal) {
+        modal = null;
+        document.documentElement.classList.remove('tc-popup-lock');
+        if (lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
+      }
+    };
+
+    document.addEventListener('keydown', e => {
+      if (!open.length) return;
+      if (e.key === 'Escape') { hide(modal || open[open.length - 1]); return; }
+      if (e.key === 'Tab' && modal) {   // keep keyboard focus inside the centered box
+        const f = focusables(modal);
+        if (!f.length) return;
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        else if (!modal.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+      }
+    });
+
+    const fine = window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
+    popups.forEach(p => {
+      p.addEventListener('click', e => {
+        if (e.target.closest('[data-popup-close]')) { e.preventDefault(); hide(p); }
+        else if (e.target.closest('[data-popup-done]')) hide(p);   // remembered as seen; the link still opens normally
+      });
+      if (!due(p)) return;
+      const t = p.dataset.trigger || 'delay5';
+      const later = s => setTimeout(() => show(p), s * 1000);
+      if (t === 'load') later(0.4);
+      else if (t.indexOf('delay') === 0) later(parseInt(t.slice(5), 10) || 5);
+      else if (t === 'exit' && fine) {
+        const onOut = e => { if (!e.relatedTarget && e.clientY <= 0) { document.removeEventListener('mouseout', onOut); show(p); } };
+        document.addEventListener('mouseout', onOut);
+      } else {
+        // "scroll", and "exit" on touch screens (which have no mouse to leave with): halfway down the page
+        const check = () => {
+          const max = document.documentElement.scrollHeight - innerHeight;
+          if (max > 0 && scrollY / max < 0.5) return;
+          removeEventListener('scroll', check);
+          show(p);
+        };
+        addEventListener('scroll', check, { passive: true });
+        if (document.documentElement.scrollHeight - innerHeight <= 0) setTimeout(check, 5000);  // short page: show after 5 seconds
+      }
+    });
+  }
 })();

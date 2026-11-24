@@ -197,6 +197,7 @@ Open the **Add** tab and click a section. It's added below the section you selec
 | Images & video | Image, Gallery, Video (YouTube or Vimeo), Before / after |
 | Links | Button, Link list, Social icons, Contact form, Announcement, Newsletter |
 | Business | Numbers, Call to action, Logo strip, Team, Products |
+| Popups | Popup: a centered box, a bar or a corner card over the page |
 | Plugins | Sections added by plugins you've switched on |
 
 A few tips:
@@ -205,6 +206,7 @@ A few tips:
 - **Products:** the button can link anywhere, such as your online shop, a WhatsApp link (`https://wa.me/your-number`) or an email address.
 - **Video:** paste a normal YouTube or Vimeo link in the section settings.
 - **Contact form** and **Newsletter:** results arrive in **Messages**.
+- **Popup:** choose the **Type** (centered box, bar or corner card), **When it appears** (right away, after a few seconds, after scrolling halfway, or when the visitor moves to leave) and **How often** (every time, once per visit, once a day, week or month, or only once). In the editor it shows as a small preview card; visitors see it over the page. "How often" is remembered in each visitor's own browser, with no cookies. Use popups sparingly: one per page is plenty.
 
 ### Moving, copying and deleting sections
 

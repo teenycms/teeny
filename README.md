@@ -7,7 +7,7 @@
 
 # Teeny CMS
 
-**Version 1.3.0** · [Website](https://teenycms.github.io) · [Apache License 2.0](LICENSE) · [Changelog](CHANGELOG.md) · [Installation & user guide](docs/GUIDE.md)
+**Version 1.4.0** · [Website](https://teenycms.github.io) · [Apache License 2.0](LICENSE) · [Changelog](CHANGELOG.md) · [Installation & user guide](docs/GUIDE.md)
 
 A small, secure website builder that keeps everything in plain files. There's no database to set up.
 Upload it to almost any web host, open your browser, and edit your pages by clicking on the text.
@@ -20,7 +20,7 @@ It's made for landing pages, portfolios, simple documentation, galleries and lin
 - **3 themes:** Minimal, Dark and Luxury. Customise colours, fonts, corners and width.
 - **4 alignments:** Normal website, Centered, Left or Right (site-wide or per page).
 - **Starter templates:** Landing, Portfolio, Documentation, Gallery and Link in bio.
-- **31 section types:** hero, profile, heading, text, quote, code, FAQ, tabs, callout, table, events, image, gallery, video, before/after slider, image + text, steps, columns, pricing, numbers, call-to-action banner, logo strip, team, products, button, link list, social icons, announcement bar, contact form, newsletter sign-up and divider.
+- **32 section types:** hero, profile, heading, text, quote, code, FAQ, tabs, callout, table, events, image, gallery, video, before/after slider, image + text, steps, columns, pricing, numbers, call-to-action banner, logo strip, team, products, button, link list, social icons, announcement bar, contact form, newsletter sign-up, popup and divider.
 - **Section placement:** every section can be moved left, center or right and made narrow, medium, wide or full width.
 - **Contact form + Messages:** messages are saved in **Messages**, with optional email alerts. Spam is blocked without CAPTCHAs.
 - **Navigation editor:** drag to reorder, and mix pages with links to other websites.
@@ -379,4 +379,4 @@ You may use it for personal and commercial websites, change it and share it. If 
 
 **Name and logo.** "Teeny", "Teeny CMS", "Teeny Studio" and the Teeny CMS logo are not covered by the software license. You're welcome to say your site is "built with Teeny CMS", but modified or redistributed versions must use their own name and logo.
 
-© 2026 Teeny CMS · Version 1.3.0 · Made to stay small.
+© 2026 Teeny CMS · Version 1.4.0 · Made to stay small.

@@ -11,7 +11,7 @@ if (PHP_VERSION_ID < 80100) {
     exit('Teeny CMS needs PHP 8.1 or newer.');
 }
 
-define('TEENY_VERSION', '1.3.0');
+define('TEENY_VERSION', '1.4.0');
 define('TEENY_ROOT', dirname(__DIR__));
 
 // Optional config.php (see config.sample.php), for example to move data outside the web root.

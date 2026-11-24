@@ -7,6 +7,32 @@ Never overwrite your `data/` and `uploads/` folders (or your own `config.php`).
 
 ---
 
+## 1.4.0 · 2026-11-24
+
+### Added
+- **Popups**, a new kind of section in the editor's **Add** panel (group **Popups**). Three types:
+  - **Centered box:** a box in the middle of the screen, with an optional image. On phones it slides up from the bottom.
+  - **Bar:** a slim strip across the top or bottom of the screen.
+  - **Corner card:** a small card at the bottom right or left.
+- **When it appears:** right away, after 5, 10 or 30 seconds, after scrolling halfway down, or when the visitor moves to leave (on computers; on phones this waits for scrolling halfway instead).
+- **How often:** every time the page opens, once per visit, once a day, once a week, once a month, or only once. This is remembered in the visitor's own browser, with no cookies and nothing sent to your server.
+- Popups close with the × button, the Escape key, or a click outside a centered box. Keyboard focus stays inside a centered box while it's open and returns afterwards, and animations follow the visitor's "reduce motion" setting.
+
+### Fixed
+- In the editor, an empty **Small label** in a Hero section showed its placeholder squeezed into a narrow column on the Luxury theme.
+
+### Files to upload
+```
+admin/assets/editor.js
+admin/assets/canvas.css
+assets/site.js
+assets/site.css
+core/Blocks.php
+core/Renderer.php
+core/bootstrap.php
+```
+---
+
 ## 1.3.0 · 2026-11-24
 
 ### Added

@@ -73,6 +73,7 @@ final class Renderer
             'compare'    => self::compare($b),
             'announce'   => self::announce($b),
             'newsletter' => self::newsletter($b),
+            'popup'      => self::popup($b),
             'divider' => '<div class="tc-block tc-divider tc-divider--' . e($b['style']) . '" role="separator"><span></span></div>',
             default   => str_starts_with((string)($b['type'] ?? ''), 'plugin-') ? Plugins::render($b) : '',
         };
@@ -373,6 +374,38 @@ final class Renderer
             $h .= '<div class="tc-stat"><span class="tc-stat__value">' . e($it['value']) . '</span><span class="tc-stat__label">' . e($it['label']) . '</span></div>';
         }
         return $h === '' ? '' : '<div class="tc-block tc-stats tc-cols-' . max(1, min(6, count($b['items']))) . '">' . $h . '</div>';
+    }
+
+    /**
+     * Popup: stays hidden in the page and is shown by assets/site.js according to its trigger and
+     * "how often" setting. Without JavaScript it simply never appears. Everything is escaped.
+     */
+    private static function popup(array $b): string
+    {
+        if ($b['title'] === '' && $b['text'] === '' && $b['button'] === '') return '';
+        $kind = isset(Blocks::POPUP_KIND[$b['kind']]) ? $b['kind'] : 'modal';
+        $place = (string)$b['place'];
+        if ($kind === 'bar') $place = $place === 'bottom' ? 'bottom' : 'top';
+        elseif ($kind === 'corner') $place = $place === 'left' ? 'left' : 'right';
+        else $place = 'center';
+        $id = preg_replace('/[^a-z0-9]/', '', (string)$b['id']);
+        $titleId = 'tc-pop-' . $id . '-t';
+        $label = $b['title'] !== '' ? ' aria-labelledby="' . $titleId . '"' : ' aria-label="Message"';
+        $h = '<div class="tc-popup tc-popup--' . $kind . ' tc-popup--' . $place . '" data-popup="' . $id . '"'
+            . ' data-trigger="' . e(isset(Blocks::POPUP_TRIGGER[$b['trigger']]) ? $b['trigger'] : 'delay5') . '"'
+            . ' data-often="' . e(isset(Blocks::POPUP_OFTEN[$b['often']]) ? $b['often'] : 'week') . '"'
+            . ' role="dialog"' . ($kind === 'modal' ? ' aria-modal="true"' : '') . $label . ' hidden>';
+        if ($kind === 'modal') $h .= '<div class="tc-popup__backdrop" data-popup-close></div>';
+        $h .= '<div class="tc-popup__box">';
+        if ($kind === 'modal' && $b['image'] !== '') $h .= self::img($b['image'], $b['alt'], 'tc-popup__img');
+        $h .= '<div class="tc-popup__body">';
+        if ($b['title'] !== '') $h .= '<p class="tc-popup__title" id="' . $titleId . '">' . e($b['title']) . '</p>';
+        if ($b['text'] !== '') $h .= '<p class="tc-popup__text">' . nl2br(e($b['text']), false) . '</p>';
+        $h .= '</div>';
+        if ($b['button'] !== '') $h .= '<a class="tc-btn tc-btn--solid tc-popup__btn" href="' . e($b['url'] ?: '#') . '" data-popup-done>' . e($b['button']) . '</a>';
+        $h .= '<button type="button" class="tc-popup__close" data-popup-close aria-label="Close">'
+            . '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>';
+        return $h . '</div></div>';
     }
 
     private static function cta(array $b): string

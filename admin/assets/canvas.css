@@ -52,3 +52,15 @@ body { padding-bottom: 60px; }
 .tc-no-footer .tce-footer { opacity: .45; }
 .tc-no-footer .tce-footer::after { content: "Footer · hidden on this page"; opacity: .85; }
 .tce-footer [data-footer-text]:empty::before { content: "Footer text"; opacity: .38; }
+
+/* popup sections: a preview card in the editor (visitors see the real popup over the page) */
+.tce-popup { max-width: 460px; margin-inline: auto; padding: 18px 20px 16px; text-align: center; background: var(--tc-surface, var(--tc-bg)); border: 1px dashed var(--tc-border); border-radius: max(var(--tc-radius), 6px); }
+.tce-popup--bar { max-width: none; display: block; text-align: left; }
+.tce-popup--corner { max-width: 340px; margin-right: 0; text-align: left; }
+.tce-popup__meta { margin: 0 0 12px; font: 500 11.5px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; letter-spacing: .02em; opacity: .65; }
+.tce-popup__meta b { margin-right: 4px; padding: 2px 7px; border-radius: 999px; background: var(--tc-accent); color: var(--tc-accent-text); font-weight: 600; }
+.tce-popup__title { margin: 0 0 .3em; font-family: var(--tc-font-heading); font-size: 1.3em; line-height: 1.2; }
+.tce-popup__text { margin: 0 0 1em; color: var(--tc-muted); }
+
+/* an empty small label shows its placeholder text, not a theme's decorative line (e.g. Luxury) */
+.tc-eyebrow[data-ph]:empty::before { content: attr(data-ph); display: inline; width: auto; height: auto; background: none; white-space: nowrap; }

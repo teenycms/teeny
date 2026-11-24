@@ -45,7 +45,7 @@ Teeny CMS is free and open source under the Apache License 2.0. Use it for your 
 - No database. Everything is stored in plain files.
 - Installs in a couple of minutes on ordinary shared hosting.
 - Edit text by clicking on it.
-- 31 kinds of sections, each with its own position and width.
+- 32 kinds of sections, including popups, each with its own position and width.
 - Three themes, your own colours and fonts, and a light/dark switch for visitors.
 - Contact form, newsletter sign-ups and privacy-friendly visitor numbers.
 - Owners and editors, two-factor sign-in, and backups in one click.

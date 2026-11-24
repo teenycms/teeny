@@ -197,6 +197,14 @@
     newsletter(b) {
       return `<div class="tc-block tc-newsletter">${ed('h2', 'title', b.title, 'tc-newsletter__title', 'Title')}${ed('p', 'text', b.text, 'tc-newsletter__text', 'A short line of text', 'multi')}<div class="tc-form tc-newsletter__form tce-form"><label class="tc-newsletter__field" contenteditable="false"><input disabled placeholder="you@example.com"></label>${ed('span', 'button', b.button, 'tc-btn tc-btn--solid', 'Subscribe')}</div><p class="tce-hint" contenteditable="false">Sign-ups appear in Messages → Subscribers.</p></div>`;
     },
+    popup(b) {
+      // Shown here as a small preview card; visitors see it over the page, at the moment and as often as chosen.
+      const f = S.popup.fields;
+      const opt = k => esc((f[k].options || {})[b[k]] || '');
+      return `<div class="tc-block tce-popup tce-popup--${tok(b.kind)}"><p class="tce-popup__meta" contenteditable="false"><b>Popup</b> ${opt('kind')} · ${opt('trigger')} · ${opt('often')}</p>`
+        + `${ed('p', 'title', b.title, 'tce-popup__title', 'Title')}${ed('p', 'text', b.text, 'tce-popup__text', 'Message', 'multi')}${ed('span', 'button', b.button, 'tc-btn tc-btn--solid', 'Button text')}`
+        + `<p class="tce-hint" contenteditable="false">Visitors see this over the page. It takes no space on the page itself.</p></div>`;
+    },
   };
 
   const BAR_IC = {
@@ -716,7 +724,7 @@
     }
     const scroll = box.parentElement.scrollTop;
     box.innerHTML = `<div class="insp-head"><strong>${esc(def.label)}</strong><small class="muted">${esc(def.desc)}</small></div>`;
-    box.appendChild(placementControl(b));
+    if (b.type !== 'popup') box.appendChild(placementControl(b)); // a popup floats over the page, so it has no placement
     const fieldsLabel = document.createElement('p');
     fieldsLabel.className = 'pane-label';
     fieldsLabel.textContent = 'Content';

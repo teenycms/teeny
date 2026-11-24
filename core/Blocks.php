@@ -11,6 +11,12 @@ final class Blocks
 
     /** Where a section sits and how wide it is ('' = follow the page). */
     public const PLACEMENT_ALIGN = ['' => 'Page default', 'left' => 'Left', 'center' => 'Center', 'right' => 'Right'];
+
+    /** Popup choices. The browser remembers "how often" in its own storage: no cookies, nothing sent to the server. */
+    public const POPUP_KIND = ['modal' => 'Centered box', 'bar' => 'Bar across the screen', 'corner' => 'Corner card'];
+    public const POPUP_PLACE = ['auto' => 'Automatic (bar at the top, card bottom right)', 'top' => 'Top (bar)', 'bottom' => 'Bottom (bar)', 'left' => 'Bottom left (card)', 'right' => 'Bottom right (card)'];
+    public const POPUP_TRIGGER = ['load' => 'Right away', 'delay5' => 'After 5 seconds', 'delay10' => 'After 10 seconds', 'delay30' => 'After 30 seconds', 'scroll' => 'After scrolling halfway down', 'exit' => 'When the visitor moves to leave (computers)'];
+    public const POPUP_OFTEN = ['always' => 'Every time the page opens', 'visit' => 'Once per visit', 'day' => 'Once a day', 'week' => 'Once a week', 'month' => 'Once a month', 'once' => 'Only once'];
     public const PLACEMENT_WIDTH = ['' => 'Page default', 'narrow' => 'Narrow', 'medium' => 'Medium', 'wide' => 'Wide', 'full' => 'Full width'];
 
     /** Simple line icons drawn for Teeny (24×24, stroke-based), with no external icon fonts. */
@@ -383,6 +389,22 @@ final class Blocks
                     'style'    => ['type' => 'select', 'label' => 'Colour', 'options' => ['accent' => 'Accent colour', 'dark' => 'Dark', 'soft' => 'Soft']],
                 ],
                 'defaults' => ['text' => 'New collection is out now', 'linkText' => 'Take a look', 'url' => '#', 'style' => 'accent'],
+            ],
+            'popup' => [
+                'label' => 'Popup', 'group' => 'Popups', 'desc' => 'Box, bar or corner card that appears over the page',
+                'fields' => [
+                    'kind'    => ['type' => 'select', 'label' => 'Type', 'options' => self::POPUP_KIND],
+                    'place'   => ['type' => 'select', 'label' => 'Position', 'options' => self::POPUP_PLACE],
+                    'trigger' => ['type' => 'select', 'label' => 'When it appears', 'options' => self::POPUP_TRIGGER],
+                    'often'   => ['type' => 'select', 'label' => 'How often', 'options' => self::POPUP_OFTEN],
+                    'title'   => ['type' => 'text', 'label' => 'Title', 'max' => 120],
+                    'text'    => ['type' => 'textarea', 'label' => 'Message', 'max' => 600],
+                    'button'  => ['type' => 'text', 'label' => 'Button text', 'max' => 60],
+                    'url'     => ['type' => 'url', 'label' => 'Button link'],
+                    'image'   => ['type' => 'image', 'label' => 'Image (centered box only)'],
+                    'alt'     => ['type' => 'text', 'label' => 'Image description', 'max' => 200],
+                ],
+                'defaults' => ['kind' => 'modal', 'place' => 'auto', 'trigger' => 'delay5', 'often' => 'week', 'title' => 'Hello there', 'text' => 'Tell visitors about something new, like an offer, an event or a newsletter.', 'button' => 'Find out more', 'url' => '#', 'image' => '', 'alt' => ''],
             ],
             'newsletter' => [
                 'label' => 'Newsletter', 'group' => 'Links', 'desc' => 'Collect email sign-ups',
