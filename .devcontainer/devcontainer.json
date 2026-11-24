@@ -8,7 +8,7 @@
       "onAutoForward": "openBrowser"
     }
   },
-  "postStartCommand": "nohup php -S 0.0.0.0:8000 router.php > /tmp/teeny.log 2>&1 &",
+  "postAttachCommand": "pgrep -x php >/dev/null && echo 'Teeny is already running on port 8000.' || php -S 0.0.0.0:8000 router.php",
   "customizations": {
     "codespaces": {
       "openFiles": ["README.md"]
