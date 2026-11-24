@@ -396,7 +396,12 @@
     if (el.hasAttribute('data-rich')) {
       return el.textContent.trim() === '' ? '' : el.innerHTML;
     }
+    // innerText keeps line breaks but also applies CSS text-transform (themes show some labels in
+    // capitals), so switch that off while reading, or "Get started" would be saved as "GET STARTED".
+    const tt = el.style.textTransform;
+    el.style.textTransform = 'none';
     let t = el.innerText;
+    el.style.textTransform = tt;
     if (el.hasAttribute('data-code')) return t.replace(/\n$/, '');
     if (!el.hasAttribute('data-multi')) t = t.replace(/\s*\n\s*/g, ' ');
     return t.replace(/\n$/, '');

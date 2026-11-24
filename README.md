@@ -7,7 +7,7 @@
 
 # Teeny CMS
 
-**Version 1.4.4** · [Website](https://teenycms.github.io) · [Apache License 2.0](LICENSE) · [Changelog](CHANGELOG.md) · [Installation & user guide](docs/GUIDE.md)
+**Version 1.4.5** · [Website](https://teenycms.github.io) · [Apache License 2.0](LICENSE) · [Changelog](CHANGELOG.md) · [Installation & user guide](docs/GUIDE.md)
 
 ### Your whole website is just a folder.
 
@@ -406,4 +406,4 @@ You may use it for personal and commercial websites, change it and share it. If 
 
 *"Big enough for your site. Small enough to zip."*
 
-© 2026 Teeny CMS · Version 1.4.4 · Made to stay small.
+© 2026 Teeny CMS · Version 1.4.5 · Made to stay small.

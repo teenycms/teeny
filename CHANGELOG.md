@@ -7,6 +7,18 @@ Never overwrite your `data/` and `uploads/` folders (or your own `config.php`).
 
 ---
 
+## 1.4.5 · 2026-11-24
+
+### Fixed
+- **Text no longer turns into capitals when you save.** Some themes show small labels, button text and quote names in capital letters. Text typed into those places was saved in capitals too, so "Get started" became "GET STARTED". It's now saved exactly as you type it. Text that was already saved in capitals stays that way until you type it again.
+
+### Files to upload
+```
+admin/assets/editor.js
+core/bootstrap.php
+```
+---
+
 ## 1.4.4 · 2026-11-24
 
 ### Added
