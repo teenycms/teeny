@@ -2,6 +2,8 @@
 
 # Teeny CMS: installation and user guide
 
+*"Your website, in plain files."*
+
 This guide takes you from an empty web hosting account to a finished website. You don't need to know any code.
 If you get stuck, jump to [Troubleshooting](#16-troubleshooting) at the end.
 
@@ -489,7 +491,7 @@ Open the **Vault** (profile menu):
 - **Download site copy (.json):** all pages, preferences and style choices. Passwords and team members are never included.
 - **Download library images (.zip):** your images. If your server can't make zip files, download the `uploads/` folder by FTP instead.
 
-You can also simply copy the `data/` and `uploads/` folders by FTP. Together they are your whole site.
+You can also simply copy the `data/` and `uploads/` folders by FTP. Together they are your whole site. You can zip them, or keep them in a Git repository to track every change. Only use a **private** repository: `data/` holds password hashes, two-factor secrets, messages and subscriber emails.
 
 ### Moving to a new host
 
@@ -545,3 +547,7 @@ Make sure you clicked **Save** and the page is **Live**. Then reload the page. P
 
 **Something else?**
 Open an issue on the project's GitHub page and describe what you did and what you saw. Please don't post passwords or private information.
+
+---
+
+*"Just files. Just websites."*

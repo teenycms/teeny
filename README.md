@@ -9,13 +9,25 @@
 
 **Version 1.4.4** · [Website](https://teenycms.github.io) · [Apache License 2.0](LICENSE) · [Changelog](CHANGELOG.md) · [Installation & user guide](docs/GUIDE.md)
 
-A small, secure website builder that keeps everything in plain files. There's no database to set up.
-Upload it to almost any web host, open your browser, and edit your pages by clicking on the text.
+### Your whole website is just a folder.
+
+Teeny is a simple website builder anyone can use. Click any text on your page and type. There's no database to set up, so it runs on the cheapest shared hosting or a basic VPS.
 It's made for landing pages, portfolios, simple documentation, galleries and link-in-bio pages.
 
 **Try it without a server:** [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/webzing/teeny?quickstart=1) or [run it on your computer](#try-it-on-your-own-computer) with one command.
 
 <p align="center"><img src="docs/screenshots/studio.png" alt="The Teeny Studio home screen: a greeting, a preview card of the live site, counts of pages, images, new messages and team members, recently edited pages and shortcuts" width="900"></p>
+
+## Why Teeny
+
+- **Easy for everyone.** Click any text on your page and type. No code, no manuals. It installs in about two minutes, and you can [try it in your browser](https://codespaces.new/webzing/teeny?quickstart=1) first.
+- **No database, no migrations.** It runs on the cheapest shared hosting or a basic VPS. Updating means copying new files, with no upgrade scripts that can break your site.
+- **Your whole site is a folder.** Back it up by zipping it, move it by copying it, or keep it in a private Git repo. You also get a one-click backup in the Studio and the last 20 versions of every page.
+- **Fast by default.** Visitors get ready-made pages and about 12 KB of code. There are no heavy queries, no plugin bloat, and nothing to compile. The whole app is a 200 KB download.
+
+## Features
+
+*"All the website. None of the bloat."*
 
 - **Teeny Studio:** a calm, focused workspace with a top bar for Studio, Pages, Library, Messages, Navigation and Style. Team, Preferences and the Vault sit in the profile menu.
 - **Visual editor:** click any text on the page and type. Add, reorder and style sections.
@@ -208,7 +220,7 @@ Teeny CMS was built to be safe by default. To report a problem privately, see [S
 - **Download library images** creates a zip of your `uploads` folder, if your server supports zip. Otherwise copy `uploads` by FTP.
 - To move to a new host: install Teeny there, upload your `uploads` folder, then use **Restore from copy** in the Vault.
 
-You can also simply copy the whole `data` and `uploads` folders. That is your entire site.
+You can also simply copy the whole `data` and `uploads` folders. That is your entire site. Zip them, copy them, or keep them in a Git repo to track every change. Use a **private** repo only: `data` holds password hashes, two-factor secrets, contact messages and subscriber emails.
 
 ---
 
@@ -391,5 +403,7 @@ Teeny CMS is free and open source, released under the [Apache License 2.0](LICEN
 You may use it for personal and commercial websites, change it and share it. If you share a modified version, keep the [LICENSE](LICENSE) and [NOTICE](NOTICE) files and mark the files you changed.
 
 **Name and logo.** "Teeny", "Teeny CMS", "Teeny Studio" and the Teeny CMS logo are not covered by the software license. You're welcome to say your site is "built with Teeny CMS", but modified or redistributed versions must use their own name and logo.
+
+*"Big enough for your site. Small enough to zip."*
 
 © 2026 Teeny CMS · Version 1.4.4 · Made to stay small.
