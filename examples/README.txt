@@ -5,4 +5,4 @@ theme-sand/     An example theme. Zip this folder and upload it in Studio → St
 *.zip           Ready-made zips of the example theme and plugins (for trying the upload screens).
 
 The example plugins (Opening hours, Testimonials, Countdown) are already in plugins/. Switch them on
-in Studio → Plugins. Read "Make your own plugin" and "Make your own theme" in README.md.
+in Studio → Plugins. Read docs/PLUGINS.md and docs/THEMES.md to make your own.

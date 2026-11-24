@@ -352,7 +352,7 @@ To use one, open **Plugins** (profile menu), click **Switch on**, then find its 
 - Their styles only affect their own section.
 - Any interactive part runs in a sealed box that can't see your site, your visitors or your account.
 
-Want to make your own? See **Make your own plugin** in [README.md](../README.md).
+Want to make your own? See [Make your own plugin](PLUGINS.md). For a theme of your own, see [Make your own theme](THEMES.md).
 
 ---
 
@@ -493,6 +493,25 @@ Open the **Vault** (profile menu):
 
 You can also simply copy the `data/` and `uploads/` folders by FTP. Together they are your whole site. You can zip them, or keep them in a Git repository to track every change. Only use a **private** repository: `data/` holds password hashes, two-factor secrets, messages and subscriber emails.
 
+### What's in the Teeny folder
+
+```
+index.php        public website
+install.php      one-time installer (locks itself)
+admin/           Teeny Studio (editing area), editor and API
+core/            CMS engine (storage, security, rendering)
+themes/          minimal, dark, luxury + your own themes
+plugins/         section plugins (opening-hours, testimonials, countdown included)
+templates/       starter page layouts
+assets/          shared site CSS/JS
+part.php         sandboxed frame for interactive plugins
+router.php       lets PHP's built-in server run Teeny on your computer (does nothing on a web host)
+data/            your content (JSON), keep it safe
+uploads/         your images
+```
+
+The GitHub download also has `brand/`, `docs/` and `examples/`. They aren't needed on your server.
+
 ### Moving to a new host
 
 1. Install Teeny on the new host (see section 2).
@@ -507,6 +526,8 @@ You can also simply copy the `data/` and `uploads/` folders by FTP. Together the
    - `data/` (your content)
    - `uploads/` (your images)
    - `config.php` (if you created one)
+
+   Don't delete folders first. Just upload over them. Themes and plugins you added yourself stay.
 4. Reload your site and the Studio. Check the version number at the bottom of any Studio page.
 
 There's no database, so there's nothing else to run.
