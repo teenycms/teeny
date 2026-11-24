@@ -5,10 +5,10 @@
   "portsAttributes": {
     "8000": {
       "label": "Teeny CMS",
-      "onAutoForward": "openPreview"
+      "onAutoForward": "openBrowser"
     }
   },
-  "postAttachCommand": "php -S 0.0.0.0:8000 router.php",
+  "postStartCommand": "nohup php -S 0.0.0.0:8000 router.php > /tmp/teeny.log 2>&1 &",
   "customizations": {
     "codespaces": {
       "openFiles": ["README.md"]

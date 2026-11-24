@@ -80,7 +80,7 @@ Your Studio (the editing area) is at `https://your-site.com/admin/`.
 
 No web host needed. Pick one:
 
-- **In your browser, nothing to install:** click [Open in GitHub Codespaces](https://codespaces.new/webzing/teeny?quickstart=1) (needs a free GitHub account). After about a minute Teeny opens in a preview tab, ready to install. If VS Code asks whether you trust the authors of the files, click **Trust Folder & Continue** so Teeny can start. Your test site lives in your own Codespace, and nothing is shared.
+- **In your browser, nothing to install:** click [Open in GitHub Codespaces](https://codespaces.new/webzing/teeny?quickstart=1) (needs a free GitHub account). After about a minute Teeny opens in a new browser tab, ready to install. If VS Code asks whether you trust the authors of the files, click **Trust Folder & Continue**. If no tab opens (your browser may block it), open the **Ports** tab at the bottom of VS Code and click the globe icon next to **Teeny CMS**. Your test site lives in your own Codespace, and nothing is shared.
 - **With PHP 8.1 or newer:** open a terminal in the Teeny folder and run
   ```
   php -S localhost:8000 router.php
