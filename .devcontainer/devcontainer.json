@@ -1,0 +1,17 @@
+{
+  "name": "Teeny CMS",
+  "image": "mcr.microsoft.com/devcontainers/php:8.3",
+  "forwardPorts": [8000],
+  "portsAttributes": {
+    "8000": {
+      "label": "Teeny CMS",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "postAttachCommand": "php -S 0.0.0.0:8000 router.php",
+  "customizations": {
+    "codespaces": {
+      "openFiles": ["README.md"]
+    }
+  }
+}

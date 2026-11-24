@@ -110,14 +110,26 @@ Put these rules **above** your PHP `location` block. If Teeny lives in a subfold
 
 ## 3. Trying it on your own computer
 
-If PHP is installed on your computer, you can try Teeny without a web host:
+You can try Teeny without a web host. Pick whichever suits you.
+
+**In your browser (nothing to install).** Open <https://codespaces.new/webzing/teeny?quickstart=1> and sign in to GitHub (a free account is fine). After about a minute Teeny opens in a preview tab with the installer. The test site lives in your own Codespace. GitHub gives free accounts a monthly allowance of Codespaces hours; stop or delete the Codespace when you're done.
+
+**With PHP installed (version 8.1 or newer):**
 
 1. Unzip Teeny CMS.
 2. Open a terminal in that folder and run:
    ```
-   php -S localhost:8000
+   php -S localhost:8000 router.php
    ```
 3. Visit `http://localhost:8000` and follow the installer.
+
+**With Docker** (no PHP needed), in the unzipped folder run:
+```
+docker run --rm -p 8000:8000 -v "${PWD}:/app" -w /app php:8.3-cli php -S 0.0.0.0:8000 router.php
+```
+Then visit `http://localhost:8000`.
+
+`router.php` makes PHP's small built-in server behave like a real host: clean page addresses work and private folders stay private. It does nothing on a real web host. The built-in server is for trying Teeny only, not for a live site.
 
 ---
 

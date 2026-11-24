@@ -7,11 +7,13 @@
 
 # Teeny CMS
 
-**Version 1.4.3** · [Website](https://teenycms.github.io) · [Apache License 2.0](LICENSE) · [Changelog](CHANGELOG.md) · [Installation & user guide](docs/GUIDE.md)
+**Version 1.4.4** · [Website](https://teenycms.github.io) · [Apache License 2.0](LICENSE) · [Changelog](CHANGELOG.md) · [Installation & user guide](docs/GUIDE.md)
 
 A small, secure website builder that keeps everything in plain files. There's no database to set up.
 Upload it to almost any web host, open your browser, and edit your pages by clicking on the text.
 It's made for landing pages, portfolios, simple documentation, galleries and link-in-bio pages.
+
+**Try it without a server:** [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/webzing/teeny?quickstart=1) or [run it on your computer](#try-it-on-your-own-computer) with one command.
 
 <p align="center"><img src="docs/screenshots/studio.png" alt="The Teeny Studio home screen: a greeting, a preview card of the live site, counts of pages, images, new messages and team members, recently edited pages and shortcuts" width="900"></p>
 
@@ -72,13 +74,19 @@ Your Studio (the editing area) is at `https://your-site.com/admin/`.
 
 ### Try it on your own computer
 
-If PHP is installed, open a terminal in this folder and run:
+No web host needed. Pick one:
 
-```
-php -S localhost:8000
-```
+- **In your browser, nothing to install:** click [Open in GitHub Codespaces](https://codespaces.new/webzing/teeny?quickstart=1) (needs a free GitHub account). After about a minute Teeny opens in a preview tab, ready to install. Your test site lives in your own Codespace, and nothing is shared.
+- **With PHP 8.1 or newer:** open a terminal in the Teeny folder and run
+  ```
+  php -S localhost:8000 router.php
+  ```
+- **With Docker:** open a terminal in the Teeny folder and run
+  ```
+  docker run --rm -p 8000:8000 -v "${PWD}:/app" -w /app php:8.3-cli php -S 0.0.0.0:8000 router.php
+  ```
 
-Then visit <http://localhost:8000>.
+Then visit <http://localhost:8000> and follow the installer. `router.php` makes PHP's built-in server follow the same rules as a real host (clean page addresses, private folders stay private). On a real host it does nothing. This is for trying Teeny only; for a live site, use a proper web host.
 
 ---
 
@@ -352,6 +360,7 @@ themes/          minimal, dark, luxury + your own themes
 plugins/         section plugins (opening-hours, testimonials, countdown included)
 examples/        example theme and ready-made .zip files (not public)
 part.php         sandboxed frame for interactive plugins
+router.php       lets PHP's built-in server run Teeny on your computer (does nothing on a web host)
 brand/           logo, icons and social preview image (not needed on your server)
 docs/            installation & user guide, descriptions and screenshots (not needed on your server)
 templates/       starter page layouts
@@ -379,4 +388,4 @@ You may use it for personal and commercial websites, change it and share it. If 
 
 **Name and logo.** "Teeny", "Teeny CMS", "Teeny Studio" and the Teeny CMS logo are not covered by the software license. You're welcome to say your site is "built with Teeny CMS", but modified or redistributed versions must use their own name and logo.
 
-© 2026 Teeny CMS · Version 1.4.3 · Made to stay small.
+© 2026 Teeny CMS · Version 1.4.4 · Made to stay small.

@@ -7,6 +7,17 @@ Never overwrite your `data/` and `uploads/` folders (or your own `config.php`).
 
 ---
 
+## 1.4.4 · 2026-11-24
+
+### Added
+- **Try Teeny without a server.** An **Open in GitHub Codespaces** button starts a private test copy of Teeny in your browser, ready to install. Nothing to set up.
+- **One command to run Teeny on your computer:** `php -S localhost:8000 router.php`, or a Docker command for people without PHP. The new `router.php` makes PHP's built-in server follow the same rules as a real host, so clean page addresses work and private folders stay private. It does nothing on a real web host.
+
+### Files to upload
+Nothing to upload for existing sites. `router.php` is only used on your own computer.
+
+---
+
 ## 1.4.3 · 2026-11-24
 
 ### Changed
