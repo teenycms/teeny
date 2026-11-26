@@ -196,6 +196,9 @@
     announce(b) {
       return `<div class="tc-block tc-announce tc-announce--${tok(b.style)}"><p class="tc-announce__inner">${ed('span', 'text', b.text, 'tc-announce__text', 'Your announcement')} ${ed('span', 'linkText', b.linkText, 'tc-announce__link', 'Link text')}</p></div>`;
     },
+    search(b) {
+      return `<div class="tc-block tc-search">${ed('h2', 'title', b.title, 'tc-search__title', 'Title (optional)')}<div class="tc-form tc-search__form tce-form"><label class="tc-search__field" contenteditable="false"><input disabled placeholder="${esc(b.placeholder || 'Search this site')}"></label>${ed('span', 'button', b.button, 'tc-btn tc-btn--solid', 'Search')}</div></div>`;
+    },
     newsletter(b) {
       return `<div class="tc-block tc-newsletter">${ed('h2', 'title', b.title, 'tc-newsletter__title', 'Title')}${ed('p', 'text', b.text, 'tc-newsletter__text', 'A short line of text', 'multi')}<div class="tc-form tc-newsletter__form tce-form"><label class="tc-newsletter__field" contenteditable="false"><input disabled placeholder="you@example.com"></label>${ed('span', 'button', b.button, 'tc-btn tc-btn--solid', 'Subscribe')}</div><p class="tce-hint" contenteditable="false">Sign-ups appear in Messages → Subscribers.</p></div>`;
     },

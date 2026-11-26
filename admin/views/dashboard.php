@@ -31,7 +31,8 @@ admin_header('Studio', 'studio', ['bare' => true]);
     </div>
   </div>
 
-  <a class="site-card" href="<?= e(url('')) ?>" target="_blank" rel="noopener" style="--sc-bg:<?= e($look['bg']) ?>;--sc-text:<?= e($look['text']) ?>;--sc-muted:<?= e($look['muted']) ?>;--sc-accent:<?= e($look['accent']) ?>;--sc-accent-text:<?= e($look['accentText']) ?>;--sc-border:<?= e($look['border']) ?>;--sc-heading:<?= e(Theme::FONTS[$look['headingFont']]['stack']) ?>;--sc-body:<?= e(Theme::FONTS[$look['bodyFont']]['stack']) ?>;--sc-radius:<?= (int)$look['radius'] ?>px">
+  <?php $lookFonts = Fonts::faceCss([$look['headingFont'], $look['bodyFont']], $site); if ($lookFonts !== ''): ?><style><?= $lookFonts ?></style><?php endif; ?>
+  <a class="site-card" href="<?= e(url('')) ?>" target="_blank" rel="noopener" style="--sc-bg:<?= e($look['bg']) ?>;--sc-text:<?= e($look['text']) ?>;--sc-muted:<?= e($look['muted']) ?>;--sc-accent:<?= e($look['accent']) ?>;--sc-accent-text:<?= e($look['accentText']) ?>;--sc-border:<?= e($look['border']) ?>;--sc-heading:<?= e(Theme::fonts()[$look['headingFont']]['stack']) ?>;--sc-body:<?= e(Theme::fonts()[$look['bodyFont']]['stack']) ?>;--sc-radius:<?= (int)$look['radius'] ?>px">
     <span class="sc-chrome"><i></i><i></i><i></i><span class="sc-url"><?= e(preg_replace('~^https?://~', '', (string)($site['siteUrl'] ?? '')) ?: 'your website') ?></span></span>
     <span class="sc-body">
       <span class="sc-status <?= $maintenance ? 'is-maint' : '' ?>"><?= $maintenance ? 'Coming soon mode' : 'Live' ?></span>

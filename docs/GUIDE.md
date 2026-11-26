@@ -297,12 +297,13 @@ Open **Style** to change how your whole site looks.
 
   The preview on the right updates as you go. Each theme remembers its own changes.
 - **Light & dark for visitors:** adds a small switch to your site so visitors can choose a light or dark version.
+- **Fonts from Google:** type the name of any font from [Google Fonts](https://fonts.google.com) (for example *Playfair Display*) and click **Add font**. Teeny downloads it once and saves it on your own website, so visitors never connect to Google and you don't need a cookie notice. The font then appears in the **Heading font** and **Body font** menus. You can add up to 8 fonts and remove them any time; text using a removed font goes back to the theme's own font. If your host blocks outgoing connections, Teeny tells you so.
 - **Custom CSS:** for people who know CSS and want to fine-tune details.
 - Click **Save style** when you're done.
 
 **Your themes** (at the bottom of the Style page):
 
-- **Save my current style as a theme:** turns your colours, fonts and custom CSS into a new theme you can reuse.
+- **Save my current style as a theme:** turns your colours, fonts and custom CSS into a new theme you can reuse. Fonts from Google stay with your site, so a shared theme uses the closest built-in font instead.
 - **Download** a theme as a `.zip` to keep it or share it.
 - **Add a theme (.zip):** upload a theme someone made for you. Every file is checked first, and themes can only contain styles, fonts and images.
 
@@ -342,6 +343,13 @@ Plugins add new kinds of sections to the editor. Three come with Teeny, switched
 - **Countdown:** a live timer to a launch or event
 
 To use one, open **Plugins** (profile menu), click **Switch on**, then find its section in the editor under **Add → Plugins**.
+
+**Site search (built-in add-on).** At the top of the Plugins page. It's off until you switch it on:
+
+- Click **Switch on**. A **Search** section appears in the editor under **Add → Links**. Put it on any page.
+- Tick **Show a search icon in the site header** and click **Save** to add a magnifier at the end of your menu.
+- Results show each matching page with a short extract, and the words you searched for highlighted. Only live pages are searched; drafts and password-protected pages never appear.
+- Switch it off any time. Search sections are then hidden from your pages, and come back when you switch it on again.
 
 **Adding a plugin:** upload its `.zip` under **Add a plugin**. Teeny checks every file and installs it switched off, so you can review what it does before using it.
 

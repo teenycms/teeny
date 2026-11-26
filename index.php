@@ -64,6 +64,14 @@ if ($maintenance && $viewer === null) {
     exit;
 }
 
+// Site search (a built-in add-on, switched on in Plugins). Never cached.
+if (isset($_GET['search']) && Search::enabled($site) && $method === 'GET') {
+    header('Cache-Control: no-store');
+    header('Content-Type: text/html; charset=utf-8');
+    echo Renderer::searchPage($site, Search::query($_GET['search']));
+    exit;
+}
+
 // Only plain anonymous GET requests use the page cache.
 $queryKeys = array_keys($_GET);
 $plainQuery = $queryKeys === [] || $queryKeys === ['page'];

@@ -416,6 +416,15 @@ final class Blocks
                 ],
                 'defaults' => ['title' => 'Stay in the loop', 'text' => 'Occasional news, never spam. Unsubscribe any time.', 'button' => 'Subscribe', 'success' => 'Thank you for subscribing!'],
             ],
+            'search' => [
+                'label' => 'Search', 'group' => 'Links', 'desc' => 'Search box for your whole site',
+                'fields' => [
+                    'title'       => ['type' => 'text', 'label' => 'Title (optional)', 'max' => 120],
+                    'placeholder' => ['type' => 'text', 'label' => 'Text inside the box', 'max' => 60],
+                    'button'      => ['type' => 'text', 'label' => 'Button text', 'max' => 30],
+                ],
+                'defaults' => ['title' => '', 'placeholder' => 'Search this site', 'button' => 'Search'],
+            ],
             'divider' => [
                 'label' => 'Divider', 'group' => 'Layout', 'desc' => 'Line, ornament or space',
                 'fields' => [

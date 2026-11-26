@@ -279,6 +279,19 @@ switch ($p) {
             $action = (string)($_POST['action'] ?? '');
             $id = (string)($_POST['id'] ?? '');
             try {
+                if (in_array($action, ['addon_search_on', 'addon_search_off', 'addon_search_header'], true)) {
+                    $site['addons'] = is_array($site['addons'] ?? null) ? $site['addons'] : [];
+                    if ($action === 'addon_search_header') {
+                        $site['addons']['searchHeader'] = !empty($_POST['header']);
+                        flash($site['addons']['searchHeader'] ? 'The search icon now shows in your site header.' : 'The search icon was removed from your site header.');
+                    } else {
+                        $site['addons']['search'] = $action === 'addon_search_on';
+                        Activity::log($site['addons']['search'] ? 'addon.on' : 'addon.off', 'Site search');
+                        flash($site['addons']['search'] ? 'Site search is on. Add a “Search” section to a page, or show the search icon in your header.' : 'Site search is off. Search sections are hidden from your pages.');
+                    }
+                    Store::write('site', $site);
+                    redirect(admin_url('plugins') . '#addon-search');
+                }
                 if ($action === 'upload') {
                     $newId = Plugins::install(Packages::readUpload($_FILES['package'] ?? [], 'plugin'));
                     $name = Plugins::all()[$newId]['manifest']['name'] ?? $newId;
@@ -312,6 +325,25 @@ switch ($p) {
     /* ---------- appearance ---------- */
     case 'style':
         require_cap('appearance');
+        if (is_post() && isset($_POST['font_action'])) {
+            try {
+                if ($_POST['font_action'] === 'add') {
+                    $slug = Fonts::add((string)($_POST['family'] ?? ''), (string)($_POST['kind'] ?? ''));
+                    $added = Fonts::all()[$slug]['family'] ?? $slug;
+                    Activity::log('font.add', $added);
+                    flash('“' . $added . '” was saved on your site. Choose it under Heading font or Body font, then save your style.');
+                } elseif ($_POST['font_action'] === 'remove') {
+                    $slug = (string)($_POST['slug'] ?? '');
+                    $name = Fonts::all()[$slug]['family'] ?? $slug;
+                    Fonts::remove($slug);
+                    Activity::log('font.remove', $name);
+                    flash('Font removed.');
+                }
+            } catch (RuntimeException $ex) {
+                flash($ex->getMessage(), 'error');
+            }
+            redirect(admin_url('style') . '#fonts');
+        }
         if (is_post() && isset($_POST['theme_action'])) {
             $ta = (string)$_POST['theme_action'];
             $tid = (string)($_POST['id'] ?? '');
@@ -718,6 +750,10 @@ switch ($p) {
             foreach (glob(TEENY_UPLOADS . '/*.{jpg,png,gif,webp}', GLOB_BRACE) ?: [] as $f) {
                 $zip->addFile($f, 'uploads/' . basename($f));
             }
+            // Fonts saved from Google Fonts (Style → Fonts from Google)
+            foreach (glob(TEENY_UPLOADS . '/fonts/*/*.woff2') ?: [] as $f) {
+                if (preg_match('~/fonts/([a-z0-9-]{1,50})/([a-f0-9]{16}\.woff2)$~', str_replace('\\', '/', $f), $fm)) $zip->addFile($f, 'uploads/fonts/' . $fm[1] . '/' . $fm[2]);
+            }
             $zip->close();
             header('Content-Type: application/zip');
             header('Content-Disposition: attachment; filename="teeny-library-' . date('Y-m-d') . '.zip"');
@@ -759,6 +795,12 @@ switch ($p) {
             }
             if (isset($in['theme']['name']) && isset(Theme::all()[$in['theme']['name']])) $keep['theme']['name'] = $in['theme']['name'];
             if (isset($in['theme']['align']) && isset(Theme::ALIGNS[$in['theme']['align']])) $keep['theme']['align'] = $in['theme']['align'];
+            // Custom fonts (their files come back with the uploads folder)
+            $keep['fonts'] = [];
+            foreach (array_slice(is_array($in['fonts'] ?? null) ? $in['fonts'] : [], 0, Fonts::MAX, true) as $fs => $fv) {
+                if ($clean = Fonts::cleanOne((string)$fs, $fv)) $keep['fonts'][(string)$fs] = $clean;
+            }
+            site($keep); // so the theme settings below accept the restored fonts
             $keep['theme']['overrides'] = [];
             foreach ((array)($in['theme']['overrides'] ?? []) as $tn => $ov) {
                 if (isset(Theme::all()[$tn]) && is_array($ov)) $keep['theme']['overrides'][$tn] = Theme::clean($ov, Theme::all()[$tn]['defaults']);

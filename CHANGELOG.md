@@ -7,6 +7,39 @@ Never overwrite your `data/` and `uploads/` folders (or your own `config.php`).
 
 ---
 
+## 1.5.0 · 2026-11-26
+
+### Added
+- **Site search (add-on).** Switch it on in **Plugins → Built-in add-ons**. Add a **Search** section to any page, and optionally show a search icon in your site header. Results show each matching page with a short extract and the search words highlighted. Only live pages are searched: drafts and password-protected pages never appear. It's off by default, needs no database and no JavaScript.
+- **Fonts from Google Fonts.** In **Style → Fonts from Google**, type any Google Font name (for example *Playfair Display*). Teeny downloads it once and saves it on your own website, so visitors never connect to Google and no cookie notice is needed. The font then appears in the Heading font and Body font menus. Up to 8 fonts. Fonts are included when you download your library in the Vault.
+
+### Changed
+- **Sign-in page:** "Forgot password?" now sits next to "← Back to the website" under the sign-in box.
+
+### Files to upload
+```
+index.php
+core/Fonts.php          (new)
+core/Search.php         (new)
+core/bootstrap.php
+core/Blocks.php
+core/Renderer.php
+core/Theme.php
+admin/index.php
+admin/views/appearance.php
+admin/views/dashboard.php
+admin/views/editor.php
+admin/views/login.php
+admin/views/plugins.php
+admin/assets/admin.css
+admin/assets/editor.js
+assets/site.css
+uploads/.htaccess       (Teeny's own rules file, safe to replace)
+uploads/web.config      (Teeny's own rules file, safe to replace)
+```
+Only replace those two files inside `uploads/`. Never delete or overwrite your images.
+---
+
 ## 1.4.5 · 2026-11-24
 
 ### Fixed

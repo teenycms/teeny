@@ -10,6 +10,41 @@ admin_header('Plugins', 'plugins');
 
 <div class="plugins-layout">
   <div>
+    <?php $searchOn = Search::enabled($site); ?>
+    <p class="pane-label plugin-group">Built-in add-ons</p>
+    <div class="plugin-list">
+      <article class="plugin-card<?= $searchOn ? ' is-on' : '' ?>" id="addon-search">
+        <header class="plugin-head">
+          <span class="plugin-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></span>
+          <div class="plugin-title">
+            <h3>Site search <small class="muted">built in</small></h3>
+            <p class="muted">Lets visitors search every live page. Drafts and password-protected pages are never shown.</p>
+          </div>
+          <span class="badge <?= $searchOn ? 'badge-published' : '' ?>"><?= $searchOn ? 'On' : 'Off' ?></span>
+        </header>
+        <div class="plugin-facts">
+          <span><?= icon('pages') ?> Adds the section <strong>“Search”</strong></span>
+          <span><?= icon('shield') ?> No JavaScript, no database</span>
+        </div>
+        <?php if ($searchOn): ?>
+        <form method="post" class="addon-option"><?= Auth::csrfField() ?><input type="hidden" name="action" value="addon_search_header">
+          <label class="check"><input type="checkbox" name="header" value="1" <?= Search::inHeader($site) ? 'checked' : '' ?>> Show a search icon in the site header</label>
+          <button class="btn btn-ghost btn-sm">Save</button>
+        </form>
+        <?php endif; ?>
+        <footer class="plugin-actions">
+          <form method="post"><?= Auth::csrfField() ?>
+            <?php if ($searchOn): ?>
+              <button class="btn btn-ghost btn-sm" name="action" value="addon_search_off">Switch off</button>
+              <a class="btn btn-ghost btn-sm" href="<?= e(Search::url()) ?>" target="_blank" rel="noopener"><?= icon('eye') ?> Open the search page</a>
+            <?php else: ?>
+              <button class="btn btn-primary btn-sm" name="action" value="addon_search_on">Switch on</button>
+            <?php endif; ?>
+          </form>
+        </footer>
+      </article>
+    </div>
+    <p class="pane-label plugin-group">Plugins</p>
     <?php if (!$plugins): ?>
       <div class="card empty-state"><?= icon('plug') ?><h3 class="card-title">No plugins yet</h3><p class="muted">Upload a plugin .zip to get started.</p></div>
     <?php endif; ?>

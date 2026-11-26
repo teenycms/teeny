@@ -9,9 +9,9 @@ auth_open('Sign in', 'Sign in', 'Welcome back. Sign in to edit your website.');
         <?= Auth::csrfField() ?>
         <label class="signin-field"><span>Username</span><input name="username" required autofocus autocomplete="username" maxlength="64" value="<?= e($username ?? '') ?>"></label>
         <label class="signin-field">
-          <span>Password <a href="<?= e(admin_url('forgot')) ?>">Forgot password?</a></span>
+          <span>Password</span>
           <input type="password" name="password" required autocomplete="current-password" maxlength="200">
         </label>
         <button class="signin-btn" type="submit">Sign in</button>
       </form>
-<?php auth_close('<a href="' . e(url('')) . '">← Back to the website</a>');
+<?php auth_close('<a href="' . e(url('')) . '">← Back to the website</a><a href="' . e(admin_url('forgot')) . '">Forgot password?</a>');

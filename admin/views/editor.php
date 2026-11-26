@@ -10,7 +10,8 @@ $isHome = ($site['home'] ?? '') === $page['id'];
 $editorData = [
     'page'      => Pages::forEditor($page),
     'customMenu' => Menu::custom() !== null,
-    'schema'    => Blocks::schema(),
+    // The Search section is offered only while the Search add-on is on (Plugins)
+    'schema'    => Search::enabled($site) ? Blocks::schema() : array_diff_key(Blocks::schema(), ['search' => 1]),
     'calloutIcons' => Renderer::CALLOUT_ICONS,
     'placement' => ['align' => Blocks::PLACEMENT_ALIGN, 'width' => Blocks::PLACEMENT_WIDTH],
     'isHome'    => $isHome,

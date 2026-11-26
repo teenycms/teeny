@@ -11,7 +11,7 @@ if (PHP_VERSION_ID < 80100) {
     exit('Teeny CMS needs PHP 8.1 or newer.');
 }
 
-define('TEENY_VERSION', '1.4.5');
+define('TEENY_VERSION', '1.5.0');
 define('TEENY_REPO', 'https://github.com/webzing/teeny'); // project home: releases, wiki and help
 define('TEENY_ROOT', dirname(__DIR__));
 
@@ -58,6 +58,8 @@ require __DIR__ . '/Renderer.php';
 require __DIR__ . '/Menu.php';
 require __DIR__ . '/Inbox.php';
 require __DIR__ . '/Stats.php';
+require __DIR__ . '/Fonts.php';
+require __DIR__ . '/Search.php';
 require __DIR__ . '/Totp.php';
 require __DIR__ . '/Activity.php';
 require __DIR__ . '/Templater.php';

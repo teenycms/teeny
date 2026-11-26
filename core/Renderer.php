@@ -74,6 +74,7 @@ final class Renderer
             'announce'   => self::announce($b),
             'newsletter' => self::newsletter($b),
             'popup'      => self::popup($b),
+            'search'     => self::search($b),
             'divider' => '<div class="tc-block tc-divider tc-divider--' . e($b['style']) . '" role="separator"><span></span></div>',
             default   => str_starts_with((string)($b['type'] ?? ''), 'plugin-') ? Plugins::render($b) : '',
         };
@@ -498,6 +499,45 @@ final class Renderer
         return $h . '</div>';
     }
 
+    /** The search box (only shown while the Search add-on is switched on in Plugins). */
+    private static function search(array $b): string
+    {
+        if (!Search::enabled()) return '';
+        $h = '<div class="tc-block tc-search">';
+        if ($b['title'] !== '') $h .= '<h2 class="tc-search__title">' . e($b['title']) . '</h2>';
+        return $h . self::searchForm('', $b['placeholder'] ?: 'Search this site', $b['button'] ?: 'Search') . '</div>';
+    }
+
+    private static function searchForm(string $value, string $placeholder, string $button, bool $autofocus = false): string
+    {
+        return '<form class="tc-form tc-search__form" method="get" action="' . e(url('')) . '" role="search">'
+            . '<label class="tc-search__field"><span class="tc-sr">' . e($placeholder) . '</span><input type="search" name="search" maxlength="' . Search::MAX_QUERY . '" placeholder="' . e($placeholder) . '" value="' . e($value) . '"' . ($autofocus ? ' autofocus' : '') . '></label>'
+            . '<button class="tc-btn tc-btn--solid" type="submit">' . e($button) . '</button></form>';
+    }
+
+    /** Search results page ("?search=..." on the site's main address). */
+    public static function searchPage(array $site, string $query): string
+    {
+        $results = $query !== '' ? Search::run($query) : [];
+        $h = '<section class="tc-block tc-search tc-search--page">';
+        $h .= '<h1 class="tc-search__title">' . ($query !== '' ? 'Results for “' . e($query) . '”' : 'Search') . '</h1>';
+        $h .= self::searchForm($query, 'Search this site', 'Search', $query === '');
+        if ($query !== '') {
+            $n = count($results);
+            $h .= '<p class="tc-search__count" role="status">' . ($n === 0 ? 'No pages found. Try fewer or different words.' : ($n === 1 ? '1 page found' : ($n >= Search::MAX_RESULTS ? 'Top ' . $n . ' pages' : $n . ' pages found'))) . '</p>';
+            if ($results) {
+                $h .= '<ol class="tc-search__results">';
+                foreach ($results as $r) {
+                    $h .= '<li><a class="tc-search__hit" href="' . e($r['url']) . '">' . e($r['title']) . '</a>'
+                        . ($r['snippet'] !== '' ? '<p class="tc-search__snippet">' . $r['snippet'] . '</p>' : '') . '</li>';
+                }
+                $h .= '</ol>';
+            }
+        }
+        $h .= '</section>';
+        return self::document($site, null, $h, ['title' => ($query !== '' ? $query . ' · ' : '') . 'Search · ' . ($site['title'] ?? ''), 'noindex' => true]);
+    }
+
     /* ---------- full documents ---------- */
 
     public static function header(array $site, ?array $current): string
@@ -510,12 +550,15 @@ final class Renderer
         $brand .= '<span class="tc-brand__name">' . e($site['title'] ?? 'My Site') . '</span>';
         $h .= '<a class="tc-brand" href="' . e(url('')) . '">' . $brand . '</a>';
         $nav = Menu::items($current);
-        if ($nav) {
+        $search = Search::inHeader($site);
+        if ($nav || $search) {
             $h .= '<nav class="tc-nav" aria-label="Main">';
             foreach ($nav as $it) {
                 $h .= '<a href="' . e($it['url']) . '"' . ($it['current'] ? ' aria-current="page"' : '')
                     . ($it['newTab'] ? ' target="_blank" rel="noopener noreferrer"' : '') . '>' . e($it['label']) . '</a>';
             }
+            // Search icon (Search add-on, "Show a search icon in the site header")
+            if ($search) $h .= '<a class="tc-nav__search" href="' . e(Search::url()) . '" aria-label="Search" title="Search"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></a>';
             $h .= '</nav>';
         }
         return $h . '</div></header>';

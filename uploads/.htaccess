@@ -1,5 +1,9 @@
 # Uploaded files are served as static files only, never executed.
 Options -Indexes -ExecCGI
+# Fonts saved from Google Fonts (Style → Fonts from Google)
+<IfModule mod_mime.c>
+    AddType font/woff2 .woff2
+</IfModule>
 <IfModule mod_php.c>
     php_flag engine off
 </IfModule>

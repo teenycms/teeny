@@ -24,6 +24,15 @@ final class Theme
         'mono'      => ['label' => 'Monospace', 'stack' => 'ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace'],
     ];
 
+    /** Built-in fonts plus the Google Fonts this site saved (see Fonts). */
+    public static function fonts(?array $site = null): array
+    {
+        return self::FONTS + Fonts::menu($site);
+    }
+
+    /** Closest built-in font for a custom font's kind (used when a style is saved as a shareable theme). */
+    private const KIND_TO_BUILTIN = ['sans' => 'modern', 'serif' => 'classic', 'display' => 'didone', 'handwriting' => 'humanist', 'mono' => 'mono'];
+
     public const COLOR_KEYS = [
         'bg' => 'Background', 'surface' => 'Cards & panels', 'text' => 'Text', 'muted' => 'Soft text',
         'accent' => 'Accent', 'accentText' => 'Text on accent', 'border' => 'Lines',
@@ -115,6 +124,11 @@ final class Theme
             'dark'        => !empty($src['dark']),
             'defaults'    => self::settings($site, $from),
         ];
+        // Custom fonts live in this site's uploads, not in the theme, so a shared theme uses the closest built-in font.
+        foreach (['headingFont', 'bodyFont'] as $fk) {
+            $f = $manifest['defaults'][$fk];
+            if (!isset(self::FONTS[$f])) $manifest['defaults'][$fk] = self::KIND_TO_BUILTIN[self::fonts($site)[$f]['kind'] ?? 'sans'] ?? 'modern';
+        }
         if (is_array($src['alt'] ?? null)) $manifest['alt'] = self::altPalette($site);
         $css = (string)@file_get_contents(TEENY_ROOT . '/themes/' . $from . '/theme.css');
         $css = str_replace('.theme-' . $from, '.theme-' . $id, $css);
@@ -181,7 +195,8 @@ final class Theme
         }
         foreach (['headingFont', 'bodyFont'] as $k) {
             $f = (string)($in[$k] ?? '');
-            $out[$k] = isset(self::FONTS[$f]) ? $f : (string)($defaults[$k] ?? 'modern');
+            $out[$k] = isset(self::fonts()[$f]) ? $f : (string)($defaults[$k] ?? 'modern');
+            if (!isset(self::fonts()[$out[$k]])) $out[$k] = 'modern';
         }
         $out['radius']   = Sanitizer::int($in['radius'] ?? null, 0, 28, (int)($defaults['radius'] ?? 6));
         $out['width']    = Sanitizer::int($in['width'] ?? null, 480, 1400, (int)($defaults['width'] ?? 1080));
@@ -220,13 +235,13 @@ final class Theme
             '--tc-bg' => $s['bg'], '--tc-surface' => $s['surface'], '--tc-text' => $s['text'],
             '--tc-muted' => $s['muted'], '--tc-accent' => $s['accent'], '--tc-accent-text' => $s['accentText'],
             '--tc-border' => $s['border'],
-            '--tc-font-heading' => self::FONTS[$s['headingFont']]['stack'],
-            '--tc-font-body' => self::FONTS[$s['bodyFont']]['stack'],
+            '--tc-font-heading' => self::fonts($site)[$s['headingFont']]['stack'],
+            '--tc-font-body' => self::fonts($site)[$s['bodyFont']]['stack'],
             '--tc-radius' => $s['radius'] . 'px',
             '--tc-wide' => $s['width'] . 'px',
             '--tc-font-size' => $s['fontSize'] . 'px',
         ];
-        $css = ':root{';
+        $css = Fonts::faceCss([$s['headingFont'], $s['bodyFont']], $site) . ':root{';
         foreach ($vars as $k => $v) $css .= $k . ':' . $v . ';';
         $css .= '}';
         if (self::visitorToggle($site)) {

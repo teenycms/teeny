@@ -18,8 +18,8 @@ admin_header('Style', 'style');
         <label class="theme-card">
           <input type="radio" name="theme" value="<?= e($key) ?>" <?= $key === $active ? 'checked' : '' ?> data-theme-radio>
           <span class="theme-swatch theme-swatch--lg" style="background:<?= e($d['bg']) ?>;color:<?= e($d['text']) ?>">
-            <span class="sw-eyebrow" style="color:<?= e($d['muted']) ?>;font-family:<?= e(Theme::FONTS[$d['bodyFont']]['stack']) ?>">Welcome</span>
-            <span class="sw-title" style="font-family:<?= e(Theme::FONTS[$d['headingFont']]['stack']) ?>">Aa Bb</span>
+            <span class="sw-eyebrow" style="color:<?= e($d['muted']) ?>;font-family:<?= e(Theme::fonts()[$d['bodyFont']]['stack']) ?>">Welcome</span>
+            <span class="sw-title" style="font-family:<?= e(Theme::fonts()[$d['headingFont']]['stack']) ?>">Aa Bb</span>
             <span class="sw-btn" style="background:<?= e($d['accent']) ?>;color:<?= e($d['accentText']) ?>;border-radius:<?= (int)$d['radius'] ?>px">Button</span>
           </span>
           <span class="theme-name"><?= e($t['name']) ?></span>
@@ -67,12 +67,12 @@ admin_header('Style', 'style');
             <p class="field-label">Typography &amp; shape</p>
             <label class="field"><span>Heading font</span>
               <select name="t[headingFont]" data-var="headingFont">
-                <?php foreach (Theme::FONTS as $fk => $f): ?><option value="<?= e($fk) ?>" data-stack="<?= e($f['stack']) ?>" <?= $s['headingFont'] === $fk ? 'selected' : '' ?>><?= e($f['label']) ?></option><?php endforeach; ?>
+                <?php foreach (Theme::fonts() as $fk => $f): ?><option value="<?= e($fk) ?>" data-stack="<?= e($f['stack']) ?>" <?= $s['headingFont'] === $fk ? 'selected' : '' ?>><?= e($f['label']) ?></option><?php endforeach; ?>
               </select>
             </label>
             <label class="field"><span>Body font</span>
               <select name="t[bodyFont]" data-var="bodyFont">
-                <?php foreach (Theme::FONTS as $fk => $f): ?><option value="<?= e($fk) ?>" data-stack="<?= e($f['stack']) ?>" <?= $s['bodyFont'] === $fk ? 'selected' : '' ?>><?= e($f['label']) ?></option><?php endforeach; ?>
+                <?php foreach (Theme::fonts() as $fk => $f): ?><option value="<?= e($fk) ?>" data-stack="<?= e($f['stack']) ?>" <?= $s['bodyFont'] === $fk ? 'selected' : '' ?>><?= e($f['label']) ?></option><?php endforeach; ?>
               </select>
             </label>
             <label class="field range"><span>Text size <output><?= (int)$s['fontSize'] ?>px</output></span><input type="range" min="14" max="22" name="t[fontSize]" value="<?= (int)$s['fontSize'] ?>" data-var="fontSize"></label>
@@ -112,6 +112,44 @@ admin_header('Style', 'style');
     <button class="btn btn-primary" type="submit" name="action" value="save">Save style</button>
   </div>
 </form>
+
+<?php $customFonts = Fonts::all($site); $faceCss = Fonts::faceCss(array_keys(Fonts::menu($site)), $site); ?>
+<?php if ($faceCss !== ''): ?><style><?= $faceCss ?></style><?php endif; ?>
+<section class="card" id="fonts">
+  <div class="card-head">
+    <h3 class="card-title">Fonts from Google</h3>
+    <span class="muted small"><?= count($customFonts) ?> of <?= Fonts::MAX ?></span>
+  </div>
+  <p class="muted">Add any font from <a href="https://fonts.google.com" target="_blank" rel="noopener">Google Fonts</a> by its name. Teeny saves it on your own website, so visitors never connect to Google and no cookie notice is needed. New fonts appear in the <strong>Heading font</strong> and <strong>Body font</strong> menus above.</p>
+  <?php if ($customFonts): ?>
+  <ul class="font-rows">
+    <?php foreach ($customFonts as $slug => $f): ?>
+      <li>
+        <span class="font-sample" style="font-family:<?= e(Fonts::menu($site)[Fonts::key($slug)]['stack']) ?>">The quick brown fox</span>
+        <span class="tr-name"><strong><?= e($f['family']) ?></strong><small class="muted"><?= e(Fonts::KINDS[$f['kind']]['label']) ?><?= Fonts::inUse($slug, $site) ? ' · in use' : '' ?></small></span>
+        <form method="post" data-confirm="Remove the font “<?= e($f['family']) ?>”?<?= Fonts::inUse($slug, $site) ? ' Text using it goes back to the theme’s own font.' : '' ?>"><?= Auth::csrfField() ?><input type="hidden" name="font_action" value="remove"><input type="hidden" name="slug" value="<?= e($slug) ?>"><button class="icon-btn danger" title="Remove"><?= icon('trash') ?></button></form>
+      </li>
+    <?php endforeach; ?>
+  </ul>
+  <?php endif; ?>
+  <?php if (!Fonts::canDownload()): ?>
+    <p class="hint">Your web host doesn’t let Teeny download files, so fonts can’t be added here. Ask your host to enable “allow_url_fopen” or cURL.</p>
+  <?php elseif (count($customFonts) < Fonts::MAX): ?>
+  <form method="post" class="mini-form font-add">
+    <?= Auth::csrfField() ?><input type="hidden" name="font_action" value="add">
+    <div class="add-row">
+      <input name="family" maxlength="50" required list="font-suggestions" placeholder="e.g. Playfair Display" autocomplete="off" spellcheck="false" aria-label="Google Font name">
+      <select name="kind" aria-label="What the font looks like">
+        <option value="">Looks like… (automatic)</option>
+        <?php foreach (Fonts::KINDS as $k => $kd): ?><option value="<?= e($k) ?>"><?= e($kd['label']) ?></option><?php endforeach; ?>
+      </select>
+      <button class="btn btn-ghost">Add font</button>
+    </div>
+    <datalist id="font-suggestions"><?php foreach (Fonts::SUGGESTIONS as $name => $_): ?><option value="<?= e($name) ?>"><?php endforeach; ?></datalist>
+    <small class="hint">Type the name exactly as Google Fonts shows it. “Looks like” picks a similar backup font while it loads.</small>
+  </form>
+  <?php endif; ?>
+</section>
 
 <section class="card" id="themes">
   <div class="card-head">
