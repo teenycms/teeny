@@ -362,8 +362,9 @@ final class Blocks
                         'url'    => ['type' => 'url', 'label' => 'Button link (shop, WhatsApp, email…)'],
                     ]],
                     'columns' => ['type' => 'select', 'label' => 'Columns', 'options' => ['3' => '3 columns', '2' => '2 columns', '4' => '4 columns']],
+                    'whatsapp' => ['type' => 'text', 'label' => 'WhatsApp number for orders (optional, e.g. +60123456789)', 'max' => 20],
                 ],
-                'defaults' => ['items' => [
+                'defaults' => ['whatsapp' => '', 'items' => [
                     ['image' => '', 'name' => 'Linen tote', 'price' => '$35', 'desc' => 'Hand-stitched, natural linen.', 'button' => 'Order', 'url' => '#'],
                     ['image' => '', 'name' => 'Ceramic cup', 'price' => '$22', 'desc' => 'Glazed by hand, one of a kind.', 'button' => 'Order', 'url' => '#'],
                     ['image' => '', 'name' => 'Art print', 'price' => '$48', 'desc' => 'A3 giclée on cotton paper.', 'button' => 'Order', 'url' => '#'],
@@ -415,6 +416,21 @@ final class Blocks
                     'success' => ['type' => 'textarea', 'label' => 'Thank-you message', 'max' => 300],
                 ],
                 'defaults' => ['title' => 'Stay in the loop', 'text' => 'Occasional news, never spam. Unsubscribe any time.', 'button' => 'Subscribe', 'success' => 'Thank you for subscribing!'],
+            ],
+            'rsvp' => [
+                'label' => 'RSVP', 'group' => 'Links', 'desc' => 'Guests reply whether they can come',
+                'fields' => [
+                    'title'     => ['type' => 'text', 'label' => 'Title', 'max' => 120],
+                    'text'      => ['type' => 'textarea', 'label' => 'Text', 'max' => 400],
+                    'maxGuests' => ['type' => 'select', 'label' => 'People per reply', 'options' => ['1' => 'Just the guest', '2' => 'Up to 2', '3' => 'Up to 3', '4' => 'Up to 4', '5' => 'Up to 5', '6' => 'Up to 6', '8' => 'Up to 8', '10' => 'Up to 10']],
+                    'askNote'   => ['type' => 'select', 'label' => 'Note field', 'options' => ['yes' => 'Ask for a note', 'no' => 'No note']],
+                    'noteLabel' => ['type' => 'text', 'label' => 'Note question', 'max' => 80],
+                    'deadline'  => ['type' => 'text', 'label' => 'Reply by (YYYY-MM-DD, optional)', 'max' => 10],
+                    'button'    => ['type' => 'text', 'label' => 'Button text', 'max' => 40],
+                    'success'   => ['type' => 'textarea', 'label' => 'Thank-you message', 'max' => 300],
+                    'closed'    => ['type' => 'textarea', 'label' => 'Message after the reply date', 'max' => 300],
+                ],
+                'defaults' => ['title' => 'Will you join us?', 'text' => 'Please let us know if you can come.', 'maxGuests' => '2', 'askNote' => 'yes', 'noteLabel' => 'Anything we should know? (for example dietary needs)', 'deadline' => '', 'button' => 'Send my reply', 'success' => 'Thank you! Your reply has been saved. To change it, reply again with the same email.', 'closed' => 'Replies are now closed. Please contact us if anything has changed.'],
             ],
             'search' => [
                 'label' => 'Search', 'group' => 'Links', 'desc' => 'Search box for your whole site',

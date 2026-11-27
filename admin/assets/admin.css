@@ -541,6 +541,10 @@ body.admin { background: radial-gradient(1400px 500px at 50% -220px, #fffdf8, va
 /* ---------- plugins & themes ---------- */
 .plugins-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 24px; align-items: start; }
 .plugin-list { display: grid; gap: 14px; }
+.rsvp-totals { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-bottom: 16px; }
+.rsvp-total p { margin: 0; }
+.rsvp-total__num { font-size: 22px; margin: 6px 0 !important; }
+.rsvp-total__num strong { font-size: 30px; }
 .plugin-group { margin: 22px 0 10px; }
 .plugin-group:first-child { margin-top: 0; }
 .addon-option { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 14px 0 0; padding: 12px 14px; background: var(--bg-2, rgba(0,0,0,.025)); border-radius: 10px; }

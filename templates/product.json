@@ -1,0 +1,21 @@
+{
+  "title": "Product page",
+  "blocks": [
+    {"type": "split", "image": "", "alt": "", "title": "Linen tote", "html": "<p><strong>$35</strong></p><p>Hand-stitched from natural linen, with a deep inside pocket and long handles that sit comfortably on the shoulder. Made in small batches.</p>", "button": "Order now", "url": "#", "side": "left"},
+    {"type": "gallery", "columns": "3", "images": [{"src": "", "alt": "", "caption": ""}, {"src": "", "alt": "", "caption": ""}, {"src": "", "alt": "", "caption": ""}]},
+    {"type": "heading", "text": "Details", "level": "h2"},
+    {"type": "table", "title": "", "header": "Detail | Info", "rows": "Material | 100% linen\nSize | 38 × 42 cm, handles 60 cm\nCare | Machine wash cold, hang to dry\nDelivery | Sent within 2 working days", "firstcol": "yes"},
+    {"type": "heading", "text": "Questions", "level": "h2"},
+    {"type": "faq", "items": [
+      {"q": "How do I pay?", "a": "Tap Order now. You'll pay securely through our payment link, or we can arrange it on WhatsApp."},
+      {"q": "Can I return it?", "a": "Yes, within 14 days if it's unused."}
+    ]},
+    {"type": "divider", "style": "ornament"},
+    {"type": "heading", "text": "You might also like", "level": "h2"},
+    {"type": "products", "columns": "3", "whatsapp": "", "items": [
+      {"image": "", "name": "Ceramic mug", "price": "$22", "desc": "Glazed by hand.", "button": "View", "url": ""},
+      {"image": "", "name": "Beeswax candle", "price": "$18", "desc": "A warm honey scent.", "button": "View", "url": ""},
+      {"image": "", "name": "Wool scarf", "price": "$48", "desc": "Soft merino wool.", "button": "View", "url": ""}
+    ]}
+  ]
+}

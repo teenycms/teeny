@@ -15,6 +15,9 @@ final class Pages
         'docs'      => ['label' => 'Documentation', 'desc' => 'Headings, text and code examples'],
         'gallery'   => ['label' => 'Gallery', 'desc' => 'Image grid with captions'],
         'linkinbio' => ['label' => 'Link in bio', 'desc' => 'Profile photo and a list of links'],
+        'shop'      => ['label' => 'Shop', 'desc' => 'Product catalog with order buttons, delivery and FAQ'],
+        'product'   => ['label' => 'Product page', 'desc' => 'One product with photos, details and an order button'],
+        'event'     => ['label' => 'Event', 'desc' => 'Wedding, concert or camp: details, schedule, tickets and RSVP'],
     ];
 
     public static function index(): array

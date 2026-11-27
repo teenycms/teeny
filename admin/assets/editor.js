@@ -196,6 +196,10 @@
     announce(b) {
       return `<div class="tc-block tc-announce tc-announce--${tok(b.style)}"><p class="tc-announce__inner">${ed('span', 'text', b.text, 'tc-announce__text', 'Your announcement')} ${ed('span', 'linkText', b.linkText, 'tc-announce__link', 'Link text')}</p></div>`;
     },
+    rsvp(b) {
+      const max = Math.max(1, Math.min(10, parseInt(b.maxGuests, 10) || 1));
+      return `<div class="tc-block tc-rsvp">${ed('h2', 'title', b.title, 'tc-rsvp__title', 'Title')}${ed('p', 'text', b.text, 'tc-rsvp__text', 'A short line of text', 'multi')}<div class="tc-form tc-rsvp__form tce-form" contenteditable="false"><div class="tc-form-row"><label class="tc-field"><span>Your name</span><input disabled></label><label class="tc-field"><span>Email</span><input disabled></label></div><fieldset class="tc-rsvp__choice"><label><input type="radio" disabled> <span>Yes, I'll be there</span></label><label><input type="radio" disabled> <span>Sorry, I can't come</span></label></fieldset>${max > 1 ? `<label class="tc-field tc-rsvp__guests"><span>How many people, including you?</span><select disabled><option>1</option></select></label>` : ''}${b.askNote === 'yes' ? `<label class="tc-field"><span>${esc(b.noteLabel || 'Note')}</span><textarea rows="2" disabled></textarea></label>` : ''}</div><p class="tc-form-actions">${ed('span', 'button', b.button, 'tc-btn tc-btn--solid', 'Send my reply')}</p><p class="tce-hint" contenteditable="false">Replies appear in Messages → RSVPs. Set the reply-by date and guests in the section settings.</p></div>`;
+    },
     search(b) {
       return `<div class="tc-block tc-search">${ed('h2', 'title', b.title, 'tc-search__title', 'Title (optional)')}<div class="tc-form tc-search__form tce-form"><label class="tc-search__field" contenteditable="false"><input disabled placeholder="${esc(b.placeholder || 'Search this site')}"></label>${ed('span', 'button', b.button, 'tc-btn tc-btn--solid', 'Search')}</div></div>`;
     },

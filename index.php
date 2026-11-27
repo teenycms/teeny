@@ -127,8 +127,8 @@ if ($protected && $viewer === null) {
 }
 
 // Contact form and newsletter submissions
-if ($formName === 'contact' || $formName === 'newsletter') {
-    $state = $formName === 'contact' ? Inbox::submit($page, $_POST) : Inbox::subscribe($page, $_POST);
+if ($formName === 'contact' || $formName === 'newsletter' || $formName === 'rsvp') {
+    $state = match ($formName) { 'contact' => Inbox::submit($page, $_POST), 'newsletter' => Inbox::subscribe($page, $_POST), default => Inbox::rsvp($page, $_POST) };
     if (!empty($state['sent'])) {
         redirect(page_url($page) . (str_contains(page_url($page), '?') ? '&' : '?') . 'sent=' . rawurlencode($state['block']) . '#' . $formName . '-' . rawurlencode($state['block']));
     }

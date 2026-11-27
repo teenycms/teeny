@@ -217,9 +217,9 @@ details[open] > .tc-faq__q::after, .tce-open > .tc-faq__q::after { transform: ro
 .tc-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
 .tc-field { display: block; margin-bottom: 16px; }
 .tc-field span { display: block; font-size: .8em; font-weight: 600; letter-spacing: .04em; margin-bottom: 6px; color: var(--tc-muted); }
-.tc-field input, .tc-field textarea { width: 100%; padding: .8em 1em; font: inherit; font-size: .95em; color: var(--tc-text); background: var(--tc-surface); border: 1px solid var(--tc-border); border-radius: var(--tc-radius); transition: border-color .2s, box-shadow .2s; }
+.tc-field input, .tc-field textarea, .tc-field select { width: 100%; padding: .8em 1em; font: inherit; font-size: .95em; color: var(--tc-text); background: var(--tc-surface); border: 1px solid var(--tc-border); border-radius: var(--tc-radius); transition: border-color .2s, box-shadow .2s; }
 .tc-field textarea { resize: vertical; min-height: 8em; }
-.tc-field input:focus, .tc-field textarea:focus { outline: none; border-color: var(--tc-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--tc-accent) 20%, transparent); }
+.tc-field input:focus, .tc-field textarea:focus, .tc-field select:focus { outline: none; border-color: var(--tc-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--tc-accent) 20%, transparent); }
 .tc-form-actions { margin: 4px 0 0; display: flex; justify-content: var(--tc-justify); }
 .tc-hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .tc-form-msg { padding: 1em 1.2em; border-radius: var(--tc-radius); border: 1px solid var(--tc-border); background: var(--tc-surface); margin: 0 0 18px; }
@@ -468,6 +468,17 @@ details[open] > .tc-faq__q::after, .tce-open > .tc-faq__q::after { transform: ro
 .tc-newsletter__field input:focus { outline: none; border-color: var(--tc-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--tc-accent) 20%, transparent); }
 .tc-newsletter .tc-form-msg { max-width: 520px; margin-inline: auto; }
 @media (max-width: 520px) { .tc-newsletter__form { flex-direction: column; } }
+
+/* RSVP */
+.tc-rsvp { max-width: 640px; margin-inline: auto; }
+.tc-rsvp__title { font-size: clamp(1.5em, 3vw, 2em); margin-bottom: .3em; text-align: center; }
+.tc-rsvp__text { color: var(--tc-muted); margin: 0 0 .6em; text-align: center; white-space: pre-line; }
+.tc-rsvp__deadline { text-align: center; font-size: .9em; color: var(--tc-accent); margin: 0 0 1.4em; }
+.tc-rsvp__choice { border: 0; padding: 0; margin: .2em 0 1em; display: flex; flex-wrap: wrap; gap: .6em 1.6em; }
+.tc-rsvp__choice label { display: inline-flex; align-items: center; gap: .45em; cursor: pointer; }
+.tc-rsvp__choice input { accent-color: var(--tc-accent); width: 1.1em; height: 1.1em; }
+.tc-rsvp__guests select { width: auto; min-width: 7em; }
+.tc-rsvp .tc-form-msg { text-align: center; }
 
 /* Search (built-in add-on) */
 .tc-search { text-align: center; }

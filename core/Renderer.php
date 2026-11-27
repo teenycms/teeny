@@ -12,6 +12,8 @@ final class Renderer
     public static ?array $page = null;
     /** Contact form state after a submission: ['block' => id, 'sent' => bool, 'error' => string, 'old' => array] */
     public static array $form = [];
+    /** Has this page already printed the #rsvp anchor? */
+    private static bool $rsvpAnchor = false;
 
     public static function blocks(array $blocks): string
     {
@@ -75,6 +77,7 @@ final class Renderer
             'newsletter' => self::newsletter($b),
             'popup'      => self::popup($b),
             'search'     => self::search($b),
+            'rsvp'       => self::rsvp($b),
             'divider' => '<div class="tc-block tc-divider tc-divider--' . e($b['style']) . '" role="separator"><span></span></div>',
             default   => str_starts_with((string)($b['type'] ?? ''), 'plugin-') ? Plugins::render($b) : '',
         };
@@ -453,10 +456,65 @@ final class Renderer
                 . '<div class="tc-product__body"><h3 class="tc-product__name">' . e($it['name']) . '</h3>'
                 . ($it['price'] !== '' ? '<p class="tc-product__price">' . e($it['price']) . '</p>' : '')
                 . ($it['desc'] !== '' ? '<p class="tc-product__desc">' . e($it['desc']) . '</p>' : '')
-                . ($it['button'] !== '' ? '<p class="tc-product__action"><a class="tc-btn tc-btn--solid" href="' . e($it['url'] ?: '#') . '">' . e($it['button']) . '</a></p>' : '')
+                . ($it['button'] !== '' ? self::orderButton($it, (string)($b['whatsapp'] ?? '')) : '')
                 . '</div></article>';
         }
         return $h === '' ? '' : '<div class="tc-block tc-products tc-cols-' . e($b['columns']) . '">' . $h . '</div>';
+    }
+
+    /** The order button: the product's own link, or (when it has none) a WhatsApp chat with the order typed in. */
+    private static function orderButton(array $it, string $whatsapp): string
+    {
+        $url = (string)($it['url'] ?? '');
+        $wa = false;
+        if ($url === '' || $url === '#') {
+            $digits = (string)preg_replace('/\D+/', '', $whatsapp);
+            if (strlen($digits) >= 7 && strlen($digits) <= 15) {
+                $text = "Hi, I'd like to order: " . $it['name'] . ($it['price'] !== '' ? ' (' . $it['price'] . ')' : '');
+                $url = 'https://wa.me/' . $digits . '?text=' . rawurlencode($text);
+                $wa = true;
+            } else {
+                $url = '#';
+            }
+        }
+        return '<p class="tc-product__action"><a class="tc-btn tc-btn--solid" href="' . e($url) . '"' . ($wa ? ' target="_blank" rel="noopener"' : '') . '>' . e($it['button']) . '</a></p>';
+    }
+
+    /** RSVP form (replies are saved in Messages → RSVPs). */
+    private static function rsvp(array $b): string
+    {
+        $id = $b['id'];
+        $state = (self::$form['block'] ?? '') === $id ? self::$form : [];
+        // The first RSVP on a page also answers to #rsvp, so buttons can link to it simply.
+        $anchor = self::$rsvpAnchor ? '' : '<span id="rsvp" class="tc-anchor"></span>';
+        self::$rsvpAnchor = true;
+        $h = '<div class="tc-block tc-rsvp" id="rsvp-' . e($id) . '">' . $anchor;
+        if ($b['title'] !== '') $h .= '<h2 class="tc-rsvp__title">' . e($b['title']) . '</h2>';
+        if ($b['text'] !== '') $h .= '<p class="tc-rsvp__text">' . e($b['text']) . '</p>';
+        if (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $b['deadline'], $dm) && checkdate((int)$dm[2], (int)$dm[3], (int)$dm[1]) && !Inbox::rsvpClosed($b)) {
+            $h .= '<p class="tc-rsvp__deadline">Please reply by ' . e(date('j F Y', (int)mktime(0, 0, 0, (int)$dm[2], (int)$dm[3], (int)$dm[1]))) . '</p>';
+        }
+        if (!empty($state['sent'])) return $h . '<p class="tc-form-msg tc-form-msg--ok" role="status">' . e($b['success']) . '</p></div>';
+        if (Inbox::rsvpClosed($b)) return $h . '<p class="tc-form-msg" role="status">' . e($b['closed']) . '</p></div>';
+        if (!empty($state['error'])) $h .= '<p class="tc-form-msg tc-form-msg--err" role="alert">' . e($state['error']) . '</p>';
+        $old = $state['old'] ?? [];
+        $max = max(1, min(10, (int)$b['maxGuests']));
+        $action = self::$page ? page_url(self::$page) : url('');
+        $h .= '<form class="tc-form tc-rsvp__form" method="post" action="' . e($action) . '#rsvp-' . e($id) . '">'
+            . '<input type="hidden" name="_teeny_form" value="rsvp"><input type="hidden" name="_block" value="' . e($id) . '"><input type="hidden" name="_t" value="" data-tc-timer>'
+            . '<div class="tc-hp" aria-hidden="true"><label>Leave this field empty<input name="website" tabindex="-1" autocomplete="off"></label></div>'
+            . '<div class="tc-form-row"><label class="tc-field"><span>Your name</span><input name="name" required maxlength="100" autocomplete="name" value="' . e($old['name'] ?? '') . '"></label>'
+            . '<label class="tc-field"><span>Email</span><input type="email" name="email" required maxlength="200" autocomplete="email" value="' . e($old['email'] ?? '') . '"></label></div>'
+            . '<fieldset class="tc-rsvp__choice"><legend class="tc-sr">Can you come?</legend>'
+            . '<label><input type="radio" name="coming" value="yes" required' . (($old['coming'] ?? '') === 'yes' ? ' checked' : '') . '> <span>Yes, I&#39;ll be there</span></label>'
+            . '<label><input type="radio" name="coming" value="no"' . (($old['coming'] ?? '') === 'no' ? ' checked' : '') . '> <span>Sorry, I can&#39;t come</span></label></fieldset>';
+        if ($max > 1) {
+            $h .= '<label class="tc-field tc-rsvp__guests"><span>How many people, including you?</span><select name="guests">';
+            for ($i = 1; $i <= $max; $i++) $h .= '<option value="' . $i . '"' . ((int)($old['guests'] ?? 1) === $i ? ' selected' : '') . '>' . $i . '</option>';
+            $h .= '</select></label>';
+        }
+        if ($b['askNote'] === 'yes') $h .= '<label class="tc-field"><span>' . e($b['noteLabel'] ?: 'Note') . '</span><textarea name="note" rows="3" maxlength="500">' . e($old['note'] ?? '') . '</textarea></label>';
+        return $h . '<p class="tc-form-actions"><button class="tc-btn tc-btn--solid" type="submit">' . e($b['button'] ?: 'Send my reply') . '</button></p></form></div>';
     }
 
     private static function compare(array $b): string

@@ -153,6 +153,130 @@ final class Inbox
         return $out;
     }
 
+    /* ---------- RSVPs (event replies) ---------- */
+
+    private const MAX_RSVPS = 5000;
+
+    public static function rsvps(): array
+    {
+        $d = Store::read('rsvps', ['items' => []]);
+        return is_array($d['items'] ?? null) ? $d['items'] : [];
+    }
+
+    /** Is this RSVP section past its closing date? Dates are YYYY-MM-DD; the whole closing day still counts. */
+    public static function rsvpClosed(array $block): bool
+    {
+        $d = (string)($block['deadline'] ?? '');
+        return preg_match('/^\d{4}-\d{2}-\d{2}$/', $d) === 1 && date('Y-m-d') > $d;
+    }
+
+    /** Handle an RSVP form. Same spam protection as the contact form. Replying again with the same email updates the reply. */
+    public static function rsvp(array $page, array $post): array
+    {
+        $blockId = (string)($post['_block'] ?? '');
+        $block = null;
+        foreach ($page['blocks'] ?? [] as $b) {
+            if (($b['type'] ?? '') === 'rsvp' && $b['id'] === $blockId) $block = $b;
+        }
+        if (!$block) return [];
+        $max = max(1, min(10, (int)($block['maxGuests'] ?? 1)));
+        $coming = ($post['coming'] ?? '') === 'yes' ? true : (($post['coming'] ?? '') === 'no' ? false : null);
+        $old = [
+            'name'   => Sanitizer::text($post['name'] ?? '', 100),
+            'email'  => strtolower(Sanitizer::text($post['email'] ?? '', 200)),
+            'coming' => $coming === null ? '' : ($coming ? 'yes' : 'no'),
+            'guests' => (string)max(1, min($max, (int)($post['guests'] ?? 1))),
+            'note'   => ($block['askNote'] ?? 'yes') === 'yes' ? Sanitizer::text($post['note'] ?? '', 500, true) : '',
+        ];
+        $fail = static fn(string $msg) => ['block' => $blockId, 'error' => $msg, 'old' => $old];
+        if (trim((string)($post['website'] ?? '')) !== '') return ['block' => $blockId, 'sent' => true];
+        if (self::rsvpClosed($block)) return $fail('Replies are closed.');
+        if ((int)($post['_t'] ?? 0) < 3) return $fail('Please take a moment to fill in the form (JavaScript must be enabled), then try again.');
+        if ($old['name'] === '') return $fail('Please enter your name.');
+        if (!filter_var($old['email'], FILTER_VALIDATE_EMAIL)) return $fail('Please enter a valid email address.');
+        if ($coming === null) return $fail('Please tell us whether you can come.');
+        if (preg_match_all('~https?://~i', $old['note']) > 2) return $fail('Your note contains too many links.');
+        if (!self::allowSubmission()) return $fail('Too many replies were sent from your connection. Please try again later.');
+
+        $reply = [
+            'id' => random_id(6), 'time' => time(), 'pageId' => $page['id'] ?? '', 'page' => $page['title'] ?? '',
+            'blockId' => $blockId, 'event' => Sanitizer::text($block['title'] ?? '', 120),
+            'name' => $old['name'], 'email' => $old['email'], 'coming' => $coming,
+            'guests' => $coming ? (int)$old['guests'] : 0, 'note' => $old['note'],
+        ];
+        $updated = false;
+        Store::update('rsvps', static function (array $d) use ($reply, &$updated): array {
+            $items = is_array($d['items'] ?? null) ? $d['items'] : [];
+            foreach ($items as $i => $it) {
+                if (($it['blockId'] ?? '') === $reply['blockId'] && ($it['pageId'] ?? '') === $reply['pageId'] && ($it['email'] ?? '') === $reply['email']) {
+                    $reply['id'] = $it['id'];
+                    unset($items[$i]);
+                    $updated = true;
+                }
+            }
+            array_unshift($items, $reply);
+            $d['items'] = array_slice(array_values($items), 0, self::MAX_RSVPS);
+            return $d;
+        }, ['items' => []]);
+        self::notifyRsvp($reply, $updated);
+        return ['block' => $blockId, 'sent' => true];
+    }
+
+    public static function removeRsvp(string $id): void
+    {
+        Store::update('rsvps', static function (array $d) use ($id): array {
+            $d['items'] = array_values(array_filter($d['items'] ?? [], static fn($it) => ($it['id'] ?? '') !== $id));
+            return $d;
+        }, ['items' => []]);
+    }
+
+    /** Totals per event: [key => ['event', 'page', 'replies', 'coming', 'guests', 'notComing']]. */
+    public static function rsvpSummary(): array
+    {
+        $out = [];
+        foreach (self::rsvps() as $r) {
+            $k = ($r['pageId'] ?? '') . ':' . ($r['blockId'] ?? '');
+            $out[$k] ??= ['event' => (string)($r['event'] ?? '') ?: (string)($r['page'] ?? ''), 'page' => (string)($r['page'] ?? ''), 'replies' => 0, 'coming' => 0, 'guests' => 0, 'notComing' => 0];
+            $out[$k]['replies']++;
+            if (!empty($r['coming'])) { $out[$k]['coming']++; $out[$k]['guests'] += (int)($r['guests'] ?? 1); }
+            else $out[$k]['notComing']++;
+        }
+        return $out;
+    }
+
+    public static function rsvpsCsv(): string
+    {
+        $safe = static function (string $v): string {
+            if ($v !== '' && strpbrk($v[0], "=+-@\t\r") !== false) $v = "'" . $v;
+            return '"' . str_replace('"', '""', $v) . '"';
+        };
+        $out = "\xEF\xBB\xBF" . "event,name,email,coming,guests,note,replied,page\r\n";
+        foreach (self::rsvps() as $r) {
+            $out .= implode(',', array_map($safe, [
+                (string)($r['event'] ?? ''), (string)$r['name'], (string)$r['email'], !empty($r['coming']) ? 'yes' : 'no',
+                (string)(int)($r['guests'] ?? 0), (string)($r['note'] ?? ''), date('Y-m-d H:i', (int)$r['time']), (string)($r['page'] ?? ''),
+            ])) . "\r\n";
+        }
+        return $out;
+    }
+
+    private static function notifyRsvp(array $r, bool $updated): void
+    {
+        $site = site();
+        $to = (string)($site['notifyEmail'] ?? '');
+        if (!filter_var($to, FILTER_VALIDATE_EMAIL)) return;
+        $noBreaks = static fn(string $s) => trim((string)preg_replace('/[\r\n]+/', ' ', $s));
+        $what = $r['coming'] ? 'is coming' . ($r['guests'] > 1 ? ' (' . $r['guests'] . ' people)' : '') : "can't come";
+        $subject = ($updated ? 'Updated RSVP: ' : 'RSVP: ') . $noBreaks($r['name']) . ' ' . $what;
+        $body = ($updated ? "Someone changed their reply" : "You have a new reply") . " for " . ($r['event'] !== '' ? $r['event'] : $r['page']) . ".\n\n"
+            . "Name:    {$r['name']}\nEmail:   {$r['email']}\nComing:  " . ($r['coming'] ? 'Yes' : 'No') . "\n"
+            . ($r['coming'] ? "Guests:  {$r['guests']}\n" : '') . ($r['note'] !== '' ? "Note:    {$r['note']}\n" : '')
+            . "\nTeeny CMS (see every reply in the Studio, under Messages → RSVPs)\n";
+        if (!Mailer::send($to, $subject, $body, (string)$r['email'])) {
+            Activity::log('email.failed', 'RSVP alert: ' . Mailer::$lastError);
+        }
+    }
+
     /** Shared per-visitor and per-day limits for public forms. */
     private static function allowSubmission(): bool
     {

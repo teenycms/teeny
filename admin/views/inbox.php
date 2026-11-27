@@ -3,8 +3,12 @@ declare(strict_types=1);
 defined('TEENY_VERSION') || exit; // views only run through admin/index.php
 $unread = count(array_filter($messages, static fn($m) => empty($m['read'])));
 $actions = $unread ? '<form method="post">' . Auth::csrfField() . '<input type="hidden" name="action" value="readall"><button class="btn btn-ghost">' . icon('check') . ' Mark all as read</button></form>' : '';
-$view = ($_GET['view'] ?? '') === 'subscribers' ? 'subscribers' : 'messages';
+$view = in_array($_GET['view'] ?? '', ['subscribers', 'rsvps'], true) ? $_GET['view'] : 'messages';
 $subs = Inbox::subscribers();
+$rsvps = Inbox::rsvps();
+if ($view === 'rsvps') {
+    $actions = $rsvps ? '<form method="post">' . Auth::csrfField() . '<input type="hidden" name="action" value="rsvp_export"><button class="btn btn-ghost">' . icon('backup') . ' Download CSV</button></form>' : '';
+}
 if ($view === 'subscribers') {
     $actions = $subs ? '<form method="post">' . Auth::csrfField() . '<input type="hidden" name="action" value="sub_export"><button class="btn btn-ghost">' . icon('backup') . ' Download CSV</button></form>' : '';
 }
@@ -13,7 +17,40 @@ admin_header('Messages', 'messages', ['actions' => $actions]);
 <nav class="subtabs" aria-label="Messages views">
   <a href="<?= e(admin_url('messages')) ?>"<?= $view === 'messages' ? ' aria-current="page"' : '' ?>>Messages <span><?= count($messages) ?></span></a>
   <a href="<?= e(admin_url('messages', ['view' => 'subscribers'])) ?>"<?= $view === 'subscribers' ? ' aria-current="page"' : '' ?>>Subscribers <span><?= count($subs) ?></span></a>
+  <?php if ($rsvps || $view === 'rsvps'): ?><a href="<?= e(admin_url('messages', ['view' => 'rsvps'])) ?>"<?= $view === 'rsvps' ? ' aria-current="page"' : '' ?>>RSVPs <span><?= count($rsvps) ?></span></a><?php endif; ?>
 </nav>
+<?php if ($view === 'rsvps'): ?>
+  <?php if (!$rsvps): ?>
+    <div class="card empty-state"><?= icon('inbox') ?><h3 class="card-title">No replies yet</h3><p class="muted">Add an <strong>RSVP</strong> section to a page (or start from the <strong>Event</strong> layout). Guests' replies appear here with a running total, and you can download them as a spreadsheet (CSV).</p></div>
+  <?php else: ?>
+  <div class="rsvp-totals">
+    <?php foreach (Inbox::rsvpSummary() as $sum): ?>
+      <div class="card rsvp-total">
+        <p class="muted small"><?= e($sum['event']) ?><?= $sum['page'] !== '' && $sum['page'] !== $sum['event'] ? ' · ' . e($sum['page']) : '' ?></p>
+        <p class="rsvp-total__num"><strong><?= (int)$sum['guests'] ?></strong> coming</p>
+        <p class="muted small"><?= (int)$sum['coming'] ?> <?= $sum['coming'] === 1 ? 'reply' : 'replies' ?> said yes · <?= (int)$sum['notComing'] ?> can't make it</p>
+      </div>
+    <?php endforeach; ?>
+  </div>
+  <div class="card card-flush">
+    <table class="table">
+      <thead><tr><th>Name</th><th>Coming</th><th class="hide-sm">Note</th><th class="hide-sm">Replied</th><th class="t-right"></th></tr></thead>
+      <tbody>
+      <?php foreach (array_slice($rsvps, 0, 500) as $r): ?>
+        <tr>
+          <td><strong><?= e($r['name']) ?></strong><br><small><a href="mailto:<?= e(rawurlencode((string)$r['email'])) ?>"><?= e($r['email']) ?></a></small></td>
+          <td><?= !empty($r['coming']) ? '<span class="badge badge-published">Yes' . ((int)$r['guests'] > 1 ? ' · ' . (int)$r['guests'] : '') . '</span>' : '<span class="badge">No</span>' ?></td>
+          <td class="hide-sm"><small><?= e(str_limit((string)($r['note'] ?? ''), 120)) ?></small></td>
+          <td class="hide-sm"><small><?= e(fmt_date((int)$r['time'])) ?></small><br><small class="muted"><?= e($r['event'] !== '' ? $r['event'] : $r['page']) ?></small></td>
+          <td class="t-right"><form method="post" data-confirm="Delete the reply from <?= e($r['name']) ?>?"><?= Auth::csrfField() ?><input type="hidden" name="action" value="rsvp_delete"><input type="hidden" name="id" value="<?= e($r['id']) ?>"><button class="icon-btn danger" title="Delete"><?= icon('trash') ?></button></form></td>
+        </tr>
+      <?php endforeach; ?>
+      </tbody>
+    </table>
+    <?php if (count($rsvps) > 500): ?><p class="card-intro muted">Showing the newest 500 of <?= count($rsvps) ?>. Download the CSV for the full list.</p><?php endif; ?>
+  </div>
+  <?php endif; ?>
+<?php admin_footer(); return; endif; ?>
 <?php if ($view === 'subscribers'): ?>
   <?php if (!$subs): ?>
     <div class="card empty-state"><?= icon('inbox') ?><h3 class="card-title">No subscribers yet</h3><p class="muted">Add a <strong>Newsletter</strong> section to a page. Email addresses people leave appear here, and you can download them as a spreadsheet (CSV) for your email tool.</p></div>

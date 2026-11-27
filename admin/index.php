@@ -419,6 +419,17 @@ switch ($p) {
     /* ---------- inbox ---------- */
     case 'messages':
         require_cap('inbox');
+        if (is_post() && ($_POST['action'] ?? '') === 'rsvp_export') {
+            header('Content-Type: text/csv; charset=utf-8');
+            header('Content-Disposition: attachment; filename="rsvps-' . date('Y-m-d') . '.csv"');
+            echo Inbox::rsvpsCsv();
+            exit;
+        }
+        if (is_post() && ($_POST['action'] ?? '') === 'rsvp_delete') {
+            Inbox::removeRsvp((string)($_POST['id'] ?? ''));
+            flash('Reply deleted.');
+            redirect(admin_url('messages', ['view' => 'rsvps']));
+        }
         if (is_post() && ($_POST['action'] ?? '') === 'sub_export') {
             header('Content-Type: text/csv; charset=utf-8');
             header('Content-Disposition: attachment; filename="subscribers-' . date('Y-m-d') . '.csv"');

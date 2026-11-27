@@ -1,0 +1,31 @@
+{
+  "title": "Shop",
+  "blocks": [
+    {"type": "announce", "text": "Free delivery on orders over $50", "linkText": "How ordering works", "url": "#how-ordering-works", "style": "accent"},
+    {"type": "hero", "eyebrow": "Our shop", "title": "Small batches, made by hand", "text": "Browse our latest pieces. Tap Order on anything you like and we'll take care of the rest.", "button": "See the collection", "url": "#collection", "style": "none"},
+    {"type": "heading", "text": "Collection", "level": "h2"},
+    {"type": "products", "columns": "3", "whatsapp": "", "items": [
+      {"image": "", "name": "Linen tote", "price": "$35", "desc": "Hand-stitched, natural linen. Holds everything for a day out.", "button": "Order", "url": ""},
+      {"image": "", "name": "Ceramic mug", "price": "$22", "desc": "Glazed by hand, so every one is a little different.", "button": "Order", "url": ""},
+      {"image": "", "name": "Beeswax candle", "price": "$18", "desc": "Burns for about 30 hours with a warm honey scent.", "button": "Order", "url": ""},
+      {"image": "", "name": "Notebook set", "price": "$15", "desc": "Three recycled-paper notebooks, plain pages.", "button": "Order", "url": ""},
+      {"image": "", "name": "Wool scarf", "price": "$48", "desc": "Soft merino in a calm, earthy colour.", "button": "Order", "url": ""},
+      {"image": "", "name": "Gift card", "price": "From $20", "desc": "Let them choose. Sent by email the same day.", "button": "Order", "url": ""}
+    ]},
+    {"type": "divider", "style": "space-s"},
+    {"type": "heading", "text": "How ordering works", "level": "h2"},
+    {"type": "steps", "items": [
+      {"title": "Choose", "text": "Tap Order on the product you like."},
+      {"title": "Pay", "text": "Pay securely with the link we send, or chat with us on WhatsApp."},
+      {"title": "Receive", "text": "We pack it with care and send it within 2 working days."}
+    ]},
+    {"type": "heading", "text": "Questions", "level": "h2"},
+    {"type": "faq", "items": [
+      {"q": "How much is delivery?", "a": "Delivery is free on orders over $50. Smaller orders cost $5."},
+      {"q": "Can I return something?", "a": "Yes, within 14 days if it's unused. Just send us a message."},
+      {"q": "Do you make custom orders?", "a": "Often, yes. Tell us what you have in mind using the form below."}
+    ]},
+    {"type": "heading", "text": "Get in touch", "level": "h2"},
+    {"type": "contact", "phone": "no", "button": "Send message", "success": "Thank you! We'll reply within a day."}
+  ]
+}

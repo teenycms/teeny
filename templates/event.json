@@ -1,0 +1,34 @@
+{
+  "title": "Event",
+  "blocks": [
+    {"type": "hero", "eyebrow": "Saturday 14 March · 4 pm", "title": "Aisha & Daniel are getting married", "text": "Join us for the ceremony, dinner and dancing at The Garden House, Kuala Lumpur.", "button": "Reply now", "url": "#rsvp", "style": "none"},
+    {"type": "columns", "items": [
+      {"title": "When", "text": "Saturday 14 March. Ceremony at 4 pm, dinner from 7 pm."},
+      {"title": "Where", "text": "The Garden House, 12 Jalan Bunga, Kuala Lumpur."},
+      {"title": "Dress code", "text": "Garden formal. Comfortable shoes for the lawn."}
+    ]},
+    {"type": "button", "text": "Open in Maps", "url": "https://maps.google.com/?q=Kuala+Lumpur", "style": "outline"},
+    {"type": "divider", "style": "ornament"},
+    {"type": "heading", "text": "Schedule", "level": "h2"},
+    {"type": "events", "linkText": "Details", "items": [
+      {"date": "14 Mar", "time": "16:00", "title": "Ceremony", "place": "The lawn", "url": ""},
+      {"date": "14 Mar", "time": "17:30", "title": "Drinks and photos", "place": "The terrace", "url": ""},
+      {"date": "14 Mar", "time": "19:00", "title": "Dinner and dancing", "place": "The glass hall", "url": ""}
+    ]},
+    {"type": "heading", "text": "Tickets", "level": "h2"},
+    {"type": "pricing", "items": [
+      {"name": "Guest", "price": "Free", "period": "", "features": "Ceremony and dinner\nPlease reply below", "button": "Reply now", "url": "#rsvp", "featured": "yes"},
+      {"name": "After-party", "price": "$15", "period": "", "features": "Live band from 10 pm\nDrinks included", "button": "Buy ticket", "url": "#", "featured": "no"}
+    ]},
+    {"type": "rsvp", "title": "Will you join us?", "text": "Please let us know if you can come, and how many of you there will be.", "maxGuests": "4", "askNote": "yes", "noteLabel": "Anything we should know? (for example dietary needs)", "deadline": "", "button": "Send my reply", "success": "Thank you! Your reply has been saved. To change it, reply again with the same email.", "closed": "Replies are now closed. Please contact us if anything has changed."},
+    {"type": "heading", "text": "Good to know", "level": "h2"},
+    {"type": "faq", "items": [
+      {"q": "Is there parking?", "a": "Yes, free parking next to the venue."},
+      {"q": "Can I bring my children?", "a": "Of course. Let us know how many in your reply."},
+      {"q": "Gifts?", "a": "Your company is the best gift. If you'd like to give something, there will be a card box at the venue."}
+    ]},
+    {"type": "gallery", "columns": "3", "images": [{"src": "", "alt": "", "caption": ""}, {"src": "", "alt": "", "caption": ""}, {"src": "", "alt": "", "caption": ""}]},
+    {"type": "heading", "text": "Questions?", "level": "h2"},
+    {"type": "contact", "phone": "yes", "button": "Send message", "success": "Thank you! We'll get back to you soon."}
+  ]
+}
