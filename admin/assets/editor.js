@@ -196,6 +196,11 @@
     announce(b) {
       return `<div class="tc-block tc-announce tc-announce--${tok(b.style)}"><p class="tc-announce__inner">${ed('span', 'text', b.text, 'tc-announce__text', 'Your announcement')} ${ed('span', 'linkText', b.linkText, 'tc-announce__link', 'Link text')}</p></div>`;
     },
+    news(b) {
+      const items = (D.newsPreview || []).filter(p => !b.category || p.category === b.category).slice(0, Math.max(1, parseInt(b.count, 10) || 3));
+      const cards = items.map(p => `<article class="tc-post-card">${b.style !== 'list' && p.cover ? `<span class="tc-post-card__media"><img src="${esc(p.cover)}" alt=""></span>` : ''}<div class="tc-post-card__body"><p class="tc-post-card__meta">${esc(p.date)}</p><h3 class="tc-post-card__title"><a>${esc(p.title)}</a></h3>${p.summary ? `<p class="tc-post-card__summary">${esc(p.summary)}</p>` : ''}</div></article>`).join('');
+      return `<section class="tc-block tc-news tc-news--${b.style === 'list' ? 'list' : 'cards'}">${ed('h2', 'title', b.title, 'tc-news__title', 'Title (optional)')}${cards ? `<div class="tc-news__items" contenteditable="false">${cards}</div>` : '<p class="tce-hint" contenteditable="false">Your newest live posts will appear here. Write posts under News in the top bar.</p>'}${b.button ? `<p class="tc-news__more">${ed('span', 'button', b.button, 'tc-btn tc-btn--outline', 'All news')}</p>` : ''}</section>`;
+    },
     toc(b) {
       const levels = b.levels === 'h3' ? ['h2', 'h3'] : ['h2'];
       const items = page.blocks.filter(x => x.type === 'heading' && x.text && levels.includes(x.level || 'h2'))
@@ -884,6 +889,20 @@
       page.slug = inp.value;
     });
   });
+
+  /* cover image (News posts) */
+  const coverPreview = $('[data-cover-preview]');
+  if (coverPreview) {
+    const showCover = src => { coverPreview.innerHTML = ''; if (src) { const img = document.createElement('img'); img.src = src; img.alt = ''; coverPreview.appendChild(img); } };
+    showCover(D.coverThumb || '');
+    $('[data-cover-pick]').addEventListener('click', () => T.openPicker(item => {
+      if (!item) return;
+      page.cover = item.ref;
+      showCover(item.thumb);
+      markDirty();
+    }));
+    $('[data-cover-clear]').addEventListener('click', () => { page.cover = ''; showCover(''); markDirty(); });
+  }
 
   /* password protection */
   const protectInput = $('[data-protect-input]');

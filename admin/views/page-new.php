@@ -9,7 +9,7 @@ admin_header('New page', 'pages');
   <label class="field"><span>Page title</span><input name="title" required maxlength="120" placeholder="e.g. About me" autofocus></label>
   <p class="field-label">Start from</p>
   <div class="choice-grid">
-    <?php foreach (Pages::TEMPLATES as $key => $t): ?>
+    <?php foreach (Pages::templates() as $key => $t): ?>
       <label class="choice">
         <input type="radio" name="template" value="<?= e($key) ?>" <?= $key === 'blank' ? 'checked' : '' ?>>
         <span class="choice-body"><strong><?= e($t['label']) ?></strong><small><?= e($t['desc']) ?></small></span>

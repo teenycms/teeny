@@ -546,6 +546,17 @@ body.admin { background: radial-gradient(1400px 500px at 50% -220px, #fffdf8, va
 .rsvp-total__num { font-size: 22px; margin: 6px 0 !important; }
 .rsvp-total__num strong { font-size: 30px; }
 .plugin-group { margin: 22px 0 10px; }
+.addon-next { margin-top: 14px; }
+.news-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start; }
+@media (max-width: 900px) { .news-layout { grid-template-columns: minmax(0, 1fr); } }
+.news-new { padding: 14px 16px; margin-bottom: 16px; }
+.news-new select { flex: 0 1 200px; }
+.cat-list { list-style: none; margin: 0 0 12px; padding: 0; }
+.cat-list li { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid var(--line-2); }
+.cat-list li:first-child { border-top: 0; }
+.tips { margin: 0; padding-left: 18px; display: grid; gap: 8px; }
+.badge-scheduled { background: #eef3fb; color: #2f5b9a; }
+.post-cover-field .post-cover-preview img { display: block; width: 100%; max-height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; }
 .plugin-group:first-child { margin-top: 0; }
 .addon-option { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 14px 0 0; padding: 12px 14px; background: var(--bg-2, rgba(0,0,0,.025)); border-radius: 10px; }
 .addon-option .check { margin: 0; }

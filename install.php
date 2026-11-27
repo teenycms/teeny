@@ -52,7 +52,7 @@ if (!$installed && $canInstall && is_post()) {
     if ($p = Auth::passwordProblem($pass)) $errors[] = $p;
     if ($p = Auth::emailProblem($in['email'])) $errors[] = $p;
     if ($pass !== $pass2) $errors[] = 'The two passwords do not match.';
-    if (!isset(Pages::TEMPLATES[$in['template']])) $in['template'] = 'blank';
+    if (!isset(Pages::templates()[$in['template']])) $in['template'] = 'blank';
     if (!isset(Theme::all()[$in['theme']])) $in['theme'] = 'minimal';
     if (!isset(Theme::ALIGNS[$in['align']])) $in['align'] = 'normal';
 
@@ -213,7 +213,7 @@ if (!$installed && $canInstall && is_post()) {
       <fieldset>
         <legend>3. What are you building?</legend>
         <div class="choice-grid">
-          <?php foreach (Pages::TEMPLATES as $key => $t): ?>
+          <?php foreach (Pages::templates() as $key => $t): ?>
             <label class="choice">
               <input type="radio" name="template" value="<?= e($key) ?>" <?= $old['template'] === $key ? 'checked' : '' ?>>
               <span class="choice-body"><strong><?= e($t['label']) ?></strong><small><?= e($t['desc']) ?></small></span>

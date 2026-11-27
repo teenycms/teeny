@@ -4,8 +4,7 @@ declare(strict_types=1);
 const TEENY_RESERVED_SLUGS = [
     'admin', 'core', 'data', 'uploads', 'themes', 'templates', 'assets',
     'install', 'index', 'sitemap', 'robots', 'config', 'favicon',
-    'plugins', 'examples', 'brand', 'part',
-];
+    'plugins', 'examples', 'brand', 'part'];
 
 /** Escape anything for safe HTML output. */
 function e(mixed $value): string
@@ -33,6 +32,7 @@ function admin_url(string $page = '', array $query = []): string
 
 function page_url(array $page): string
 {
+    if (($page['kind'] ?? '') === 'post') return News::url((string)($page['slug'] ?? ''));
     $site = site();
     if (($site['home'] ?? '') === ($page['id'] ?? null)) {
         return url('');

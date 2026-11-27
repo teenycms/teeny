@@ -24,6 +24,9 @@ final class Menu
             foreach (Pages::nav() as $p) {
                 $out[] = ['label' => $p['title'], 'url' => page_url($p), 'current' => $current && $current['id'] === $p['id'], 'newTab' => false];
             }
+            if (News::enabled()) {
+                $out[] = ['label' => 'News', 'url' => News::url(), 'current' => ($current['kind'] ?? '') === 'post', 'newTab' => false];
+            }
             return $out;
         }
         $index = Pages::index();

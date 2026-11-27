@@ -417,6 +417,17 @@ final class Blocks
                 ],
                 'defaults' => ['title' => 'Stay in the loop', 'text' => 'Occasional news, never spam. Unsubscribe any time.', 'button' => 'Subscribe', 'success' => 'Thank you for subscribing!'],
             ],
+            'news' => [
+                'label' => 'Latest news', 'group' => 'Links', 'desc' => 'Your newest News posts',
+                'fields' => [
+                    'title'    => ['type' => 'text', 'label' => 'Title', 'max' => 120],
+                    'count'    => ['type' => 'select', 'label' => 'How many posts', 'options' => ['3' => '3 posts', '6' => '6 posts', '9' => '9 posts']],
+                    'style'    => ['type' => 'select', 'label' => 'Look', 'options' => ['cards' => 'Cards with cover images', 'list' => 'Simple list']],
+                    'category' => ['type' => 'select', 'label' => 'Category', 'options' => ['' => 'All categories'] + (class_exists('News') ? News::categories() : [])],
+                    'button'   => ['type' => 'text', 'label' => 'Button text', 'max' => 40],
+                ],
+                'defaults' => ['title' => 'Latest news', 'count' => '3', 'style' => 'cards', 'category' => '', 'button' => 'All news'],
+            ],
             'toc' => [
                 'label' => 'Table of contents', 'group' => 'Text', 'desc' => 'Links to the headings on this page',
                 'fields' => [

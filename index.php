@@ -39,6 +39,14 @@ if ($slug === 'sitemap.xml') {
             if ($loc === '') continue;
             echo '  <url><loc>' . e($loc) . '</loc><lastmod>' . date('Y-m-d', (int)($m['updated'] ?? time())) . '</lastmod></url>' . "\n";
         }
+        if (News::enabled($site)) {
+            $list = absolute_url(News::url());
+            if ($list !== '') echo '  <url><loc>' . e($list) . '</loc></url>' . "\n";
+            foreach (News::posts() as $id => $m) {
+                $loc = absolute_url(page_url(['id' => (string)$id] + $m));
+                if ($loc !== '') echo '  <url><loc>' . e($loc) . '</loc><lastmod>' . date('Y-m-d', (int)($m['updated'] ?? time())) . '</lastmod></url>' . "\n";
+            }
+        }
     }
     echo '</urlset>';
     exit;
@@ -72,6 +80,27 @@ if (isset($_GET['search']) && Search::enabled($site) && $method === 'GET') {
     exit;
 }
 
+// News (a built-in add-on, switched on in Plugins): the list, categories and the RSS feed. Never cached,
+// so scheduled posts appear on their day. Single posts continue below like any page.
+$newsRoute = News::enabled($site) ? News::route($slug) : null;
+if ($newsRoute && $newsRoute['type'] === 'feed') {
+    header('Content-Type: application/rss+xml; charset=utf-8');
+    echo News::feed($site);
+    exit;
+}
+if ($newsRoute && in_array($newsRoute['type'], ['list', 'category'], true)) {
+    $cat = (string)($newsRoute['category'] ?? '');
+    if ($cat !== '' && !isset(News::categories($site)[$cat])) {
+        http_response_code(404);
+        echo Renderer::notFound($site);
+        exit;
+    }
+    header('Cache-Control: no-cache');
+    header('Content-Type: text/html; charset=utf-8');
+    echo Renderer::newsList($site, $cat, (int)$newsRoute['page']);
+    exit;
+}
+
 // Only plain anonymous GET requests use the page cache.
 $queryKeys = array_keys($_GET);
 $plainQuery = $queryKeys === [] || $queryKeys === ['page'];
@@ -89,13 +118,17 @@ if ($cacheable) {
 }
 
 $page = null;
-if ($slug === '') {
+if ($newsRoute && $newsRoute['type'] === 'post') {
+    $page = News::bySlug((string)$newsRoute['slug']);
+} elseif ($slug === '') {
     $page = Pages::home();
 } elseif (valid_slug($slug)) {
     $page = Pages::bySlug($slug);
 }
 
 $visible = $page && ($page['status'] === 'published' || $viewer !== null);
+// A post with a future date stays hidden from visitors until that day.
+if ($visible && ($page['kind'] ?? '') === 'post' && $viewer === null && (string)($page['date'] ?? '') > date('Y-m-d')) $visible = false;
 if (!$visible) {
     http_response_code(404);
     echo Renderer::notFound($site);
@@ -142,6 +175,8 @@ if ($formName === 'contact' || $formName === 'newsletter' || $formName === 'rsvp
 $opts = [];
 if ($page['status'] !== 'published') {
     $opts['notice'] = 'Draft preview. Only signed-in users can see this page.';
+} elseif (($page['kind'] ?? '') === 'post' && News::isScheduled($page)) {
+    $opts['notice'] = 'Scheduled: visitors will see this post from ' . News::niceDate((string)$page['date']) . '.';
 } elseif ($maintenance) {
     $opts['notice'] = 'Maintenance mode is on. Visitors currently see the “Coming soon” page.';
 } elseif ($protected && $viewer !== null) {

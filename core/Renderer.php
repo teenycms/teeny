@@ -79,6 +79,7 @@ final class Renderer
             'search'     => self::search($b),
             'rsvp'       => self::rsvp($b),
             'toc'        => self::toc($b),
+            'news'       => self::latestNews($b),
             'divider' => '<div class="tc-block tc-divider tc-divider--' . e($b['style']) . '" role="separator"><span></span></div>',
             default   => str_starts_with((string)($b['type'] ?? ''), 'plugin-') ? Plugins::render($b) : '',
         };
@@ -463,6 +464,101 @@ final class Renderer
         return $h === '' ? '' : '<div class="tc-block tc-products tc-cols-' . e($b['columns']) . '">' . $h . '</div>';
     }
 
+    /* ---------- News (built-in add-on) ---------- */
+
+    /** One post as a card or list row. */
+    private static function postCard(string $id, array $m, string $style = 'cards'): string
+    {
+        $url = page_url(['id' => $id] + $m);
+        $cats = News::categories();
+        $cat = ($m['category'] ?? '') !== '' && isset($cats[$m['category']]) ? $cats[$m['category']] : '';
+        $img = $style === 'cards' ? self::img((string)($m['cover'] ?? ''), (string)$m['title'], '', true) : '';
+        return '<article class="tc-post-card">'
+            . ($img !== '' ? '<a class="tc-post-card__media" href="' . e($url) . '" tabindex="-1" aria-hidden="true">' . $img . '</a>' : '')
+            . '<div class="tc-post-card__body"><p class="tc-post-card__meta">' . e(News::niceDate((string)($m['date'] ?? ''))) . ($cat !== '' ? ' · ' . e($cat) : '') . '</p>'
+            . '<h3 class="tc-post-card__title"><a href="' . e($url) . '">' . e($m['title']) . '</a></h3>'
+            . (($m['summary'] ?? '') !== '' ? '<p class="tc-post-card__summary">' . e($m['summary']) . '</p>' : '')
+            . '</div></article>';
+    }
+
+    /** "Latest news" section: the newest posts, on any page. */
+    private static function latestNews(array $b): string
+    {
+        if (!News::enabled()) return '';
+        $posts = array_slice(News::posts(true, (string)$b['category']), 0, max(1, min(12, (int)$b['count'])), true);
+        if (!$posts) return '';
+        $style = $b['style'] === 'list' ? 'list' : 'cards';
+        $h = '<section class="tc-block tc-news tc-news--' . $style . '">';
+        if ($b['title'] !== '') $h .= '<h2 class="tc-news__title">' . e($b['title']) . '</h2>';
+        $h .= '<div class="tc-news__items">';
+        foreach ($posts as $id => $m) $h .= self::postCard((string)$id, $m, $style);
+        $h .= '</div>';
+        if ($b['button'] !== '') {
+            $more = $b['category'] !== '' && isset(News::categories()[$b['category']]) ? News::categoryUrl($b['category']) : News::url();
+            $h .= '<p class="tc-news__more"><a class="tc-btn tc-btn--outline" href="' . e($more) . '">' . e($b['button']) . '</a></p>';
+        }
+        return $h . '</section>';
+    }
+
+    /** The automatic news page (/news) or a category (/news/category/...). */
+    public static function newsList(array $site, string $category, int $pageNo): string
+    {
+        $cats = News::categories($site);
+        $posts = News::posts(true, $category);
+        $pages = max(1, (int)ceil(count($posts) / News::PER_PAGE));
+        $pageNo = min($pageNo, $pages);
+        $slice = array_slice($posts, ($pageNo - 1) * News::PER_PAGE, News::PER_PAGE, true);
+        $title = $category !== '' ? $cats[$category] : 'News';
+        $h = '<section class="tc-block tc-news tc-news--page">';
+        $h .= '<p class="tc-eyebrow">' . e($category !== '' ? 'News' : ($site['title'] ?? '')) . '</p><h1 class="tc-news__title">' . e($title) . '</h1>';
+        if ($cats) {
+            $h .= '<nav class="tc-news__cats" aria-label="Categories"><a href="' . e(News::url()) . '"' . ($category === '' ? ' aria-current="page"' : '') . '>All</a>';
+            foreach ($cats as $slug => $label) $h .= '<a href="' . e(News::categoryUrl($slug)) . '"' . ($category === $slug ? ' aria-current="page"' : '') . '>' . e($label) . '</a>';
+            $h .= '</nav>';
+        }
+        if (!$slice) {
+            $h .= '<p class="tc-muted">No posts yet. Please check back soon.</p>';
+        } else {
+            $h .= '<div class="tc-news__items">';
+            foreach ($slice as $id => $m) $h .= self::postCard((string)$id, $m);
+            $h .= '</div>';
+        }
+        if ($pages > 1) {
+            $link = static fn(int $n) => $category !== '' ? News::categoryUrl($category, $n) : News::listUrl($n);
+            $h .= '<nav class="tc-news__pager" aria-label="More news">'
+                . ($pageNo > 1 ? '<a href="' . e($link($pageNo - 1)) . '" rel="prev">← Newer</a>' : '<span></span>')
+                . '<span class="tc-muted">Page ' . $pageNo . ' of ' . $pages . '</span>'
+                . ($pageNo < $pages ? '<a href="' . e($link($pageNo + 1)) . '" rel="next">Older →</a>' : '<span></span>')
+                . '</nav>';
+        }
+        $h .= '</section>';
+        return self::document($site, null, $h, ['title' => $title . ' · ' . ($site['title'] ?? ''), 'canonical' => $category !== '' ? News::categoryUrl($category, $pageNo) : News::listUrl($pageNo)]);
+    }
+
+    /** A post's own header (category, date, title, cover) and footer (previous / next / all news). */
+    private static function postHead(array $post): string
+    {
+        $cats = News::categories();
+        $cat = ($post['category'] ?? '') !== '' && isset($cats[$post['category']]) ? $cats[$post['category']] : '';
+        $h = '<header class="tc-block tc-post-head"><p class="tc-post-head__meta"><a href="' . e(News::url()) . '">News</a>'
+            . ($cat !== '' ? ' · <a href="' . e(News::categoryUrl($post['category'])) . '">' . e($cat) . '</a>' : '')
+            . ' · <time datetime="' . e($post['date'] ?? '') . '">' . e(News::niceDate((string)($post['date'] ?? ''))) . '</time></p>'
+            . '<h1 class="tc-post-head__title">' . e($post['title']) . '</h1>'
+            . (($post['summary'] ?? '') !== '' ? '<p class="tc-post-head__summary">' . e($post['summary']) . '</p>' : '') . '</header>';
+        $cover = self::img((string)($post['cover'] ?? ''), (string)$post['title'], 'tc-post-cover__img', false, false);
+        return $h . ($cover !== '' ? '<figure class="tc-block tc-post-cover">' . $cover . '</figure>' : '');
+    }
+
+    private static function postFoot(array $post): string
+    {
+        [$newer, $older] = News::neighbours($post);
+        return '<nav class="tc-block tc-post-foot" aria-label="More news">'
+            . ($older ? '<a class="tc-post-foot__prev" href="' . e($older['url']) . '"><small>Previous</small>' . e($older['title']) . '</a>' : '<span></span>')
+            . '<a class="tc-post-foot__all" href="' . e(News::url()) . '">All news</a>'
+            . ($newer ? '<a class="tc-post-foot__next" href="' . e($newer['url']) . '"><small>Next</small>' . e($newer['title']) . '</a>' : '<span></span>')
+            . '</nav>';
+    }
+
     /** Table of contents: links to the page's Heading sections (same ids as heading() gives them). */
     private static function toc(array $b): string
     {
@@ -728,7 +824,7 @@ final class Renderer
         $titleParts[] = $site['title'] ?? 'My Site';
         if ($page && ($site['home'] ?? '') === $page['id'] && !empty($site['tagline'])) $titleParts[] = $site['tagline'];
         $title = $opts['title'] ?? implode(' · ', $titleParts);
-        $desc = $page['description'] ?? '' ?: ($site['description'] ?? '');
+        $desc = $page['description'] ?? '' ?: (($page['kind'] ?? '') === 'post' && ($page['summary'] ?? '') !== '' ? $page['summary'] : ($site['description'] ?? ''));
         $favicon = Media::exists((string)($site['favicon'] ?? '')) ? url($site['favicon']) : asset('assets/favicon.svg');
         $hideHeader = !empty($page['hideHeader']);
 
@@ -736,14 +832,23 @@ final class Renderer
         $o .= '<meta name="viewport" content="width=device-width, initial-scale=1">';
         $o .= '<title>' . e($title) . '</title>';
         if ($desc !== '') $o .= '<meta name="description" content="' . e($desc) . '">';
-        $o .= '<meta property="og:type" content="website"><meta property="og:site_name" content="' . e($site['title'] ?? 'My Site') . '">';
+        $o .= '<meta property="og:type" content="' . (($page['kind'] ?? '') === 'post' ? 'article' : 'website') . '"><meta property="og:site_name" content="' . e($site['title'] ?? 'My Site') . '">';
         $o .= '<meta property="og:title" content="' . e($title) . '">';
         if ($desc !== '') $o .= '<meta property="og:description" content="' . e($desc) . '">';
         $hasShareImage = false;
+        if (!$page && !$editor && !empty($opts['canonical'])) {
+            $canon = absolute_url((string)$opts['canonical']);
+            if ($canon !== '') $o .= '<link rel="canonical" href="' . e($canon) . '"><meta property="og:url" content="' . e($canon) . '">';
+        }
+        if (!$editor && News::enabled($site)) {
+            $o .= '<link rel="alternate" type="application/rss+xml" title="' . e(($site['title'] ?? '') . ' · News') . '" href="' . e(absolute_url(News::feedUrl()) ?: News::feedUrl()) . '">';
+        }
         if ($page && !$editor) {
             $canon = absolute_url(page_url($page));
             if ($canon !== '') $o .= '<link rel="canonical" href="' . e($canon) . '"><meta property="og:url" content="' . e($canon) . '">';
-            $share = (string)($site['shareImage'] ?? '');
+            // A post's cover image is its share image; otherwise the site's share image.
+            $share = (($page['kind'] ?? '') === 'post' && Media::exists((string)($page['cover'] ?? ''))) ? (string)$page['cover'] : (string)($site['shareImage'] ?? '');
+            if (($page['kind'] ?? '') === 'post') $o .= '<meta property="article:published_time" content="' . e((string)($page['date'] ?? '')) . '">';
             if (Media::exists($share) && absolute_url(url($share)) !== '') {
                 $o .= '<meta property="og:image" content="' . e(absolute_url(url($share))) . '">';
                 $hasShareImage = true;
@@ -784,7 +889,9 @@ final class Renderer
     {
         self::$page = $page;
         $main = self::blocks($page['blocks'] ?? []);
-        if (trim($main) === '') {
+        if (($page['kind'] ?? '') === 'post') {
+            $main = self::postHead($page) . $main . self::postFoot($page);
+        } elseif (trim($main) === '') {
             $main = '<div class="tc-block tc-text tc-prose"><p class="tc-muted">This page is empty.</p></div>';
         }
         return self::document($site, $page, $main, $opts);

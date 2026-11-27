@@ -1,0 +1,9 @@
+{
+  "title": "News",
+  "blocks": [
+    {"type": "hero", "eyebrow": "News", "title": "What's new", "text": "Stories, updates and announcements from us.", "button": "", "url": "", "style": "none"},
+    {"type": "news", "title": "", "count": "9", "style": "cards", "category": "", "button": "All news"},
+    {"type": "divider", "style": "ornament"},
+    {"type": "newsletter", "title": "Never miss a post", "text": "Occasional news, never spam. Unsubscribe any time.", "button": "Subscribe", "success": "Thank you for subscribing!"}
+  ]
+}

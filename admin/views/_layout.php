@@ -10,6 +10,7 @@ function admin_header(string $title, string $active, array $opts = []): void
     $nav = [
         ['studio', 'Studio', null],
         ['pages', 'Pages', 'pages'],
+        ...(News::enabled($site) ? [['news', 'News', 'pages']] : []),
         ['library', 'Library', 'media'],
         ['messages', 'Messages', 'inbox'],
         ['navigation', 'Navigation', 'appearance'],

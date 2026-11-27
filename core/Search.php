@@ -53,8 +53,9 @@ final class Search
         $words = self::words($query);
         if (!$words) return [];
         $hits = [];
-        foreach (Pages::index() as $id => $meta) {
+        foreach (Pages::all() as $id => $meta) {
             if (($meta['status'] ?? '') !== 'published' || !empty($meta['protected'])) continue;
+            if (($meta['kind'] ?? '') === 'post' && (!News::enabled() || !News::isLive($meta))) continue;
             $page = Pages::get((string)$id);
             if (!$page || ($page['protect'] ?? '') !== '') continue;
             $title = (string)($page['title'] ?? '');

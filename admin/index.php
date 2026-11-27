@@ -233,6 +233,54 @@ switch ($p) {
         require __DIR__ . '/views/pages.php';
         break;
 
+    case 'news':
+        require_cap('pages');
+        if (!News::enabled($site)) redirect(admin_url('plugins') . '#addon-news');
+        if (is_post()) {
+            $action = (string)($_POST['action'] ?? '');
+            if ($action === 'create') {
+                $post = Pages::save([
+                    'kind' => 'post', 'title' => post_str('title', 120) ?: 'New post', 'status' => 'draft',
+                    'date' => date('Y-m-d'), 'category' => (string)($_POST['category'] ?? ''),
+                    'blocks' => [['type' => 'text', 'html' => '<p>Start writing your post here.</p>']],
+                ], $user['id']);
+                redirect(admin_url('edit', ['id' => $post['id']]));
+            }
+            if ($action === 'delete') {
+                require_cap('settings');
+                $id = (string)($_POST['id'] ?? '');
+                $pg = Pages::get($id);
+                if ($pg && ($pg['kind'] ?? '') === 'post') { Pages::delete($id); flash('Post deleted.'); }
+            }
+            if ($action === 'cat_add') {
+                $label = Sanitizer::text($_POST['label'] ?? '', 40);
+                $slug = slugify($label);
+                $cats = News::categories($site);
+                if ($label === '' || $slug === '') flash('Please give the category a name.', 'error');
+                elseif (isset($cats[$slug])) flash('That category already exists.', 'error');
+                elseif (count($cats) >= News::MAX_CATEGORIES) flash('You can have up to ' . News::MAX_CATEGORIES . ' categories.', 'error');
+                else { $cats[substr($slug, 0, 40)] = $label; $site['newsCategories'] = $cats; Store::write('site', $site); flash('Category “' . $label . '” added.'); }
+            }
+            if ($action === 'cat_remove') {
+                $slug = (string)($_POST['slug'] ?? '');
+                $cats = News::categories($site);
+                if (isset($cats[$slug])) {
+                    unset($cats[$slug]);
+                    $site['newsCategories'] = $cats;
+                    Store::write('site', $site);
+                    site($site);
+                    // Posts in that category simply lose it.
+                    foreach (News::posts(false, $slug) as $pid => $_) {
+                        if ($pg = Pages::get((string)$pid)) { $pg['category'] = ''; Pages::save($pg, (string)$pg['author'], true); }
+                    }
+                    flash('Category removed.');
+                }
+            }
+            redirect(admin_url('news'));
+        }
+        require __DIR__ . '/views/news.php';
+        break;
+
     case 'new':
         require_cap('pages');
         require __DIR__ . '/views/page-new.php';
@@ -279,6 +327,14 @@ switch ($p) {
             $action = (string)($_POST['action'] ?? '');
             $id = (string)($_POST['id'] ?? '');
             try {
+                if (in_array($action, ['addon_news_on', 'addon_news_off'], true)) {
+                    $site['addons'] = is_array($site['addons'] ?? null) ? $site['addons'] : [];
+                    $site['addons']['news'] = $action === 'addon_news_on';
+                    Activity::log($site['addons']['news'] ? 'addon.on' : 'addon.off', 'News');
+                    Store::write('site', $site);
+                    flash($site['addons']['news'] ? 'News is on. Write your first post under News in the top bar.' : 'News is off. Your posts are kept and come back when you switch it on.');
+                    redirect(admin_url('plugins') . '#addon-news');
+                }
                 if (in_array($action, ['addon_search_on', 'addon_search_off', 'addon_search_header'], true)) {
                     $site['addons'] = is_array($site['addons'] ?? null) ? $site['addons'] : [];
                     if ($action === 'addon_search_header') {
@@ -734,7 +790,7 @@ switch ($p) {
         require_cap('backup');
         if (is_post() && ($_POST['action'] ?? '') === 'export') {
             $pages = [];
-            foreach (Pages::index() as $id => $m) {
+            foreach (Pages::all() as $id => $m) {
                 if ($pg = Pages::get((string)$id)) $pages[] = $pg;
             }
             $bundle = [
@@ -783,7 +839,13 @@ switch ($p) {
                 redirect(admin_url('vault'));
             }
             // Replace pages
-            foreach (array_keys(Pages::index()) as $id) Pages::delete((string)$id);
+            foreach (array_keys(Pages::all()) as $id) Pages::delete((string)$id);
+            // News categories first, so restored posts keep their category
+            $cats = [];
+            foreach (array_slice(is_array($data['site']['newsCategories'] ?? null) ? $data['site']['newsCategories'] : [], 0, News::MAX_CATEGORIES, true) as $cs => $cl) {
+                if (is_string($cs) && preg_match('/^[a-z0-9-]{1,40}$/', $cs) && is_string($cl) && Sanitizer::text($cl, 40) !== '') $cats[$cs] = Sanitizer::text($cl, 40);
+            }
+            site(['newsCategories' => $cats] + $site);
             $map = [];
             foreach (array_slice($data['pages'], 0, 500) as $pg) {
                 if (!is_array($pg)) continue;
@@ -819,6 +881,8 @@ switch ($p) {
             $keep['theme']['customCss'] = Sanitizer::css($in['theme']['customCss'] ?? '');
             $keep['home'] = $map[(string)($in['home'] ?? '')] ?? (string)(array_key_first(Pages::index()) ?? '');
             $keep['theme']['visitorToggle'] = !empty($in['theme']['visitorToggle']);
+            $keep['newsCategories'] = $cats;
+            $keep['addons'] = ['search' => !empty($in['addons']['search']), 'searchHeader' => !empty($in['addons']['searchHeader']), 'news' => !empty($in['addons']['news'])];
             unset($keep['menu']);
             if (is_array($in['menu'] ?? null)) {
                 $menu = [];

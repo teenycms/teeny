@@ -18,9 +18,23 @@ final class Pages
         'shop'      => ['label' => 'Shop', 'desc' => 'Product catalog with order buttons, delivery and FAQ'],
         'product'   => ['label' => 'Product page', 'desc' => 'One product with photos, details and an order button'],
         'event'     => ['label' => 'Event', 'desc' => 'Wedding, concert or camp: details, schedule, tickets and RSVP'],
+        'news'      => ['label' => 'News', 'desc' => 'Your latest posts, categories and a sign-up form'],
     ];
 
+    /** Layouts offered when creating a page (News only while the News add-on is on). */
+    public static function templates(): array
+    {
+        return News::enabled() ? self::TEMPLATES : array_diff_key(self::TEMPLATES, ['news' => 1]);
+    }
+
+    /** Pages only (News posts are kept out, so menus, lists and pickers never show them). */
     public static function index(): array
+    {
+        return array_filter(self::all(), static fn($m) => ($m['kind'] ?? '') !== 'post');
+    }
+
+    /** Pages and News posts. */
+    public static function all(): array
     {
         $d = Store::read('pages', ['pages' => []]);
         $pages = is_array($d['pages'] ?? null) ? $d['pages'] : [];
@@ -90,7 +104,9 @@ final class Pages
         if ($title === '') $title = 'Untitled';
         $slug = slugify(is_string($input['slug'] ?? null) && $input['slug'] !== '' ? $input['slug'] : $title);
         if ($slug === '') $slug = 'page-' . substr($id, 0, 6);
-        $slug = self::uniqueSlug($slug, $id);
+        // Posts keep the kind they were created with; they have their own set of addresses (/news/...).
+        $kind = (($existing['kind'] ?? ($input['kind'] ?? '')) === 'post') ? 'post' : 'page';
+        $slug = self::uniqueSlug($slug, $id, $kind);
 
         $layout = (string)($input['layout'] ?? '');
         $page = [
@@ -110,6 +126,16 @@ final class Pages
             'updated'     => time(),
             'author'      => $userId,
         ];
+        if ($kind === 'post') {
+            $date = (string)($input['date'] ?? '');
+            $page['kind'] = 'post';
+            $page['nav'] = false;
+            $page['date'] = preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $date, $dm) && checkdate((int)$dm[2], (int)$dm[3], (int)$dm[1]) ? $date : date('Y-m-d');
+            $page['cover'] = Media::validRef($input['cover'] ?? '') ? (string)$input['cover'] : '';
+            $page['summary'] = Sanitizer::text($input['summary'] ?? '', 300);
+            $cat = (string)($input['category'] ?? '');
+            $page['category'] = isset(News::categories()[$cat]) ? $cat : '';
+        }
 
         if ($existing) {
             self::addRevision($existing);
@@ -121,18 +147,23 @@ final class Pages
                 'nav' => $page['nav'], 'order' => $page['order'], 'updated' => $page['updated'],
                 'author' => $page['author'], 'protected' => $page['protect'] !== '',
             ];
+            if (($page['kind'] ?? '') === 'post') {
+                $d['pages'][$page['id']] += ['kind' => 'post', 'date' => $page['date'], 'category' => $page['category'],
+                    'summary' => $page['summary'], 'cover' => $page['cover'], 'created' => $page['created']];
+            }
             return $d;
         }, ['pages' => []]);
         return $page;
     }
 
-    private static function uniqueSlug(string $slug, string $id): string
+    private static function uniqueSlug(string $slug, string $id, string $kind = 'page'): string
     {
         $base = $slug;
-        if (in_array($base, TEENY_RESERVED_SLUGS, true)) $base .= '-page';
+        if ($kind === 'page' && (in_array($base, TEENY_RESERVED_SLUGS, true) || ($base === 'news' && News::enabled()))) $base .= '-page';
+        if ($kind === 'post' && in_array($base, ['feed-xml', 'category'], true)) $base .= '-post';
         $taken = [];
-        foreach (self::index() as $pid => $m) {
-            if ((string)$pid !== $id) $taken[$m['slug'] ?? ''] = true;
+        foreach (self::all() as $pid => $m) {
+            if ((string)$pid !== $id && ((($m['kind'] ?? '') === 'post') === ($kind === 'post'))) $taken[$m['slug'] ?? ''] = true;
         }
         $candidate = $base;
         for ($i = 2; isset($taken[$candidate]); $i++) {
@@ -256,7 +287,7 @@ final class Pages
 
     public static function fromTemplate(string $template): array
     {
-        if (!isset(self::TEMPLATES[$template]) || $template === 'blank') return [];
+        if (!isset(self::templates()[$template]) || $template === 'blank') return [];
         $file = TEENY_ROOT . '/templates/' . $template . '.json';
         $data = is_file($file) ? json_decode((string)file_get_contents($file), true) : null;
         return is_array($data['blocks'] ?? null) ? Blocks::sanitize($data['blocks']) : [];

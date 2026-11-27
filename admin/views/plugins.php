@@ -44,6 +44,33 @@ admin_header('Plugins', 'plugins');
         </footer>
       </article>
     </div>
+    <?php $newsOn = News::enabled($site); ?>
+    <div class="plugin-list addon-next">
+      <article class="plugin-card<?= $newsOn ? ' is-on' : '' ?>" id="addon-news">
+        <header class="plugin-head">
+          <span class="plugin-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M7 9h10M7 12.5h10M7 16h6"/></svg></span>
+          <div class="plugin-title">
+            <h3>News <small class="muted">built in</small></h3>
+            <p class="muted">A simple blog. Write posts in the same editor as pages, with dates, cover images and categories. Posts appear at /news, with an RSS feed.</p>
+          </div>
+          <span class="badge <?= $newsOn ? 'badge-published' : '' ?>"><?= $newsOn ? 'On' : 'Off' ?></span>
+        </header>
+        <div class="plugin-facts">
+          <span><?= icon('pages') ?> Adds <strong>News</strong> to the top bar and the section <strong>“Latest news”</strong></span>
+          <span><?= icon('shield') ?> No database, scheduled posts, RSS feed</span>
+        </div>
+        <footer class="plugin-actions">
+          <form method="post"><?= Auth::csrfField() ?>
+            <?php if ($newsOn): ?>
+              <button class="btn btn-ghost btn-sm" name="action" value="addon_news_off">Switch off</button>
+              <a class="btn btn-ghost btn-sm" href="<?= e(admin_url('news')) ?>"><?= icon('edit') ?> Write a post</a>
+            <?php else: ?>
+              <button class="btn btn-primary btn-sm" name="action" value="addon_news_on">Switch on</button>
+            <?php endif; ?>
+          </form>
+        </footer>
+      </article>
+    </div>
     <p class="pane-label plugin-group">Plugins</p>
     <?php if (!$plugins): ?>
       <div class="card empty-state"><?= icon('plug') ?><h3 class="card-title">No plugins yet</h3><p class="muted">Upload a plugin .zip to get started.</p></div>

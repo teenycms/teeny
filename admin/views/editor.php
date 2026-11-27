@@ -7,11 +7,21 @@ foreach (Pages::index() as $pid => $m) {
     $pageLinks[] = ['title' => $m['title'], 'url' => page_url(['id' => (string)$pid] + $m)];
 }
 $isHome = ($site['home'] ?? '') === $page['id'];
+$isPost = ($page['kind'] ?? '') === 'post';
+$newsPreview = [];
+if (News::enabled($site)) {
+    foreach (array_slice(News::posts(), 0, 12, true) as $nid => $nm) {
+        $newsPreview[] = ['title' => $nm['title'], 'date' => News::niceDate((string)($nm['date'] ?? '')), 'summary' => (string)($nm['summary'] ?? ''), 'category' => (string)($nm['category'] ?? ''),
+            'cover' => Media::exists((string)($nm['cover'] ?? '')) ? url(Media::thumb((string)$nm['cover'])) : ''];
+    }
+}
 $editorData = [
     'page'      => Pages::forEditor($page),
     'customMenu' => Menu::custom() !== null,
     // The Search section is offered only while the Search add-on is on (Plugins)
-    'schema'    => Search::enabled($site) ? Blocks::schema() : array_diff_key(Blocks::schema(), ['search' => 1]),
+    'schema'    => array_diff_key(Blocks::schema(), Search::enabled($site) ? [] : ['search' => 1], News::enabled($site) ? [] : ['news' => 1]),
+    'newsPreview' => $newsPreview,
+    'coverThumb' => $isPost && Media::exists((string)($page['cover'] ?? '')) ? url(Media::thumb((string)$page['cover'])) : '',
     'calloutIcons' => Renderer::CALLOUT_ICONS,
     'placement' => ['align' => Blocks::PLACEMENT_ALIGN, 'width' => Blocks::PLACEMENT_WIDTH],
     'isHome'    => $isHome,
@@ -41,7 +51,7 @@ $editorData = [
 <script type="application/json" id="editor-data"><?= json_for_html($editorData) ?></script>
 
 <header class="ed-top">
-  <a class="icon-btn" href="<?= e(admin_url('pages')) ?>" title="Back to pages" data-leave><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></a>
+  <a class="icon-btn" href="<?= e(admin_url($isPost ? 'news' : 'pages')) ?>" title="<?= $isPost ? 'Back to news' : 'Back to pages' ?>" data-leave><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></a>
   <div class="ed-title">
     <strong data-title><?= e($page['title']) ?></strong>
     <small data-save-state>All changes saved</small>
@@ -82,12 +92,25 @@ $editorData = [
     </section>
 
     <section class="ed-pane" data-pane="page" hidden>
-      <label class="field"><span>Page title</span><input data-prop="title" maxlength="120"></label>
-      <label class="field"><span>Page address</span>
-        <span class="slug-input"><span class="slug-prefix"><?= e(url('')) ?><?= empty($site['prettyUrls']) ? '?page=' : '' ?></span><input data-prop="slug" maxlength="60" <?= $isHome ? 'disabled title="The home page lives at your main address"' : '' ?>></span>
+      <label class="field"><span><?= $isPost ? 'Post title' : 'Page title' ?></span><input data-prop="title" maxlength="120"></label>
+      <label class="field"><span><?= $isPost ? 'Post address' : 'Page address' ?></span>
+        <span class="slug-input"><span class="slug-prefix"><?= e(url('')) ?><?= $isPost ? (empty($site['prettyUrls']) ? '?news=' : 'news/') : (empty($site['prettyUrls']) ? '?page=' : '') ?></span><input data-prop="slug" maxlength="60" <?= $isHome ? 'disabled title="The home page lives at your main address"' : '' ?>></span>
       </label>
+      <?php if ($isPost): $postCats = News::categories($site); ?>
+      <label class="field"><span>Date</span><input type="date" data-prop="date"><small class="hint">A future date keeps a live post hidden until that day.</small></label>
+      <?php if ($postCats): ?>
+      <label class="field"><span>Category</span><select data-prop="category"><option value="">No category</option><?php foreach ($postCats as $cs => $cl): ?><option value="<?= e($cs) ?>"><?= e($cl) ?></option><?php endforeach; ?></select></label>
+      <?php endif; ?>
+      <div class="field post-cover-field"><span>Cover image</span>
+        <div class="post-cover-preview" data-cover-preview></div>
+        <div class="btn-row"><button type="button" class="btn btn-ghost btn-sm" data-cover-pick>Choose image</button><button type="button" class="btn btn-ghost btn-sm" data-cover-clear>Remove</button></div>
+        <small class="hint">Shown at the top of the post, on news cards, and when the post is shared.</small>
+      </div>
+      <label class="field"><span>Summary</span><textarea data-prop="summary" rows="3" maxlength="300" placeholder="One or two sentences for news cards and the RSS feed"></textarea></label>
+      <?php endif; ?>
       <label class="field"><span>Description <small>(for search engines)</small></span><textarea data-prop="description" rows="3" maxlength="300"></textarea></label>
-      <?php if (Menu::custom() === null): ?>
+      <?php if ($isPost): ?>
+      <?php elseif (Menu::custom() === null): ?>
       <label class="check"><input type="checkbox" data-prop="nav"> Show in navigation</label>
       <label class="field"><span>Navigation order</span><input type="number" data-prop="order" min="-999" max="999"></label>
       <?php else: ?>
