@@ -1,0 +1,32 @@
+{
+    "id": "bio",
+    "name": "Bio",
+    "description": "Link-in-bio: a narrow centred column, round photo and big tappable links",
+    "order": 10,
+    "dark": false,
+    "defaults": {
+        "bg": "#fbf4ef",
+        "surface": "#ffffff",
+        "text": "#2b2230",
+        "muted": "#7d6f80",
+        "accent": "#d94f75",
+        "accentText": "#ffffff",
+        "border": "#efe1dc",
+        "headingFont": "geometric",
+        "bodyFont": "geometric",
+        "radius": 24,
+        "width": 560,
+        "fontSize": 17
+    },
+    "alt": {
+        "bg": "#1d1720",
+        "surface": "#2a2230",
+        "text": "#f6eef2",
+        "muted": "#b3a4b5",
+        "accent": "#ff7aa0",
+        "accentText": "#1d1720",
+        "border": "#3a3040"
+    },
+    "author": "Teeny CMS",
+    "version": "1.0"
+}

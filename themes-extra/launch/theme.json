@@ -1,0 +1,32 @@
+{
+    "id": "launch",
+    "name": "Launch",
+    "description": "Landing pages: a big hero, strong buttons and bold sections that convert",
+    "order": 12,
+    "dark": false,
+    "defaults": {
+        "bg": "#ffffff",
+        "surface": "#f4f2ff",
+        "text": "#14112b",
+        "muted": "#5b5876",
+        "accent": "#6a45ff",
+        "accentText": "#ffffff",
+        "border": "#e6e2f8",
+        "headingFont": "geometric",
+        "bodyFont": "modern",
+        "radius": 14,
+        "width": 1180,
+        "fontSize": 18
+    },
+    "alt": {
+        "bg": "#0d0b1d",
+        "surface": "#17142e",
+        "text": "#f1efff",
+        "muted": "#a6a2c6",
+        "accent": "#8f73ff",
+        "accentText": "#0d0b1d",
+        "border": "#2a2550"
+    },
+    "author": "Teeny CMS",
+    "version": "1.0"
+}

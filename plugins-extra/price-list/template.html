@@ -1,0 +1,12 @@
+<section class="pl">
+  {{#title}}<h2 class="pl__title">{{title}}</h2>{{/title}}
+  <ul class="pl__list">
+    {{#items}}
+    <li class="pl__item">
+      <div class="pl__head"><span class="pl__name">{{name}}</span>{{#tag}}<span class="pl__tag">{{tag}}</span>{{/tag}}<span class="pl__dots"></span><span class="pl__price">{{price}}</span></div>
+      {{#desc}}<p class="pl__desc">{{desc}}</p>{{/desc}}
+    </li>
+    {{/items}}
+  </ul>
+  {{#note}}<p class="pl__note">{{note}}</p>{{/note}}
+</section>

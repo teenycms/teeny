@@ -1,0 +1,8 @@
+<div class="sl" role="region" aria-roledescription="carousel" aria-label="Photos">
+  <div class="sl__track">
+    {{#slides}}
+    <figure class="sl__slide">{{#image}}<img src="{{image}}" alt="{{caption}}">{{/image}}{{^image}}<div class="sl__empty">Choose an image</div>{{/image}}{{#caption}}<figcaption>{{caption}}</figcaption>{{/caption}}</figure>
+    {{/slides}}
+  </div>
+  <div class="sl__dots"></div>
+</div>

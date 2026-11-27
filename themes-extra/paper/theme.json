@@ -1,0 +1,32 @@
+{
+    "id": "paper",
+    "name": "Paper",
+    "description": "Editorial and newspaper-like with serif headings. Made to pair with News",
+    "order": 14,
+    "dark": false,
+    "defaults": {
+        "bg": "#fbf9f4",
+        "surface": "#f1ede3",
+        "text": "#1a1917",
+        "muted": "#69655c",
+        "accent": "#b02a1f",
+        "accentText": "#ffffff",
+        "border": "#d8d2c4",
+        "headingFont": "classic",
+        "bodyFont": "classic",
+        "radius": 0,
+        "width": 1080,
+        "fontSize": 18
+    },
+    "alt": {
+        "bg": "#16150f",
+        "surface": "#201e17",
+        "text": "#ece6d8",
+        "muted": "#a59e8c",
+        "accent": "#e2675b",
+        "accentText": "#16150f",
+        "border": "#36322a"
+    },
+    "author": "Teeny CMS",
+    "version": "1.0"
+}

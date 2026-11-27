@@ -1,0 +1,15 @@
+/* Teeny CMS: Bio theme (link in bio) */
+.theme-bio { background: radial-gradient(1200px 600px at 50% -10%, color-mix(in srgb, var(--tc-accent) 14%, var(--tc-bg)), var(--tc-bg)); min-height: 100vh; }
+.theme-bio .tc-main { text-align: center; }
+.theme-bio .tc-header__inner { justify-content: center; }
+.theme-bio .tc-brand { font-weight: 700; letter-spacing: -.01em; }
+.theme-bio .tc-profile__avatar { width: 112px; height: 112px; border-radius: 50%; padding: 4px; background: var(--tc-surface); box-shadow: 0 0 0 3px var(--tc-accent), 0 10px 30px rgba(0,0,0,.12); }
+.theme-bio .tc-profile__name { font-size: 1.6em; font-weight: 700; }
+.theme-bio .tc-profile__bio { color: var(--tc-muted); }
+.theme-bio .tc-links { gap: 14px; }
+.theme-bio .tc-link { min-height: 3.6em; border-radius: 999px; border: 0; background: var(--tc-surface); box-shadow: 0 2px 0 var(--tc-border), 0 8px 22px rgba(0,0,0,.06); font-weight: 600; transition: transform .15s ease, box-shadow .15s ease; }
+.theme-bio .tc-link:hover { transform: translateY(-2px); background: var(--tc-accent); color: var(--tc-accent-text); box-shadow: 0 10px 26px color-mix(in srgb, var(--tc-accent) 35%, transparent); }
+.theme-bio .tc-btn { border-radius: 999px; font-weight: 600; padding: 1em 2em; }
+.theme-bio .tc-social__link { background: var(--tc-surface); border-radius: 50%; box-shadow: 0 4px 14px rgba(0,0,0,.06); }
+.theme-bio .tc-heading h2 { font-size: 1.25em; }
+.theme-bio .tc-footer { font-size: .8em; }
