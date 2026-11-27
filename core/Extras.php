@@ -13,6 +13,8 @@ final class Extras
 {
     public const CATALOG_URL = 'https://teenycms.github.io/extras/catalog.json';
     public const BASE = 'https://teenycms.github.io/extras/';
+    /** The download page for official themes and plugins (also lists their versions). */
+    public const PAGE = 'https://teenycms.github.io/extras/';
     private const HOSTS = ['teenycms.github.io'];
     private const MAX_CATALOG = 200 * 1024;
     private const MAX_ZIP = 8 * 1048576;
@@ -86,12 +88,44 @@ final class Extras
         return $item['kind'] === 'theme' ? isset(Theme::all()[$item['id']]) : isset(Plugins::all()[$item['id']]);
     }
 
+    /** Version and author of an installed theme or plugin, or null if it isn't installed. */
+    private static function installedInfo(string $kind, string $id): ?array
+    {
+        if ($kind === 'theme') {
+            $t = Theme::all()[$id] ?? null;
+            return $t && !Theme::isBuiltin($id) ? ['version' => (string)($t['version'] ?? ''), 'author' => (string)($t['author'] ?? '')] : null;
+        }
+        $m = Plugins::all()[$id]['manifest'] ?? null;
+        return $m ? ['version' => (string)($m['version'] ?? ''), 'author' => (string)($m['author'] ?? '')] : null;
+    }
+
+    /**
+     * Official themes or plugins installed here that have a newer version in the catalog:
+     * [id => ['item' => catalog entry, 'from' => installed version]]. Only items made by Teeny CMS
+     * count, so a theme someone made with the same id is never replaced.
+     */
+    public static function updates(string $kind): array
+    {
+        if (!self::checksEnabled()) return [];
+        $out = [];
+        foreach (self::catalog()[$kind === 'theme' ? 'themes' : 'plugins'] ?? [] as $id => $item) {
+            $have = self::installedInfo($kind, (string)$id);
+            if (!$have || $have['author'] !== 'Teeny CMS' || $item['version'] === '') continue;
+            if ($item['minTeeny'] !== '' && version_compare(TEENY_VERSION, $item['minTeeny'], '<')) continue; // needs a newer Teeny first
+            if (version_compare(ltrim($item['version'], 'v'), ltrim($have['version'] !== '' ? $have['version'] : '0', 'v'), '>')) {
+                $out[$id] = ['item' => $item, 'from' => $have['version']];
+            }
+        }
+        return $out;
+    }
+
     /**
      * Download and install one official theme or plugin. Returns its name.
      * @throws RuntimeException with a message for the owner
      */
-    public static function install(string $kind, string $id): string
+    public static function install(string $kind, string $id, bool $update = false): string
     {
+        if ($update && !isset(self::updates($kind)[$id])) throw new RuntimeException('There is no update for that item right now. Please refresh the page.');
         $cat = self::catalog(true);
         $item = $cat[$kind === 'theme' ? 'themes' : 'plugins'][$id] ?? null;
         if (!$item) throw new RuntimeException('That item is not in the official list. Please refresh the page and try again.');
@@ -100,16 +134,22 @@ final class Extras
         if (!Fonts::canDownload()) throw new RuntimeException('Your web host doesn’t let Teeny download files. Download the .zip and upload it here instead.');
         [$status, $data] = http_get($item['zip'], self::HOSTS, self::MAX_ZIP, 30);
         if ($status !== 200 || $data === '') throw new RuntimeException('Downloading “' . $item['name'] . '” failed. Please try again in a minute.');
-        if (!hash_equals($item['sha256'], hash('sha256', $data))) throw new RuntimeException('The download of “' . $item['name'] . '” didn’t match its checksum, so it was not installed.');
+        if (!hash_equals($item['sha256'], hash('sha256', $data))) {
+            // the official list may have changed since it was saved: fetch it again once and re-check
+            $fresh = self::catalog(false, true)[$kind === 'theme' ? 'themes' : 'plugins'][$id] ?? null;
+            if ($fresh && !hash_equals($fresh['sha256'], $item['sha256'])) { $item = $fresh; [$status, $data] = http_get($item['zip'], self::HOSTS, self::MAX_ZIP, 30); }
+        }
+        if ($status !== 200 || !hash_equals($item['sha256'], hash('sha256', $data))) throw new RuntimeException('The download of “' . $item['name'] . '” didn’t match its checksum, so it was not installed.');
         $tmp = tempnam(sys_get_temp_dir(), 'teeny');
         if ($tmp === false || file_put_contents($tmp, $data) === false) throw new RuntimeException('Could not save the download. Please try again.');
         try {
             $files = Packages::readZip($tmp, $kind);
-            $installedId = $kind === 'theme' ? Theme::installFiles($files) : Plugins::install($files);
+            // an official update keeps the plugin switched on (its download was checked against the catalog checksum)
+            $installedId = $kind === 'theme' ? Theme::installFiles($files) : Plugins::install($files, $update);
         } finally {
             @unlink($tmp);
         }
-        Activity::log($kind . '.install', $item['name'] . ' (official)');
+        Activity::log($kind . ($update ? '.update' : '.install'), $item['name'] . ' ' . $item['version'] . ' (official)');
         return $kind === 'theme' ? (Theme::all()[$installedId]['name'] ?? $item['name']) : (Plugins::all()[$installedId]['manifest']['name'] ?? $item['name']);
     }
 }

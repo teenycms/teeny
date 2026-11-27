@@ -18,6 +18,10 @@ final class Blocks
     public const POPUP_TRIGGER = ['load' => 'Right away', 'delay5' => 'After 5 seconds', 'delay10' => 'After 10 seconds', 'delay30' => 'After 30 seconds', 'scroll' => 'After scrolling halfway down', 'exit' => 'When the visitor moves to leave (computers)'];
     public const POPUP_OFTEN = ['always' => 'Every time the page opens', 'visit' => 'Once per visit', 'day' => 'Once a day', 'week' => 'Once a week', 'month' => 'Once a month', 'once' => 'Only once'];
     public const PLACEMENT_WIDTH = ['' => 'Page default', 'narrow' => 'Narrow', 'medium' => 'Medium', 'wide' => 'Wide', 'full' => 'Full width'];
+    /** Title size presets (the theme's own size is the default). */
+    public const TITLE_SIZE = ['s' => 'Small', '' => 'Auto', 'l' => 'Large', 'xl' => 'Extra large'];
+    /** Sections that have a title the size presets apply to. */
+    public const TITLED = ['hero', 'profile', 'heading', 'split', 'cta', 'newsletter', 'rsvp', 'search', 'news', 'columns', 'steps', 'pricing', 'team', 'products', 'events', 'table', 'callout'];
 
     /** Simple line icons drawn for Teeny (24×24, stroke-based), with no external icon fonts. */
     public const SOCIAL = [
@@ -493,6 +497,8 @@ final class Blocks
             $width = (string)($b['boxWidth'] ?? '');
             if (isset(self::PLACEMENT_ALIGN[$align]) && $align !== '') $clean['boxAlign'] = $align;
             if (isset(self::PLACEMENT_WIDTH[$width]) && $width !== '') $clean['boxWidth'] = $width;
+            $ts = (string)($b['titleSize'] ?? '');
+            if ($ts !== '' && isset(self::TITLE_SIZE[$ts]) && in_array($type ?? ($b['type'] ?? ''), self::TITLED, true)) $clean['titleSize'] = $ts;
             $out[] = $clean;
         }
         return $out;

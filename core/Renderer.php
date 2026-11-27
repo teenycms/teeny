@@ -38,6 +38,8 @@ final class Renderer
         $w = (string)($b['boxWidth'] ?? '');
         if ($a !== '' && isset(Blocks::PLACEMENT_ALIGN[$a])) $cls .= ' tc-a-' . $a;
         if ($w !== '' && isset(Blocks::PLACEMENT_WIDTH[$w])) $cls .= ' tc-w-' . $w;
+        $t = (string)($b['titleSize'] ?? '');
+        if ($t !== '' && isset(Blocks::TITLE_SIZE[$t])) $cls .= ' tc-ts-' . $t;
         $pos = $cls === '' ? false : strpos($html, 'class="tc-block');
         return $pos === false ? $html : substr_replace($html, 'class="tc-block' . $cls, $pos, 15);
     }

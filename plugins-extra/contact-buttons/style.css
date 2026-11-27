@@ -1,8 +1,0 @@
-/* Every rule here only applies inside this plugin's own section. */
-.cb { text-align: inherit; }
-.cb__title { font-size: 1.5em; margin-bottom: .7em; }
-.cb__row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 10px; max-width: 680px; margin-inline: var(--tc-ml, 0) var(--tc-mr, auto); }
-.cb__btn { display: inline-flex; align-items: center; justify-content: center; min-height: 3.2em; padding: .6em 1.2em; border-radius: var(--tc-radius); border: 1px solid var(--tc-border); background: var(--tc-surface); color: var(--tc-text); font-weight: 600; text-align: center; text-decoration: none; }
-.cb__btn:hover { border-color: var(--tc-accent); color: var(--tc-accent); }
-.cb__btn--wa { background: #15803d; border-color: #15803d; color: #fff; }
-.cb__btn--wa:hover { background: #116a32; color: #fff; }

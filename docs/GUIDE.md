@@ -228,14 +228,15 @@ A few tips:
 
 Hover over a section to see its toolbar: **↑ ↓** move it, **⧉** duplicates it, **+** adds a new section below, and **🗑** deletes it. You can also drag sections in the **On this page** list. Deleted something by mistake? Press **Undo**, or Ctrl+Z.
 
-### Placement: position and width
+### Placement: position, width and title size
 
 When you select a section, **Placement** is the first thing in its settings:
 
 - **Position:** Auto, Left, Center or Right
 - **Width:** Auto, Narrow, Medium, Wide or Full width
+- **Title size:** S, Auto, L or XL (on sections with a title)
 
-Choose **Narrow** or **Medium** first, then use **Position** to move the section. **Auto** follows the page's normal layout.
+Choose **Narrow** or **Medium** first, then use **Position** to move the section. **Auto** follows the page's normal layout and your theme's own title size. Large titles always fit their column, so on a phone or beside a picture, **L** and **XL** grow only as far as there is room.
 
 ### Images in sections
 
@@ -309,7 +310,7 @@ Open **Style** to change how your whole site looks.
 - **Download** a theme as a `.zip` to keep it or share it.
 - **Add a theme (.zip):** upload a theme someone made for you. Every file is checked first, and themes can only contain styles, fonts and images.
 
-**Get more themes** (below Your themes): six official themes made for Teeny: **Bio** (link in bio), **Handbook** (documentation), **Launch** (landing pages), **Studio** (portfolios), **Paper** (editorial, pairs with News) and **Soft** (cafés and small shops). Click **Install**, then pick it under **Theme**. They download from teenycms.github.io and are checked like any upload. You can also download them from the GitHub release and upload the .zip yourself.
+**Get more themes** (below Your themes): six official themes made for Teeny: **Bio** (link in bio), **Handbook** (documentation), **Launch** (landing pages), **Studio** (portfolios), **Paper** (editorial, pairs with News) and **Soft** (cafés and small shops). Click **Install**, then pick it under **Theme**. They download from teenycms.github.io and are checked like any upload. You can also download them from the [themes and plugins page](https://teenycms.github.io/extras/) and upload the .zip yourself. Each theme shows its version beside its name. When a newer version of an official theme is out, a notice appears at the top of the Style page: click **Update** (your colours and fonts for that theme are kept).
 
 ---
 
@@ -365,7 +366,7 @@ To use one, open **Plugins** (profile menu), click **Switch on**, then find its 
 - Add a **Latest news** section to any page to show your newest posts, or start a page from the **News** layout. Categories are managed on the News page.
 - Switch News off any time. Your posts are kept and come back when you switch it on again.
 
-**Get more plugins:** at the bottom of the Plugins page, Teeny lists the official extra plugins (Menu or price list, Contact buttons, Location card, Timeline and Image slider). Click **Install**: the plugin downloads from teenycms.github.io, is checked like any upload, and arrives switched off. If your host can't download, get the .zip from the GitHub release instead.
+**Get more plugins:** at the bottom of the Plugins page, Teeny lists the official extra plugins (Menu or price list, Contact buttons, Location card, Timeline and Image slider). Click **Install**: the plugin downloads from teenycms.github.io, is checked like any upload, and arrives switched off. If your host can't download, get the .zip from the [themes and plugins page](https://teenycms.github.io/extras/) instead. When a newer version of an official plugin is out, a notice appears at the top of the Plugins page: click **Update**. A plugin that was on stays on.
 
 **Adding a plugin:** upload its `.zip` under **Add a plugin**. Teeny checks every file and installs it switched off, so you can review what it does before using it.
 

@@ -7,7 +7,7 @@
 
 # Teeny CMS
 
-**Version 1.6.1** · [Website](https://teenycms.github.io) · [Apache License 2.0](LICENSE) · [Changelog](CHANGELOG.md) · [Installation & user guide](docs/GUIDE.md)
+**Version 1.6.2** · [Website](https://teenycms.github.io) · [Apache License 2.0](LICENSE) · [Changelog](CHANGELOG.md) · [Installation & user guide](docs/GUIDE.md)
 
 ### Your whole website is just a folder.
 
@@ -40,7 +40,7 @@ It's made for landing pages, portfolios, simple documentation, galleries and lin
 - **Password-protected pages**, a "coming soon" mode, and an editable footer with links and social icons.
 - **Site search** as an optional add-on, and **fonts from Google Fonts** saved on your own site (no tracking).
 - **Owners and editors**, two-factor sign-in, and a rescue code if you forget your password.
-- **More themes and plugins in one click:** 6 extra themes and 5 extra plugins install straight from the Studio. Or save your own. Plugins can't run code on your server.
+- **More themes and plugins in one click:** 6 extra themes and 5 extra plugins install and update straight from the Studio (or from the [themes and plugins page](https://teenycms.github.io/extras/)). Or save your own. Plugins can't run code on your server.
 - **Safety net:** version history for every page and one-click backups in the Vault.
 
 ## Screenshots
@@ -115,4 +115,4 @@ You may use it for personal and commercial websites, change it and share it. If 
 
 *"Big enough for your site. Small enough to zip."*
 
-© 2026 Teeny CMS · Version 1.6.1 · Made to stay small.
+© 2026 Teeny CMS · Version 1.6.2 · Made to stay small.

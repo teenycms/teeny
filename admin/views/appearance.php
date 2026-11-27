@@ -4,7 +4,10 @@ defined('TEENY_VERSION') || exit; // views only run through admin/index.php
 $themes = Theme::all();
 $active = Theme::active($site);
 $align = (string)($site['theme']['align'] ?? 'normal');
+$themeUpdates = Extras::updates('theme');
 admin_header('Style', 'style');
+require_once __DIR__ . '/_extras.php';
+extras_updates_notice('theme');
 ?>
 <form method="post" class="appearance" data-appearance>
   <?= Auth::csrfField() ?>
@@ -162,7 +165,7 @@ admin_header('Style', 'style');
       <?php foreach ($themes as $key => $t): $d = Theme::settings($site, $key); ?>
         <li>
           <span class="theme-dot" style="background:<?= e($d['bg']) ?>;box-shadow:inset 0 0 0 7px <?= e($d['bg']) ?>, inset 0 0 0 20px <?= e($d['accent']) ?>"></span>
-          <span class="tr-name"><strong><?= e($t['name']) ?></strong><small class="muted"><?= Theme::isBuiltin($key) ? 'Built in' : e(trim(($t['author'] ?? '') !== '' ? 'by ' . $t['author'] : 'Custom theme')) ?><?= $key === $active ? ' · in use' : '' ?></small></span>
+          <span class="tr-name"><strong><?= e($t['name']) ?><?php if (($t['version'] ?? '') !== ''): ?> <span class="ver"><?= e($t['version']) ?></span><?php endif; ?></strong><small class="muted"><?= Theme::isBuiltin($key) ? 'Built in' : e(trim(($t['author'] ?? '') !== '' ? 'by ' . $t['author'] : 'Custom theme')) ?><?= $key === $active ? ' · in use' : '' ?></small><?php if (isset($themeUpdates[$key])): ?><a class="badge badge-update" href="#get-more-themes">Update to <?= e($themeUpdates[$key]['item']['version']) ?></a><?php endif; ?></span>
           <span class="tr-actions">
             <?php if (Packages::zipAvailable()): ?>
             <form method="post"><?= Auth::csrfField() ?><input type="hidden" name="theme_action" value="download"><input type="hidden" name="id" value="<?= e($key) ?>"><button class="icon-btn" title="Download as .zip"><?= icon('backup') ?></button></form>

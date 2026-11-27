@@ -1,9 +1,0 @@
-/* Every rule here only applies inside this plugin's own section. */
-.tl { max-width: 680px; margin-inline: var(--tc-ml) var(--tc-mr); text-align: left; }
-.tl__title { font-size: 1.6em; margin-bottom: .9em; }
-.tl__list { list-style: none; margin: 0; padding: 0 0 0 1.6em; border-left: 2px solid var(--tc-border); display: grid; gap: 1.6em; }
-.tl__item { position: relative; }
-.tl__item::before { content: ""; position: absolute; left: calc(-1.6em - 7px); top: .45em; width: 12px; height: 12px; border-radius: 50%; background: var(--tc-accent); box-shadow: 0 0 0 4px var(--tc-bg); }
-.tl__when { margin: 0; font-size: .8em; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--tc-accent); }
-.tl__head { margin: .15em 0 .25em; font-size: 1.15em; }
-.tl__text { margin: 0; color: var(--tc-muted); }

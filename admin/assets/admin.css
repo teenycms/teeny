@@ -777,3 +777,14 @@ input[type="checkbox"]:focus-visible, input[type="radio"]:focus-visible { outlin
   .studio-foot a { display: inline-block; padding-block: 10px; }
   label.check input[type="checkbox"], label.check input[type="radio"] { width: 18px; height: 18px; }
 }
+
+/* updates for official themes and plugins */
+.notice-update { display: flex; align-items: center; gap: 14px; padding: 14px 18px; margin-bottom: 18px; border-color: #e3d3b8; background: #fffaf1; }
+.notice-update p { margin: 0; flex: 1; min-width: 0; }
+.notice-update__icon { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--accent-soft); color: #6f5530; }
+.notice-update__icon .ic { width: 18px; height: 18px; }
+.badge-update { background: #fbf0d9; color: #6f4d00; text-decoration: none; margin-left: 6px; vertical-align: 2px; }
+.badge-update:hover { background: #f6e3bd; }
+.tr-name .badge-update { margin: 4px 0 0; align-self: flex-start; }
+@media (max-width: 560px) { .notice-update { flex-wrap: wrap; } .notice-update form { width: 100%; } .notice-update .btn { width: 100%; } }
+.ver { display: inline-block; margin-left: 4px; padding: 1px 6px; border-radius: 5px; background: var(--line-2); color: var(--ink-2); font: 500 11px/1.5 var(--mono); letter-spacing: 0; vertical-align: 2px; }

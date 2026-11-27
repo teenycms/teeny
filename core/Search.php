@@ -16,7 +16,7 @@ final class Search
 
     /** Keys in a section that hold settings or addresses, not words visitors read. */
     private const SKIP_KEYS = ['id', 'type', 'url', 'image', 'avatar', 'logo', 'photo', 'style', 'side', 'level', 'kind', 'place',
-        'trigger', 'often', 'featured', 'boxAlign', 'boxWidth', 'icon', 'network', 'phone', 'language', 'newTab', 'columns', 'date'];
+        'trigger', 'often', 'featured', 'boxAlign', 'boxWidth', 'titleSize', 'icon', 'network', 'phone', 'language', 'newTab', 'columns', 'date'];
 
     public static function enabled(?array $site = null): bool
     {

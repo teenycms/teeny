@@ -186,7 +186,8 @@ final class Plugins
 
     /* ---------- install / enable / remove ---------- */
 
-    public static function install(array $files): string
+    /** @param bool $keepState keep the plugin switched on if it was (only for checksum-verified official updates) */
+    public static function install(array $files, bool $keepState = false): string
     {
         [$manifest, $problems] = self::inspectFiles($files);
         if ($problems) throw new RuntimeException('This plugin was not installed: ' . implode('; ', array_slice($problems, 0, 5)) . '.');
@@ -195,8 +196,8 @@ final class Plugins
         if (isset($files['widget.css'])) $files['widget.css'] = Sanitizer::css($files['widget.css']) . "\n";
         $wasEnabled = !empty(self::state()[$id]['enabled']);
         Packages::writeFolder(self::dir($id), $files);
-        self::saveState($id, ['enabled' => false, 'installed' => time(), 'version' => $manifest['version']]);
-        if ($wasEnabled) Activity::log('plugin.update', $manifest['name'] . ' ' . $manifest['version'] . ' (switched off for review)');
+        self::saveState($id, ['enabled' => $keepState && $wasEnabled, 'installed' => time(), 'version' => $manifest['version']]);
+        if ($wasEnabled && !$keepState) Activity::log('plugin.update', $manifest['name'] . ' ' . $manifest['version'] . ' (switched off for review)');
         return $id;
     }
 

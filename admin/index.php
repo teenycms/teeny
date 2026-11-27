@@ -338,6 +338,13 @@ switch ($p) {
                     flash('“' . $name . '” was checked and installed. Review it below, then switch it on.');
                     redirect(admin_url('plugins') . '#get-more-plugins');
                 }
+                if ($action === 'extra_update' || $action === 'extras_update_all') {
+                    $ids = $action === 'extra_update' ? [$id] : array_keys(Extras::updates('plugin'));
+                    $names = [];
+                    foreach ($ids as $one) $names[] = Extras::install('plugin', (string)$one, true);
+                    flash($names ? 'Updated: ' . implode(', ', $names) . '. Plugins that were on are still on.' : 'Everything is already up to date.');
+                    redirect(admin_url('plugins'));
+                }
                 if (in_array($action, ['addon_news_on', 'addon_news_off'], true)) {
                     $site['addons'] = is_array($site['addons'] ?? null) ? $site['addons'] : [];
                     $site['addons']['news'] = $action === 'addon_news_on';
@@ -392,9 +399,17 @@ switch ($p) {
     /* ---------- appearance ---------- */
     case 'style':
         require_cap('appearance');
-        if (is_post() && in_array($_POST['action'] ?? '', ['extra_install', 'extras_refresh'], true)) {
+        if (is_post() && in_array($_POST['action'] ?? '', ['extra_install', 'extras_refresh', 'extra_update', 'extras_update_all'], true)) {
             try {
                 if ($_POST['action'] === 'extras_refresh') { Extras::catalog(false, true); flash('The list of official themes is up to date.'); }
+                elseif ($_POST['action'] === 'extra_update' || $_POST['action'] === 'extras_update_all') {
+                    $ids = $_POST['action'] === 'extra_update' ? [(string)($_POST['id'] ?? '')] : array_keys(Extras::updates('theme'));
+                    $names = [];
+                    foreach ($ids as $one) $names[] = Extras::install('theme', (string)$one, true);
+                    Cache::clear();
+                    flash($names ? 'Updated: ' . implode(', ', $names) . '. Your colours and fonts for each theme are kept.' : 'Everything is already up to date.');
+                    redirect(admin_url('style'));
+                }
                 else flash('“' . Extras::install('theme', (string)($_POST['id'] ?? '')) . '” was checked and installed. Pick it under Theme to use it.');
             } catch (RuntimeException $ex) {
                 flash($ex->getMessage(), 'error');

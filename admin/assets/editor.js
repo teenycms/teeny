@@ -239,6 +239,7 @@
     let cls = '';
     if (b.boxAlign && b.boxAlign in D.placement.align) cls += ' tc-a-' + b.boxAlign;
     if (b.boxWidth && b.boxWidth in D.placement.width) cls += ' tc-w-' + b.boxWidth;
+    if (b.titleSize && D.placement.title && b.titleSize in D.placement.title) cls += ' tc-ts-' + b.titleSize;
     return cls ? html.replace('class="tc-block', 'class="tc-block' + cls) : html;
   }
 
@@ -252,8 +253,10 @@
     wrap.className = 'placement';
     const seg = (key, title, opts, icons) => `<div class="field"><span>${title}</span><div class="seg" role="radiogroup" aria-label="${title}" data-key="${key}">` +
       Object.entries(opts).map(([v, l]) => `<button type="button" role="radio" aria-checked="${(b[key] || '') === v}" data-v="${v}" title="${esc(l)}">${icons[v] || esc(v === '' ? 'Auto' : l.replace(' width', ''))}</button>`).join('') + `</div></div>`;
+    const titled = D.placement.title && (D.placement.titled || []).includes(b.type);
     wrap.innerHTML = '<p class="pane-label">Placement</p>' + seg('boxAlign', 'Position', D.placement.align, AL_IC) + seg('boxWidth', 'Width', D.placement.width, {}) +
-      '<p class="hint">Choose Narrow or Medium to make the section smaller, then use Position to move it left, center or right.</p>';
+      '<p class="hint">Choose Narrow or Medium to make the section smaller, then use Position to move it left, center or right.</p>' +
+      (titled ? seg('titleSize', 'Title size', D.placement.title, { s: 'S', l: 'L', xl: 'XL' }) : '');
     wrap.addEventListener('click', e => {
       const btn = e.target.closest('[data-v]');
       if (!btn) return;

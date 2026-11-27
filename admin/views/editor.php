@@ -23,7 +23,7 @@ $editorData = [
     'newsPreview' => $newsPreview,
     'coverThumb' => $isPost && Media::exists((string)($page['cover'] ?? '')) ? url(Media::thumb((string)$page['cover'])) : '',
     'calloutIcons' => Renderer::CALLOUT_ICONS,
-    'placement' => ['align' => Blocks::PLACEMENT_ALIGN, 'width' => Blocks::PLACEMENT_WIDTH],
+    'placement' => ['align' => Blocks::PLACEMENT_ALIGN, 'width' => Blocks::PLACEMENT_WIDTH, 'title' => Blocks::TITLE_SIZE, 'titled' => Blocks::TITLED],
     'isHome'    => $isHome,
     'aligns'    => array_map(static fn($a) => $a['label'], Theme::ALIGNS),
     'siteAlign' => Theme::align($site),

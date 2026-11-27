@@ -1,9 +1,0 @@
-/* Every rule here only applies inside this plugin's own section. */
-.lc__card { max-width: 720px; margin-inline: var(--tc-ml) var(--tc-mr); padding: 1.6em 1.8em; border: 1px solid var(--tc-border); border-radius: var(--tc-radius); background: var(--tc-surface); text-align: left; }
-.lc__title { font-size: 1.5em; margin-bottom: .8em; }
-.lc__cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2em 2em; }
-.lc__label { margin: 0 0 .2em; font-size: .75em; letter-spacing: .14em; text-transform: uppercase; color: var(--tc-muted); }
-.lc__text { margin: 0; white-space: pre-line; }
-.lc__action { margin: 1.4em 0 0; }
-.lc__btn { display: inline-flex; align-items: center; min-height: 2.9em; padding: 0 1.5em; border-radius: var(--tc-radius); background: var(--tc-accent); color: var(--tc-accent-text); font-weight: 600; text-decoration: none; }
-.lc__btn:hover { opacity: .9; }

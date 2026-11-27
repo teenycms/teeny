@@ -4,7 +4,10 @@ defined('TEENY_VERSION') || exit; // views only run through admin/index.php
 $plugins = Plugins::all();
 $zip = Packages::zipAvailable();
 $typeNames = ['text' => 'Text', 'textarea' => 'Paragraph', 'rich' => 'Formatted text', 'url' => 'Link', 'image' => 'Image', 'select' => 'Choice', 'list' => 'List'];
+$pluginUpdates = Extras::updates('plugin');
 admin_header('Plugins', 'plugins');
+require_once __DIR__ . '/_extras.php';
+extras_updates_notice('plugin');
 ?>
 <p class="muted lead">Plugins add new kinds of sections to the editor, like opening hours, testimonials or a countdown. They are built safely: they can't run code on your server, and any interactive part runs in a sealed sandbox.</p>
 
@@ -81,7 +84,7 @@ admin_header('Plugins', 'plugins');
         <header class="plugin-head">
           <span class="plugin-icon" aria-hidden="true"><?= e(strtoupper(substr($m['name'] ?? $id, 0, 1))) ?></span>
           <div class="plugin-title">
-            <h3><?= e($m['name'] ?? $id) ?> <small class="muted"><?= e($m['version'] ?? '') ?></small></h3>
+            <h3><?= e($m['name'] ?? $id) ?><?php if (($m['version'] ?? '') !== ''): ?> <span class="ver"><?= e($m['version']) ?></span><?php endif; ?><?php if (isset($pluginUpdates[$id])): ?> <a class="badge badge-update" href="#get-more-plugins">Update to <?= e($pluginUpdates[$id]['item']['version']) ?></a><?php endif; ?></h3>
             <p class="muted"><?= e($m['description'] ?? '') ?><?= ($m['author'] ?? '') !== '' ? ' · by ' . e($m['author']) : '' ?></p>
           </div>
           <span class="badge <?= $p['enabled'] && $ok ? 'badge-published' : '' ?>"><?= $p['enabled'] && $ok ? 'On' : 'Off' ?></span>

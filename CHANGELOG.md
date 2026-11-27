@@ -7,6 +7,41 @@ Never overwrite your `data/` and `uploads/` folders (or your own `config.php`).
 
 ---
 
+## 1.6.2 · 2026-11-28
+
+### Added
+- **Updates for official themes and plugins.** When a newer version of an official theme or plugin you have is out, a notice appears at the top of **Style** or **Plugins**. Click **Update** to install it in one click (or **Update all**). Your colours and fonts for each theme are kept, and plugins that were on stay on. The download is checked against the official list, like an install.
+- **Title size for each section.** Pick a section and choose **S**, **Auto**, **L** or **XL** under **Title size** (beside Position and Width). It works on every section with a title. Big titles always fit their column, so they never get too large for a phone.
+- **Versions beside names.** Every theme and plugin now shows its version beside its name, in **Style → Your themes**, on the **Plugins** page and in the **Get more** lists.
+
+### Fixed
+- **Big titles no longer break in the middle of words.** In 1.6.1, a large title beside a picture (for example in the Studio theme) could split words like "Somethin-g". Titles now size themselves to fit their column, and very long words hyphenate neatly instead.
+
+### Updated downloads
+New versions of the **Bio, Launch, Paper and Studio** themes, so their titles follow the new Title size setting. You can update them in one click from **Style**.
+
+Themes and plugins now have their own page at [teenycms.github.io/extras](https://teenycms.github.io/extras/), with every version listed and a download for each. The Teeny download no longer comes with separate theme and plugin packs: get them from that page instead.
+
+### Files to upload
+```
+admin/assets/admin.css
+admin/assets/editor.js
+admin/index.php
+admin/views/_extras.php
+admin/views/appearance.php
+admin/views/editor.php
+admin/views/plugins.php
+assets/site.css
+core/Blocks.php
+core/Extras.php
+core/Plugins.php
+core/Renderer.php
+core/Search.php
+core/bootstrap.php
+themes/luxury/theme.css
+```
+---
+
 ## 1.6.1 · 2026-11-27
 
 A tidy-up release from a visual check of every theme and every Studio screen on desktops, tablets and phones.
