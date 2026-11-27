@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Suggest an idea
+    url: https://github.com/teenycms/teeny/discussions
+    about: Ideas and feature requests go to Discussions, so others can add their thoughts.
+  - name: Ask a question
+    url: https://github.com/teenycms/teeny/wiki
+    about: Quick answers, FAQ and troubleshooting are in the wiki.
+  - name: Report a security problem
+    url: https://github.com/teenycms/teeny/security/advisories/new
+    about: Please report security problems privately, never in a public issue.

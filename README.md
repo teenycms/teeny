@@ -104,6 +104,7 @@ Passwords are hashed with Argon2id, sign-in is rate-limited, two-factor sign-in 
 | [Wiki](https://github.com/teenycms/teeny/wiki) | Quick answers, FAQ and email setup |
 | [Changelog](CHANGELOG.md) | Every release and which files to upload |
 | [Security](SECURITY.md) | How Teeny protects your site, and how to report a problem |
+| [Contributing](CONTRIBUTING.md) | How to report bugs, suggest ideas and send changes |
 | [Themes](docs/THEMES.md) · [Plugins](docs/PLUGINS.md) | Build your own |
 | [Official themes and plugins](https://github.com/teenycms/extras) | Source of the extra themes and plugins on the [download page](https://teenycms.github.io/extras/) |
 

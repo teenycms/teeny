@@ -1,0 +1,49 @@
+name: Report a bug
+description: Something in Teeny doesn't work as it should.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this! Found a security problem? Please don't post it here: use **Security → Report a vulnerability** instead.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you see, and what did you expect to see?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How can we make it happen?
+      description: The steps, one per line.
+      placeholder: |
+        1. Open Style
+        2. Pick the Docs theme
+        3. Click Save
+    validations:
+      required: true
+  - type: input
+    id: teeny
+    attributes:
+      label: Teeny version
+      description: Shown at the bottom of every Studio page.
+      placeholder: "1.6.3"
+    validations:
+      required: true
+  - type: input
+    id: php
+    attributes:
+      label: PHP version and web host
+      placeholder: "PHP 8.2 on cPanel"
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and device
+      placeholder: "Chrome on Windows, Safari on iPhone"
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: Screenshots or error messages help a lot. Please remove any passwords or personal details first.
