@@ -12,6 +12,8 @@ Thanks for wanting to help! Teeny is small on purpose, so every change is checke
 
 Found a security problem? Please don't open an issue. Follow [SECURITY.md](SECURITY.md) to report it privately.
 
+Please be kind: everyone here follows our [code of conduct](CODE_OF_CONDUCT.md).
+
 ## Before you start a bigger change
 
 Open a discussion first for new features, new settings or anything that adds files. It saves you time if the idea doesn't fit, and we can agree on the simplest way to do it.
