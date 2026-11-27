@@ -547,6 +547,17 @@ body.admin { background: radial-gradient(1400px 500px at 50% -220px, #fffdf8, va
 .rsvp-total__num strong { font-size: 30px; }
 .plugin-group { margin: 22px 0 10px; }
 .addon-next { margin-top: 14px; }
+.extras { margin-top: 20px; }
+.extras-grid { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; }
+.extra { display: flex; align-items: center; gap: 14px; padding: 10px 0; border-top: 1px solid var(--line-2); }
+.extra:first-child { border-top: 0; }
+.extra-text { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.35; }
+.extra-text small { font-size: 12.5px; }
+.extra-swatch { flex: none; position: relative; width: 64px; height: 44px; border-radius: 8px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); overflow: hidden; }
+.extra-swatch__title { position: absolute; left: 8px; top: 5px; font: 600 15px Georgia, serif; }
+.extra-swatch__btn { position: absolute; left: 8px; bottom: 7px; width: 22px; height: 7px; border-radius: 4px; }
+.extra-swatch__line { position: absolute; right: 7px; top: 9px; width: 18px; height: 26px; border-radius: 4px; opacity: .9; }
+.studio-foot__update { font-weight: 600; }
 .news-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start; }
 @media (max-width: 900px) { .news-layout { grid-template-columns: minmax(0, 1fr); } }
 .news-new { padding: 14px 16px; margin-bottom: 16px; }

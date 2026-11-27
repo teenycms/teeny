@@ -13,7 +13,7 @@ final class Store
 {
     private const GUARD = "<?php http_response_code(404); exit; ?>\n";
     /** Writes that never change what visitors see, so the page cache can stay. */
-    private const NO_CACHE_CLEAR = ['throttle', 'users', 'inbox', 'formlimit', 'media', 'stats/', 'activity', 'subscribers', 'rsvps', 'resets', 'resetlimit'];
+    private const NO_CACHE_CLEAR = ['throttle', 'users', 'inbox', 'formlimit', 'media', 'stats/', 'activity', 'subscribers', 'rsvps', 'resets', 'resetlimit', 'extras'];
 
     public static function path(string $name): string
     {

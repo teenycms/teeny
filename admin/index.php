@@ -182,6 +182,7 @@ switch ($p) {
 
     /* ---------- dashboard ---------- */
     case 'studio':
+        if (Auth::can('settings') && Extras::checksEnabled($site)) Extras::catalog(true); // once a day at most
         require __DIR__ . '/views/dashboard.php';
         break;
 
@@ -327,6 +328,16 @@ switch ($p) {
             $action = (string)($_POST['action'] ?? '');
             $id = (string)($_POST['id'] ?? '');
             try {
+                if ($action === 'extras_refresh') {
+                    Extras::catalog(false, true);
+                    flash('The list of official plugins is up to date.');
+                    redirect(admin_url('plugins') . '#get-more-plugins');
+                }
+                if ($action === 'extra_install') {
+                    $name = Extras::install('plugin', $id);
+                    flash('“' . $name . '” was checked and installed. Review it below, then switch it on.');
+                    redirect(admin_url('plugins') . '#get-more-plugins');
+                }
                 if (in_array($action, ['addon_news_on', 'addon_news_off'], true)) {
                     $site['addons'] = is_array($site['addons'] ?? null) ? $site['addons'] : [];
                     $site['addons']['news'] = $action === 'addon_news_on';
@@ -381,6 +392,15 @@ switch ($p) {
     /* ---------- appearance ---------- */
     case 'style':
         require_cap('appearance');
+        if (is_post() && in_array($_POST['action'] ?? '', ['extra_install', 'extras_refresh'], true)) {
+            try {
+                if ($_POST['action'] === 'extras_refresh') { Extras::catalog(false, true); flash('The list of official themes is up to date.'); }
+                else flash('“' . Extras::install('theme', (string)($_POST['id'] ?? '')) . '” was checked and installed. Pick it under Theme to use it.');
+            } catch (RuntimeException $ex) {
+                flash($ex->getMessage(), 'error');
+            }
+            redirect(admin_url('style') . '#get-more-themes');
+        }
         if (is_post() && isset($_POST['font_action'])) {
             try {
                 if ($_POST['font_action'] === 'add') {
@@ -528,6 +548,7 @@ switch ($p) {
             $home = (string)($_POST['home'] ?? '');
             if (Pages::get($home)) $site['home'] = $home;
             $site['prettyUrls'] = !empty($_POST['prettyUrls']);
+            $site['updateCheck'] = !empty($_POST['updateCheck']);
             $siteUrl = Sanitizer::url((string)($_POST['siteUrl'] ?? ''));
             $site['siteUrl'] = preg_match('~^https?://[^/\s]+(/[^\s]*)?$~i', $siteUrl) ? rtrim($siteUrl, '/') : '';
             foreach (['logo', 'favicon', 'shareImage'] as $k) {

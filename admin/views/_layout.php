@@ -99,7 +99,7 @@ function admin_footer(): void
     ?>
 </main>
 <footer class="studio-foot">
-  <span><strong>Teeny CMS</strong> <a href="<?= e(TEENY_REPO . '/releases/tag/v' . TEENY_VERSION) ?>" target="_blank" rel="noopener noreferrer" title="What's new in this version">v<?= e(TEENY_VERSION) ?></a></span>
+  <span><strong>Teeny CMS</strong> <a href="<?= e(TEENY_REPO . '/releases/tag/v' . TEENY_VERSION) ?>" target="_blank" rel="noopener noreferrer" title="What's new in this version">v<?= e(TEENY_VERSION) ?></a><?php if (Auth::can('settings') && ($upd = Extras::update())): ?> · <a class="studio-foot__update" href="<?= e($upd['url']) ?>" target="_blank" rel="noopener noreferrer">Teeny <?= e($upd['version']) ?> is available</a><?php endif; ?></span>
   <span class="studio-foot__links"><a href="<?= e(TEENY_REPO . '/wiki') ?>" target="_blank" rel="noopener noreferrer">Help</a> · <a href="<?= e(TEENY_REPO) ?>" target="_blank" rel="noopener noreferrer">GitHub</a> · © <?= date('Y') ?> Teeny CMS · Released under the Apache License 2.0</span>
 </footer>
 <?php media_modal(); ?>

@@ -61,6 +61,7 @@ require __DIR__ . '/Stats.php';
 require __DIR__ . '/Fonts.php';
 require __DIR__ . '/Search.php';
 require __DIR__ . '/News.php';
+require __DIR__ . '/Extras.php';
 require __DIR__ . '/Totp.php';
 require __DIR__ . '/Activity.php';
 require __DIR__ . '/Templater.php';

@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Posts are pages with kind "post" plus a date, cover image, summary and category, so they use
  * the same editor, storage, version history, backups and search. They live at /news/{slug};
  * the list is at /news, categories at /news/category/{slug} and the RSS feed at /news/feed.xml.
- * A post appears once it is published and its date has come (dates are YYYY-MM-DD, in UTC).
+ * A post appears once it is published and its date has come (dates are YYYY-MM-DD, in the site's time zone).
  */
 final class News
 {

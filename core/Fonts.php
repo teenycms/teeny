@@ -229,27 +229,6 @@ final class Fonts
     /** GET a URL on one of Google's two font hosts. Returns [status, body]; status 0 means no connection. */
     private static function get(string $url): array
     {
-        $host = parse_url($url, PHP_URL_HOST);
-        if (!in_array($host, ['fonts.googleapis.com', 'fonts.gstatic.com'], true) || !str_starts_with($url, 'https://')) return [0, ''];
-        // A current browser identity makes Google return WOFF2 files.
-        $ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36';
-        if (function_exists('curl_init')) {
-            $ch = curl_init($url);
-            curl_setopt_array($ch, [
-                CURLOPT_RETURNTRANSFER => true, CURLOPT_FOLLOWLOCATION => false, CURLOPT_TIMEOUT => 20, CURLOPT_CONNECTTIMEOUT => 8,
-                CURLOPT_USERAGENT => $ua, CURLOPT_PROTOCOLS => CURLPROTO_HTTPS, CURLOPT_SSL_VERIFYPEER => true,
-                CURLOPT_MAXFILESIZE => self::MAX_FILE + 1024,
-            ]);
-            $body = curl_exec($ch);
-            $status = $body === false ? 0 : (int)curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
-            curl_close($ch);
-            return [$status, is_string($body) ? $body : ''];
-        }
-        $ctx = stream_context_create(['http' => ['timeout' => 20, 'follow_location' => 0, 'ignore_errors' => true, 'header' => "User-Agent: $ua\r\n"], 'ssl' => ['verify_peer' => true, 'verify_peer_name' => true]]);
-        $body = @file_get_contents($url, false, $ctx, 0, self::MAX_FILE + 1024);
-        if ($body === false) return [0, ''];
-        $status = 0;
-        foreach ($http_response_header ?? [] as $h) if (preg_match('~^HTTP/\S+\s+(\d{3})~', $h, $m)) $status = (int)$m[1];
-        return [$status, $body];
+        return http_get($url, ['fonts.googleapis.com', 'fonts.gstatic.com'], self::MAX_FILE, 20);
     }
 }

@@ -120,6 +120,7 @@ admin_header('Plugins', 'plugins');
       </article>
     <?php endforeach; ?>
     </div>
+    <?php require_once __DIR__ . '/_extras.php'; extras_card('plugin'); ?>
   </div>
 
   <aside>

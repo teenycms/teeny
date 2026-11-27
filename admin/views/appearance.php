@@ -194,4 +194,5 @@ admin_header('Style', 'style');
     </div>
   </div>
 </section>
+<?php require_once __DIR__ . '/_extras.php'; extras_card('theme'); ?>
 <?php admin_footer();

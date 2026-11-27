@@ -131,6 +131,7 @@ admin_header('Preferences', 'preferences');
       </label>
     </div>
     <label class="check"><input type="checkbox" name="prettyUrls" value="1" <?= !empty($site['prettyUrls']) ? 'checked' : '' ?>> Clean page addresses (example.com/about). Untick this if your pages show "Not Found".</label>
+    <label class="check"><input type="checkbox" name="updateCheck" value="1" <?= Extras::checksEnabled($site) ? 'checked' : '' ?>> Tell me when a new Teeny version is out. Checks teenycms.github.io once a day; nothing about your site is sent.</label>
   </section>
 
   <div class="sticky-save"><button class="btn btn-primary" type="submit">Save preferences</button></div>

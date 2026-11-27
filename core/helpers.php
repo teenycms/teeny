@@ -233,3 +233,34 @@ function teeny_logo(bool $wordmark = true, string $class = 'teeny-logo'): string
     $word = '<g fill="currentColor"><path d="M103.6,11.9l0.2-1.4c0.1-0.6-0.1-1.2-0.4-1.6s-0.9-0.7-1.5-0.7H81.4c-1,0-1.8,0.7-2,1.7l-0.2,1.4c-0.1,0.6,0.1,1.2,0.4,1.6 s0.9,0.7,1.5,0.7h7.1l-5.1,29c-0.1,0.6,0.1,1.2,0.4,1.6s0.9,0.7,1.5,0.7h1.5c1,0,1.8-0.7,2-1.7l5.2-29.7h7.8 C102.6,13.5,103.4,12.8,103.6,11.9z"/><path d="M114.6,16.9c-3.5,0-6.6,1.3-9.3,3.8c-2.6,2.4-4.3,5.7-5,9.7c-0.9,5-0.4,8.6,1.4,11.2c1.9,2.6,4.7,3.9,8.5,4 c2.3,0,4.4-0.5,6.4-1.5c1.9-1,3.6-2.5,4.9-4.4c0.3-0.5,0.4-1,0.3-1.6c-0.1-0.5-0.5-1-0.9-1.3l-1.1-0.7c-0.3-0.2-0.7-0.3-1-0.3 c-0.6,0-1.2,0.3-1.6,0.8c-0.9,1.2-1.9,2.1-3,2.7c-1.1,0.6-2.4,0.9-3.7,0.9c-2.7,0-3.7-1.1-4.3-2c-0.8-1.1-1-3-0.8-5.4h16.1 c1,0,1.8-0.7,2-1.7l0.1-0.3c0.8-4.3,0.4-7.5-1.1-10C121.3,19,119.1,16.9,114.6,16.9z M118.6,27.4h-11.7c0.6-1.3,1.4-2.4,2.4-3.3 c1.5-1.3,3.1-1.9,5.1-1.9c2.2,0,3.1,0.8,3.5,1.5C118.4,24.6,118.6,25.8,118.6,27.4z"/><path d="M142.6,16.9c-3.5,0-6.6,1.3-9.3,3.8c-2.6,2.4-4.3,5.7-5,9.7c-0.9,5-0.4,8.6,1.4,11.2c1.9,2.6,4.7,3.9,8.5,4 c2.3,0,4.4-0.5,6.4-1.5c1.9-1,3.6-2.5,4.9-4.4c0.3-0.5,0.4-1,0.3-1.6s-0.5-1-0.9-1.3l-1.1-0.7c-0.3-0.2-0.7-0.3-1-0.3 c-0.6,0-1.2,0.3-1.6,0.8c-0.9,1.2-1.9,2.1-3,2.7c-1.1,0.6-2.4,0.9-3.7,0.9c-2.7,0-3.7-1.1-4.3-2c-0.8-1.1-1-3-0.8-5.4h16.1 c1,0,1.8-0.7,2-1.7l0.1-0.3c0.8-4.3,0.4-7.5-1.1-10C149.3,19,147,16.9,142.6,16.9z M134.8,27.4c0.6-1.3,1.4-2.4,2.4-3.3 c1.5-1.3,3.1-1.9,5.1-1.9c2.2,0,3.1,0.8,3.5,1.5c0.6,0.8,0.8,2.1,0.8,3.7H134.8z"/><path d="M178.5,20.3c-1-1.5-3.1-3.4-7.2-3.4c-2.1,0-4.1,0.5-5.8,1.4c-0.1,0.1-0.3,0.1-0.4,0.2c-0.1-0.1-0.1-0.2-0.2-0.3 c-0.4-0.5-0.9-0.7-1.5-0.7h-1.4c-1,0-1.8,0.7-2,1.7l-4.1,23.4c-0.1,0.6,0.1,1.2,0.4,1.6s0.9,0.7,1.5,0.7h1.4c1,0,1.8-0.7,2-1.7 l2.6-14.6c0.3-1.9,1.2-3.4,2.5-4.6c1.3-1.2,2.9-1.8,4.7-1.8c1.9,0,2.6,0.7,2.9,1.2c0.6,1,0.8,2.5,0.4,4.5l-2.6,14.6 c-0.1,0.6,0.1,1.2,0.4,1.6s0.9,0.7,1.5,0.7h1.4c1,0,1.8-0.7,2-1.7l2.6-14.7C180.3,25.1,179.9,22.4,178.5,20.3z"/><path d="M210.2,18.5c-0.4-0.6-1-1-1.7-1H207c-0.7,0-1.4,0.4-1.7,1L195.6,35l-3.2-15.9c-0.2-0.9-1-1.6-2-1.6h-1.6 c-0.6,0-1.2,0.3-1.5,0.7c-0.4,0.5-0.5,1.1-0.4,1.7l4.5,22.3l-2.9,4.9c-1,1.7-1.7,2.5-2.2,2.8c-0.5,0.4-0.9,0.6-1.3,0.6 c-0.3,0-0.5,0-0.6-0.1c-0.1,0-0.3-0.1-0.5-0.3c-0.3-0.3-0.8-0.4-1.2-0.4c-0.1,0-0.2,0-0.3,0c-0.5,0.1-1,0.4-1.3,0.8l-0.9,1.3 c-0.6,0.9-0.4,2.1,0.5,2.8c0.7,0.5,1.4,0.8,2.1,1c0.6,0.2,1.3,0.2,2.1,0.2c1.8,0,3.4-0.6,4.8-1.8c1.3-1,2.5-2.5,3.7-4.6l16.9-29 C210.6,19.9,210.6,19.1,210.2,18.5z"/></g>';
     return '<svg class="' . e($class) . '" viewBox="0 0 220 64" role="img" aria-label="Teeny CMS">' . $mark . $word . '</svg>';
 }
+
+/**
+ * GET an https URL on one of the given hosts (no redirects). Returns [status, body]; status 0 means no connection.
+ * Used for Google Fonts and the official extras catalog; nothing about the site is sent.
+ */
+function http_get(string $url, array $hosts, int $maxBytes, int $timeout = 20): array
+{
+    $host = parse_url($url, PHP_URL_HOST);
+    if (!in_array($host, $hosts, true) || !str_starts_with($url, 'https://')) return [0, ''];
+    // A current browser identity (Google returns WOFF2 fonts to browsers).
+    $ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36';
+    if (function_exists('curl_init')) {
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true, CURLOPT_FOLLOWLOCATION => false, CURLOPT_TIMEOUT => $timeout, CURLOPT_CONNECTTIMEOUT => min(8, $timeout),
+            CURLOPT_USERAGENT => $ua, CURLOPT_PROTOCOLS => CURLPROTO_HTTPS, CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_MAXFILESIZE => $maxBytes + 1024,
+        ]);
+        $body = curl_exec($ch);
+        $status = $body === false ? 0 : (int)curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+        curl_close($ch);
+        $body = is_string($body) ? $body : '';
+        return [$status, strlen($body) > $maxBytes ? '' : $body];
+    }
+    $ctx = stream_context_create(['http' => ['timeout' => $timeout, 'follow_location' => 0, 'ignore_errors' => true, 'header' => "User-Agent: $ua\r\n"], 'ssl' => ['verify_peer' => true, 'verify_peer_name' => true]]);
+    $body = @file_get_contents($url, false, $ctx, 0, $maxBytes + 1);
+    if ($body === false) return [0, ''];
+    $status = 0;
+    foreach ($http_response_header ?? [] as $line) if (preg_match('~^HTTP/\S+\s+(\d{3})~', $line, $m)) $status = (int)$m[1];
+    return [$status, strlen($body) > $maxBytes ? '' : $body];
+}
