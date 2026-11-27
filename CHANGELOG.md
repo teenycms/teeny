@@ -7,6 +7,67 @@ Never overwrite your `data/` and `uploads/` folders (or your own `config.php`).
 
 ---
 
+## 1.6.0 · 2026-11-27
+
+### Added
+- **News (add-on).** A simple blog. Switch it on in **Plugins → Built-in add-ons**, then write posts under **News** in the top bar.
+  - Posts use the same editor as pages, plus a date, cover image, summary and category.
+  - **Scheduled posts:** give a live post a future date and it appears on that day by itself (in your site's time zone).
+  - The list of posts is at **/news**, each post at **/news/your-post**, and categories at /news/category/… with a filter.
+  - An **RSS feed** at /news/feed.xml. Posts are in the sitemap and in site search, and use their cover image when shared.
+  - A **Latest news** section to show your newest posts on any page, and a **News** layout when creating a page.
+- **New page layouts: Shop, Product page and Event.**
+  - **Shop:** a product catalog with order buttons, "how ordering works", delivery FAQ and contact.
+  - **Product page:** one product with photos, details, an order button and "You might also like".
+  - **Event:** for weddings, concerts or camps, with details, schedule, tickets, RSVP, FAQ and gallery.
+- **RSVP section.** Guests say whether they're coming, how many people and an optional note. Replies appear in **Messages → RSVPs** with a running total and a spreadsheet download. Set a reply-by date to close replies automatically. Replying again with the same email updates the reply.
+- **Order on WhatsApp.** Add your WhatsApp number to a **Products** section: products without their own link open WhatsApp with "Hi, I'd like to order: …" already typed.
+- **Table of contents section.** Lists the headings on a page and links to them. Added to the Documentation layout.
+- **Get more themes and plugins.** **Style** and **Plugins** now list the official extras with an **Install** button. They download from teenycms.github.io, are checked against a checksum, and go through the same file-by-file checks as an upload.
+- **6 new themes, as separate downloads:** Bio (link in bio), Handbook (documentation), Launch (landing pages), Studio (portfolios), Paper (editorial, pairs with News) and Soft (cafés and small shops).
+- **5 new plugins, as separate downloads:** Menu or price list, Contact buttons, Location card, Timeline and Image slider.
+- **Update notice.** Owners see "Teeny x.y.z is available" in the Studio footer when a new version is out. Teeny checks teenycms.github.io once a day and sends nothing about your site. Switch it off in **Preferences → Advanced**.
+
+### Changed
+- The new themes and plugins are separate downloads, so the Teeny download stays under 250 KB.
+
+### Files to upload
+```
+index.php
+install.php                (only if you still need it, for new installs)
+core/bootstrap.php
+core/Blocks.php
+core/Extras.php            (new)
+core/Fonts.php
+core/helpers.php
+core/Inbox.php
+core/Menu.php
+core/News.php              (new)
+core/Pages.php
+core/Renderer.php
+core/Search.php
+core/Store.php
+admin/index.php
+admin/assets/admin.css
+admin/assets/editor.js
+admin/views/_extras.php    (new)
+admin/views/_layout.php
+admin/views/appearance.php
+admin/views/editor.php
+admin/views/inbox.php
+admin/views/news.php       (new)
+admin/views/page-new.php
+admin/views/plugins.php
+admin/views/settings.php
+assets/site.css
+templates/docs.json
+templates/event.json       (new)
+templates/news.json        (new)
+templates/product.json     (new)
+templates/shop.json        (new)
+```
+---
+
 ## 1.5.0 · 2026-11-26
 
 ### Added

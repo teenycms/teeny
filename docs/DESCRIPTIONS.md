@@ -17,7 +17,7 @@ Teeny is a simple website builder anyone can use. Click any text on your page an
 1. **Easy for everyone.** Click any text on your page and type. No code, no manuals. It installs in about two minutes, and you can try it in your browser first.
 2. **No database, no migrations.** It runs on the cheapest shared hosting or a basic VPS. Updating means copying new files, with no upgrade scripts that can break your site.
 3. **Your whole site is a folder.** Back it up by zipping it, move it by copying it, or keep it in a private Git repo. You also get a one-click backup in the Studio and the last 20 versions of every page.
-4. **Fast by default.** Visitors get ready-made pages and about 12 KB of code. There are no heavy queries, no plugin bloat, and nothing to compile. The whole app is a 200 KB download.
+4. **Fast by default.** Visitors get ready-made pages and about 12 KB of code. There are no heavy queries, no plugin bloat, and nothing to compile. The whole app is under 250 KB.
 
 ---
 
@@ -31,7 +31,7 @@ Teeny CMS is a simple website builder for people who want a good-looking site wi
 
 **Your whole site is a folder.** Pages, settings and messages are saved as plain files on your own server. A backup is a copy of two folders. Zip them, copy them to a new host, or keep them in a private Git repo. The Studio also has a one-click backup, and every page keeps its last 20 versions so you can go back.
 
-**It's fast by default.** Visitors get pages that are already built, so most visits just read one file. A page needs only about 12 KB of styles and scripts. There are no database queries, plugins can't slow down your server, and the whole app is a 200 KB download with nothing to compile.
+**It's fast by default.** Visitors get pages that are already built, so most visits just read one file. A page needs only about 12 KB of styles and scripts. There are no database queries, plugins can't slow down your server, and the whole app is under 250 KB with nothing to compile.
 
 It also includes the things small sites usually need:
 
@@ -54,7 +54,7 @@ Teeny CMS is free and open source under the Apache License 2.0. Use it for your 
 - No database and no migrations. Runs on the cheapest shared hosting.
 - Your whole site is a folder: zip it, copy it or keep it in a private Git repo.
 - Fast by default: ready-made pages and about 12 KB of code per visit.
-- 32 kinds of sections, including popups, each with its own position and width.
+- 36 kinds of sections, including popups and RSVP, each with its own position and width.
 - Three themes, your own colours and fonts, and a light/dark switch for visitors.
 - Contact form, newsletter sign-ups and privacy-friendly visitor numbers.
 - Owners and editors, two-factor sign-in, and one-click backups.

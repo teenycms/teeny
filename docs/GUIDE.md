@@ -167,7 +167,7 @@ Click the **round initials button** in the top-right corner for the rest:
 
 Open **Pages** to see everything on your site.
 
-- **New page:** click **New page**, type a title and choose what to start from (a template or blank). The editor opens straight away.
+- **New page:** click **New page**, type a title and choose what to start from (a layout or blank). The editor opens straight away. Layouts: Landing page, Portfolio, Documentation, Gallery, Link in bio, **Shop**, **Product page** and **Event** (plus **News** while the News add-on is on).
 - **Live or Draft:** a draft is only visible to people signed in to the Studio. When you're happy with it, switch it to **Live** in the editor.
 - **Home page:** click the ★ button next to a page to make it your home page. The home page is always live.
 - **Duplicate:** copies a page as a new draft, which is handy for similar pages.
@@ -207,9 +207,9 @@ Open the **Add** tab and click a section. It's added below the section you selec
 | Group | Sections |
 |---|---|
 | Layout | Hero, Profile, Columns, Pricing, Image + text, Steps, Divider |
-| Text | Heading, Text, Quote, Code, FAQ, Tabs, Callout, Table, Events |
+| Text | Heading, Text, Quote, Code, FAQ, Tabs, Callout, Table, Events, Table of contents |
 | Images & video | Image, Gallery, Video (YouTube or Vimeo), Before / after |
-| Links | Button, Link list, Social icons, Contact form, Announcement, Newsletter |
+| Links | Button, Link list, Social icons, Contact form, Announcement, Newsletter, RSVP (plus Search and Latest news when those add-ons are on) |
 | Business | Numbers, Call to action, Logo strip, Team, Products |
 | Popups | Popup: a centered box, a bar or a corner card over the page |
 | Plugins | Sections added by plugins you've switched on |
@@ -217,7 +217,9 @@ Open the **Add** tab and click a section. It's added below the section you selec
 A few tips:
 
 - **Table:** write each row on its own line and separate cells with `|`. Type `yes` or `no` in a cell to show ✓ or ✕.
-- **Products:** the button can link anywhere, such as your online shop, a WhatsApp link (`https://wa.me/your-number`) or an email address.
+- **Products:** the button can link anywhere, such as a payment link, your online shop or an email address. Or fill in **WhatsApp number for orders** in the section settings: products without their own link then open WhatsApp with "Hi, I'd like to order: …" already typed.
+- **Table of contents:** lists the **Heading** sections on the page and links to them. Choose main headings only, or main and sub-headings.
+- **RSVP:** guests say whether they can come, how many people, and an optional note. Replies arrive in **Messages → RSVPs**. Set **Reply by** (YYYY-MM-DD) to close replies after that day.
 - **Video:** paste a normal YouTube or Vimeo link in the section settings.
 - **Contact form** and **Newsletter:** results arrive in **Messages**.
 - **Popup:** choose the **Type** (centered box, bar or corner card), **When it appears** (right away, after a few seconds, after scrolling halfway, or when the visitor moves to leave) and **How often** (every time, once per visit, once a day, week or month, or only once). In the editor it shows as a small preview card; visitors see it over the page. "How often" is remembered in each visitor's own browser, with no cookies. Use popups sparingly: one per page is plenty.
@@ -307,6 +309,8 @@ Open **Style** to change how your whole site looks.
 - **Download** a theme as a `.zip` to keep it or share it.
 - **Add a theme (.zip):** upload a theme someone made for you. Every file is checked first, and themes can only contain styles, fonts and images.
 
+**Get more themes** (below Your themes): six official themes made for Teeny: **Bio** (link in bio), **Handbook** (documentation), **Launch** (landing pages), **Studio** (portfolios), **Paper** (editorial, pairs with News) and **Soft** (cafés and small shops). Click **Install**, then pick it under **Theme**. They download from teenycms.github.io and are checked like any upload. You can also download them from the GitHub release and upload the .zip yourself.
+
 ---
 
 ## 9. Navigation
@@ -328,6 +332,7 @@ Draft and deleted pages are never shown to visitors.
 
 - **Messages tab:** everything sent through **Contact form** sections. Click a message to read it, then **Reply by email**, **Mark as read** or **Delete**. New messages show a number in the top bar.
 - **Subscribers tab:** email addresses from **Newsletter** sections. Click **Download CSV** to open the list in Excel, Google Sheets or your email tool.
+- **RSVPs tab:** replies from **RSVP** sections (for example on an Event page). You see a running total per event ("42 coming"), each guest's answer, number of people and note, and you can **Download CSV**. A guest who replies again with the same email updates their reply. Set a **Reply by** date in the RSVP section to close replies automatically.
 - **Email alerts:** in **Preferences → Messages & statistics**, enter your email address to receive each new message. Messages are always saved in the Studio too, even if email fails.
 
 Spam is blocked without puzzles or "I'm not a robot" boxes. Teeny uses a hidden trap field, a timing check, and limits per visitor and per day.
@@ -350,6 +355,17 @@ To use one, open **Plugins** (profile menu), click **Switch on**, then find its 
 - Tick **Show a search icon in the site header** and click **Save** to add a magnifier at the end of your menu.
 - Results show each matching page with a short extract, and the words you searched for highlighted. Only live pages are searched; drafts and password-protected pages never appear.
 - Switch it off any time. Search sections are then hidden from your pages, and come back when you switch it on again.
+
+**News (built-in add-on).** Also at the top of the Plugins page, off until you switch it on:
+
+- Click **Switch on**. **News** appears in the top bar. Type a title and click **New post**; the editor opens.
+- Posts use the same editor as pages. In the editor's **Page** tab, set the **date**, **category**, **cover image** and a short **summary**.
+- Make a post **Live** to publish it. If its date is in the future, it stays hidden until that day and shows as **Scheduled** (dates follow the time zone in Preferences → Advanced).
+- Visitors find all posts at **/news**, each post at /news/your-post, and can filter by category. Readers can follow your news with the RSS feed at /news/feed.xml.
+- Add a **Latest news** section to any page to show your newest posts, or start a page from the **News** layout. Categories are managed on the News page.
+- Switch News off any time. Your posts are kept and come back when you switch it on again.
+
+**Get more plugins:** at the bottom of the Plugins page, Teeny lists the official extra plugins (Menu or price list, Contact buttons, Location card, Timeline and Image slider). Click **Install**: the plugin downloads from teenycms.github.io, is checked like any upload, and arrives switched off. If your host can't download, get the .zip from the GitHub release instead.
 
 **Adding a plugin:** upload its `.zip` under **Add a plugin**. Teeny checks every file and installs it switched off, so you can review what it does before using it.
 
@@ -394,7 +410,7 @@ Open **Preferences** (profile menu) for site-wide settings:
 - **Maintenance mode:** shows visitors a "Coming soon" page while you work. You still see the real site while signed in. Turn it off when you're ready.
 - **Messages & statistics:** an email address for message alerts, and visitor counting on or off
 - **Email:** how your site sends email (see below)
-- **Advanced:** language code, time zone and clean page addresses
+- **Advanced:** language code, time zone, clean page addresses, and **Tell me when a new Teeny version is out**. When it's on, owners see "Teeny x.y.z is available" in the Studio footer. Teeny checks teenycms.github.io once a day and sends nothing about your site.
 
 ### Email
 

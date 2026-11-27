@@ -7,7 +7,7 @@
 
 # Teeny CMS
 
-**Version 1.5.0** · [Website](https://teenycms.github.io) · [Apache License 2.0](LICENSE) · [Changelog](CHANGELOG.md) · [Installation & user guide](docs/GUIDE.md)
+**Version 1.6.0** · [Website](https://teenycms.github.io) · [Apache License 2.0](LICENSE) · [Changelog](CHANGELOG.md) · [Installation & user guide](docs/GUIDE.md)
 
 ### Your whole website is just a folder.
 
@@ -23,22 +23,24 @@ It's made for landing pages, portfolios, simple documentation, galleries and lin
 - **Easy for everyone.** Click any text on your page and type. No code, no manuals. It installs in about two minutes, and you can [try it in your browser](https://codespaces.new/webzing/teeny?quickstart=1) first.
 - **No database, no migrations.** It runs on the cheapest shared hosting or a basic VPS. Updating means copying new files, with no upgrade scripts that can break your site.
 - **Your whole site is a folder.** Back it up by zipping it, move it by copying it, or keep it in a private Git repo. You also get a one-click backup in the Studio and the last 20 versions of every page.
-- **Fast by default.** Visitors get ready-made pages and about 12 KB of code. There are no heavy queries, no plugin bloat, and nothing to compile. The whole app is a 200 KB download.
+- **Fast by default.** Visitors get ready-made pages and about 12 KB of code. There are no heavy queries, no plugin bloat, and nothing to compile. The whole app is under 250 KB.
 
 ## Features
 
 *"All the website. None of the bloat."*
 
 - **Visual editor:** click any text and type. Add, reorder and place sections (left, center or right, narrow to full width).
-- **32 section types:** hero, gallery, pricing, FAQ, tabs, steps, team, products, contact form, newsletter, popup and more.
+- **36 section types:** hero, gallery, pricing, FAQ, tabs, steps, team, products, contact form, newsletter, RSVP, table of contents, popup and more.
 - **3 themes** (Minimal, Dark, Luxury) with your own colours and fonts, a light/dark switch for visitors, and 4 page alignments.
-- **Starter templates:** Landing, Portfolio, Documentation, Gallery and Link in bio.
+- **Starter layouts:** Landing, Portfolio, Documentation, Gallery, Link in bio, Shop, Product page and Event.
+- **News** as an optional add-on: posts with dates, cover images and categories, scheduled posts and an RSS feed.
+- **RSVP and order buttons:** guests reply to your event in the Studio, and shop products can open a WhatsApp order.
 - **Contact form and newsletter:** messages land in the Studio, sign-ups download as a spreadsheet. Spam is blocked without CAPTCHAs.
 - **Visitor stats** without cookies and without storing IP addresses.
 - **Password-protected pages**, a "coming soon" mode, and an editable footer with links and social icons.
 - **Site search** as an optional add-on, and **fonts from Google Fonts** saved on your own site (no tracking).
 - **Owners and editors**, two-factor sign-in, and a rescue code if you forget your password.
-- **Your own themes and plugins:** save your style as a theme, or add new kinds of sections. Plugins can't run code on your server.
+- **More themes and plugins in one click:** 6 extra themes and 5 extra plugins install straight from the Studio. Or save your own. Plugins can't run code on your server.
 - **Safety net:** version history for every page and one-click backups in the Vault.
 
 ## Screenshots
@@ -113,4 +115,4 @@ You may use it for personal and commercial websites, change it and share it. If 
 
 *"Big enough for your site. Small enough to zip."*
 
-© 2026 Teeny CMS · Version 1.5.0 · Made to stay small.
+© 2026 Teeny CMS · Version 1.6.0 · Made to stay small.
