@@ -14,13 +14,13 @@
 Teeny is a simple website builder anyone can use. Click any text on your page and type. There's no database to set up, so it runs on the cheapest shared hosting or a basic VPS.
 It's made for landing pages, portfolios, simple documentation, galleries and link-in-bio pages.
 
-**Try it without a server:** [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/webzing/teeny?quickstart=1) or [run it on your computer](#try-it-on-your-own-computer) with one command.
+**Try it without a server:** [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/teenycms/teeny?quickstart=1) or [run it on your computer](#try-it-on-your-own-computer) with one command.
 
 <p align="center"><img src="docs/screenshots/studio.png" alt="The Teeny Studio home screen: a greeting, a preview card of the live site, counts of pages, images, new messages and team members, recently edited pages and shortcuts" width="900"></p>
 
 ## Why Teeny
 
-- **Easy for everyone.** Click any text on your page and type. No code, no manuals. It installs in about two minutes, and you can [try it in your browser](https://codespaces.new/webzing/teeny?quickstart=1) first.
+- **Easy for everyone.** Click any text on your page and type. No code, no manuals. It installs in about two minutes, and you can [try it in your browser](https://codespaces.new/teenycms/teeny?quickstart=1) first.
 - **No database, no migrations.** It runs on the cheapest shared hosting or a basic VPS. Updating means copying new files, with no upgrade scripts that can break your site.
 - **Your whole site is a folder.** Back it up by zipping it, move it by copying it, or keep it in a private Git repo. You also get a one-click backup in the Studio and the last 20 versions of every page.
 - **Fast by default.** Visitors get ready-made pages and about 12 KB of code. There are no heavy queries, no plugin bloat, and nothing to compile. The whole app is under 250 KB.
@@ -73,7 +73,7 @@ Your Studio (the editing area) is at `https://your-site.com/admin/`. The [user g
 
 ### Try it on your own computer
 
-- **In your browser:** [Open in GitHub Codespaces](https://codespaces.new/webzing/teeny?quickstart=1). See the [step-by-step](https://github.com/webzing/teeny/wiki/Try-it-in-your-browser).
+- **In your browser:** [Open in GitHub Codespaces](https://codespaces.new/teenycms/teeny?quickstart=1). See the [step-by-step](https://github.com/teenycms/teeny/wiki/Try-it-in-your-browser).
 - **With PHP:** `php -S localhost:8000 router.php` in the Teeny folder.
 - **With Docker:** `docker run --rm -p 8000:8000 -v "${PWD}:/app" -w /app php:8.3-cli php -S 0.0.0.0:8000 router.php`
 
@@ -101,7 +101,7 @@ Passwords are hashed with Argon2id, sign-in is rate-limited, two-factor sign-in 
 | | |
 |---|---|
 | [User guide](docs/GUIDE.md) | Installing, editing, Style, Messages, Team, backups and troubleshooting |
-| [Wiki](https://github.com/webzing/teeny/wiki) | Quick answers, FAQ and email setup |
+| [Wiki](https://github.com/teenycms/teeny/wiki) | Quick answers, FAQ and email setup |
 | [Changelog](CHANGELOG.md) | Every release and which files to upload |
 | [Security](SECURITY.md) | How Teeny protects your site, and how to report a problem |
 | [Themes](docs/THEMES.md) · [Plugins](docs/PLUGINS.md) | Build your own |

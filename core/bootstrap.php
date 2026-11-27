@@ -12,7 +12,7 @@ if (PHP_VERSION_ID < 80100) {
 }
 
 define('TEENY_VERSION', '1.6.3');
-define('TEENY_REPO', 'https://github.com/webzing/teeny'); // project home: releases, wiki and help
+define('TEENY_REPO', 'https://github.com/teenycms/teeny'); // project home: releases, wiki and help
 define('TEENY_ROOT', dirname(__DIR__));
 
 // Optional config.php (see config.sample.php), for example to move data outside the web root.
