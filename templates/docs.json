@@ -3,6 +3,7 @@
   "blocks": [
     {"type": "heading", "text": "Getting started", "level": "h1"},
     {"type": "text", "html": "<p>Welcome! This guide walks you through everything you need to know in a few minutes.</p>"},
+    {"type": "toc", "title": "On this page", "levels": "h2"},
     {"type": "heading", "text": "1. Installation", "level": "h2"},
     {"type": "text", "html": "<p>Download the package and follow these steps:</p><ol><li>Unzip the file.</li><li>Upload it to your server.</li><li>Open it in your browser.</li></ol>"},
     {"type": "code", "lang": "Terminal", "code": "unzip package.zip\ncd package\n./install"},

@@ -78,6 +78,7 @@ final class Renderer
             'popup'      => self::popup($b),
             'search'     => self::search($b),
             'rsvp'       => self::rsvp($b),
+            'toc'        => self::toc($b),
             'divider' => '<div class="tc-block tc-divider tc-divider--' . e($b['style']) . '" role="separator"><span></span></div>',
             default   => str_starts_with((string)($b['type'] ?? ''), 'plugin-') ? Plugins::render($b) : '',
         };
@@ -460,6 +461,22 @@ final class Renderer
                 . '</div></article>';
         }
         return $h === '' ? '' : '<div class="tc-block tc-products tc-cols-' . e($b['columns']) . '">' . $h . '</div>';
+    }
+
+    /** Table of contents: links to the page's Heading sections (same ids as heading() gives them). */
+    private static function toc(array $b): string
+    {
+        $levels = $b['levels'] === 'h3' ? ['h2', 'h3'] : ['h2'];
+        $items = '';
+        foreach (self::$page['blocks'] ?? [] as $h) {
+            if (($h['type'] ?? '') !== 'heading' || ($h['text'] ?? '') === '' || !in_array($h['level'] ?? 'h2', $levels, true)) continue;
+            $id = slugify($h['text']);
+            if ($id === '') continue;
+            $items .= '<li class="tc-toc__' . e($h['level']) . '"><a href="#' . e($id) . '">' . e($h['text']) . '</a></li>';
+        }
+        if ($items === '') return '';
+        return '<nav class="tc-block tc-toc" aria-label="' . e($b['title'] ?: 'Table of contents') . '">'
+            . ($b['title'] !== '' ? '<p class="tc-toc__title">' . e($b['title']) . '</p>' : '') . '<ol>' . $items . '</ol></nav>';
     }
 
     /** The order button: the product's own link, or (when it has none) a WhatsApp chat with the order typed in. */

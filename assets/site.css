@@ -469,6 +469,16 @@ details[open] > .tc-faq__q::after, .tce-open > .tc-faq__q::after { transform: ro
 .tc-newsletter .tc-form-msg { max-width: 520px; margin-inline: auto; }
 @media (max-width: 520px) { .tc-newsletter__form { flex-direction: column; } }
 
+/* Table of contents */
+.tc-toc { padding: 1.1em 1.4em; border: 1px solid var(--tc-border); border-radius: var(--tc-radius); background: var(--tc-surface); font-size: .95em; }
+.tc-toc__title { margin: 0 0 .5em; font-weight: 600; font-size: .8em; letter-spacing: .12em; text-transform: uppercase; color: var(--tc-muted); }
+.tc-toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: .35em; }
+.tc-toc a { color: var(--tc-text); text-decoration: none; }
+.tc-toc a:hover { color: var(--tc-accent); text-decoration: underline; }
+.tc-toc .tc-toc__h3 { padding-left: 1.2em; font-size: .94em; }
+.tc-toc .tc-toc__h3 a { color: var(--tc-muted); }
+html { scroll-padding-top: 1.5rem; }
+
 /* RSVP */
 .tc-rsvp { max-width: 640px; margin-inline: auto; }
 .tc-rsvp__title { font-size: clamp(1.5em, 3vw, 2em); margin-bottom: .3em; text-align: center; }

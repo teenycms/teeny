@@ -417,6 +417,14 @@ final class Blocks
                 ],
                 'defaults' => ['title' => 'Stay in the loop', 'text' => 'Occasional news, never spam. Unsubscribe any time.', 'button' => 'Subscribe', 'success' => 'Thank you for subscribing!'],
             ],
+            'toc' => [
+                'label' => 'Table of contents', 'group' => 'Text', 'desc' => 'Links to the headings on this page',
+                'fields' => [
+                    'title'  => ['type' => 'text', 'label' => 'Title', 'max' => 80],
+                    'levels' => ['type' => 'select', 'label' => 'Headings to list', 'options' => ['h2' => 'Main headings (H2)', 'h3' => 'Main and sub-headings (H2 and H3)']],
+                ],
+                'defaults' => ['title' => 'On this page', 'levels' => 'h2'],
+            ],
             'rsvp' => [
                 'label' => 'RSVP', 'group' => 'Links', 'desc' => 'Guests reply whether they can come',
                 'fields' => [
