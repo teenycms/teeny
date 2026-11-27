@@ -308,5 +308,16 @@
     });
   }
 
+  /* top bar on narrow screens: show the current tab, and a fade while more tabs are off to the side */
+  const appnav = $('.appnav');
+  if (appnav) {
+    const cur = $('[aria-current="page"]', appnav);
+    if (cur && appnav.scrollWidth > appnav.clientWidth) appnav.scrollLeft = Math.max(0, cur.offsetLeft - 16);
+    const fade = () => appnav.classList.toggle('has-more', appnav.scrollLeft + appnav.clientWidth < appnav.scrollWidth - 4);
+    fade();
+    appnav.addEventListener('scroll', fade, { passive: true });
+    window.addEventListener('resize', fade);
+  }
+
   window.Teeny = { config, api, toast, openPicker, uploadFiles, $, $$ };
 })();

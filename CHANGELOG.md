@@ -7,6 +7,36 @@ Never overwrite your `data/` and `uploads/` folders (or your own `config.php`).
 
 ---
 
+## 1.6.1 · 2026-11-27
+
+A tidy-up release from a visual check of every theme and every Studio screen on desktops, tablets and phones.
+
+### Fixed
+- **Narrow pages keep a tidy layout.** Sections now arrange themselves by the width of your page, not the width of the browser window. With a narrow site width (Style → width, or the Bio theme), headings no longer break in the middle of words, and pricing, steps and products stack neatly.
+- **No more sideways scrolling on phones.** Very long words, web addresses and email addresses now wrap inside their section instead of making the whole page wider than the screen.
+- **Pricing on phones** now shows one plan per row. Four plans show two per row on tablets.
+- **Even rows on phones.** In galleries, team lists and numbers, an odd last item now fills its row instead of sitting alone.
+- **Easier to read.** The Luxury theme's buttons and grey text are a shade deeper, call-to-action text is no longer faded, and table ticks are easier to see in light and dark mode.
+- **Buttons and menus.** Long button labels wrap evenly and stay inside the button. A long page name in the menu no longer splits over two lines. Menu links, news categories, tabs and event buttons are easier to tap on phones.
+- **Section titles follow your page.** Newsletter, RSVP and Site search titles now line up with the rest of the page instead of always being centred.
+- **Studio on phones.** Lists of pages, posts, team members, subscribers and RSVPs show each row as a small card, so nothing is cut off. The top bar shows which page you're on and fades at the edge when more tabs are off to the side. Buttons and icons are bigger to tap. Long addresses under "Most visited" no longer widen the page.
+- **Studio details.** Grey helper text is darker and easier to read. Action icons line up on every row. The RSVP list keeps event names short. Checkboxes show a clear outline when you move through a form with the keyboard.
+
+### Updated downloads
+New versions of the **Bio, Soft, Paper, Studio and Handbook** themes and the **Contact buttons** and **Price list** plugins are available in **Style → Get more themes** and **Plugins → Get more plugins**. To update one you already have, remove it and install it again.
+
+### Files to upload
+```
+admin/assets/admin.css
+admin/assets/admin.js
+admin/views/inbox.php
+assets/site.css
+core/bootstrap.php
+themes/luxury/theme.css
+themes/luxury/theme.json
+```
+---
+
 ## 1.6.0 · 2026-11-27
 
 ### Added

@@ -8,8 +8,8 @@
         "bg": "#fff8f1",
         "surface": "#fdecdc",
         "text": "#3a2e2a",
-        "muted": "#8a7569",
-        "accent": "#df7356",
+        "muted": "#6f5a4f",
+        "accent": "#a9482a",
         "accentText": "#ffffff",
         "border": "#f2dfcf",
         "headingFont": "humanist",
@@ -28,5 +28,5 @@
         "border": "#3c322c"
     },
     "author": "Teeny CMS",
-    "version": "1.0"
+    "version": "1.1"
 }

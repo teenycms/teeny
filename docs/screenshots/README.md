@@ -15,12 +15,15 @@ The `thumbs/` folder has small 640×400 JPEG versions of the three screens shown
 | `pages.png` | Pages list with live and draft pages |
 | `page-new.png` | Creating a new page from a starting layout |
 | `page-history.png` | A page's saved versions |
+| `news.png` | News: posts (live, scheduled and draft) and categories |
 | `library.png` | Image library |
 | `messages.png` | Contact form messages |
 | `messages-subscribers.png` | Newsletter subscribers |
+| `messages-rsvps.png` | RSVPs for an event, with the running total |
 | `navigation.png` | Navigation editor |
 | `style.png` | Style: themes, colours, fonts and alignment |
-| `plugins.png` | Plugins |
+| `style-get-more.png` | Style → Get more themes |
+| `plugins.png` | Plugins: built-in add-ons (Site search, News) and installed plugins |
 | `team.png` | Team: owners and editors |
 | `preferences.png` | Preferences: general, logo and icons |
 | `preferences-email.png` | Preferences → Email with the checklist and SMTP settings |
@@ -35,6 +38,7 @@ The `thumbs/` folder has small 640×400 JPEG versions of the three screens shown
 | `editor-add-sections.png` | The Add panel with section types |
 | `editor-page-settings.png` | The Page tab: title, address, password, alignment |
 | `editor-footer.png` | Editing the footer on the page |
+| `editor-post.png` | Editing a News post: date, category, cover image and summary |
 
 ## Sign-in pages
 
@@ -52,3 +56,5 @@ The `thumbs/` folder has small 640×400 JPEG versions of the three screens shown
 |---|---|
 | `site-home.png` | The sample site's home page (Luxury theme) |
 | `site-home-phone.png` | The same page on a phone |
+| `site-news.png` | The public news page with categories |
+| `site-post.png` | A news post |

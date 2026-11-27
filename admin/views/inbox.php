@@ -23,6 +23,7 @@ admin_header('Messages', 'messages', ['actions' => $actions]);
   <?php if (!$rsvps): ?>
     <div class="card empty-state"><?= icon('inbox') ?><h3 class="card-title">No replies yet</h3><p class="muted">Add an <strong>RSVP</strong> section to a page (or start from the <strong>Event</strong> layout). Guests' replies appear here with a running total, and you can download them as a spreadsheet (CSV).</p></div>
   <?php else: ?>
+  <?php $multiEvent = count(array_unique(array_map(static fn($x) => ($x['pageId'] ?? '') . '|' . ($x['blockId'] ?? ''), $rsvps))) > 1; ?>
   <div class="rsvp-totals">
     <?php foreach (Inbox::rsvpSummary() as $sum): ?>
       <div class="card rsvp-total">
@@ -41,7 +42,7 @@ admin_header('Messages', 'messages', ['actions' => $actions]);
           <td><strong><?= e($r['name']) ?></strong><br><small><a href="mailto:<?= e(rawurlencode((string)$r['email'])) ?>"><?= e($r['email']) ?></a></small></td>
           <td><?= !empty($r['coming']) ? '<span class="badge badge-published">Yes' . ((int)$r['guests'] > 1 ? ' · ' . (int)$r['guests'] : '') . '</span>' : '<span class="badge">No</span>' ?></td>
           <td class="hide-sm"><small><?= e(str_limit((string)($r['note'] ?? ''), 120)) ?></small></td>
-          <td class="hide-sm"><small><?= e(fmt_date((int)$r['time'])) ?></small><br><small class="muted"><?= e($r['event'] !== '' ? $r['event'] : $r['page']) ?></small></td>
+          <td class="hide-sm"><small><?= e(fmt_date((int)$r['time'])) ?></small><?php if ($multiEvent): ?><br><small class="muted"><?= e(str_limit((string)($r['event'] !== '' ? $r['event'] : $r['page']), 40)) ?></small><?php endif; ?></td>
           <td class="t-right"><form method="post" data-confirm="Delete the reply from <?= e($r['name']) ?>?"><?= Auth::csrfField() ?><input type="hidden" name="action" value="rsvp_delete"><input type="hidden" name="id" value="<?= e($r['id']) ?>"><button class="icon-btn danger" title="Delete"><?= icon('trash') ?></button></form></td>
         </tr>
       <?php endforeach; ?>

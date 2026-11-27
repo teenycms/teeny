@@ -24,3 +24,5 @@
 .theme-luxury .tc-divider--line span { width: 64px; background: var(--tc-accent); margin-inline: var(--tc-ml) var(--tc-mr); }
 .align-normal.theme-luxury .tc-divider--line span { width: 100%; background: var(--tc-border); }
 .theme-luxury .tc-footer { font-size: .72em; letter-spacing: .22em; text-transform: uppercase; }
+/* narrow columns: tighter letter-spacing so long button labels fit */
+@container tc-main (max-width: 560px) { .theme-luxury .tc-btn { letter-spacing: .1em; padding-inline: 1.4em; } }

@@ -1,6 +1,6 @@
 /* Teeny CMS: Bio theme (link in bio) */
 .theme-bio { background: radial-gradient(1200px 600px at 50% -10%, color-mix(in srgb, var(--tc-accent) 14%, var(--tc-bg)), var(--tc-bg)); min-height: 100vh; }
-.theme-bio .tc-main { text-align: center; }
+.theme-bio .tc-main { text-align: center; --tc-justify: center; --tc-ml: auto; --tc-mr: auto; }
 .theme-bio .tc-header__inner { justify-content: center; }
 .theme-bio .tc-brand { font-weight: 700; letter-spacing: -.01em; }
 .theme-bio .tc-profile__avatar { width: 112px; height: 112px; border-radius: 50%; padding: 4px; background: var(--tc-surface); box-shadow: 0 0 0 3px var(--tc-accent), 0 10px 30px rgba(0,0,0,.12); }

@@ -2,7 +2,7 @@
     "id": "price-list",
     "name": "Menu or price list",
     "description": "Dishes, drinks or services with descriptions, prices and little tags like \"Vegan\" or \"New\".",
-    "version": "1.0",
+    "version": "1.1",
     "author": "Teeny CMS",
     "section": {
         "label": "Menu or price list",

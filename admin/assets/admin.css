@@ -4,13 +4,13 @@
   --panel: #ffffff;
   --ink: #1b1a17;
   --ink-2: #4a463f;
-  --muted: #8a847a;
+  --muted: #6b655b;
   --line: #e7e2d9;
   --line-2: #efebe4;
   --accent: #9a7b4f;
   --accent-ink: #ffffff;
   --accent-soft: #f3ece1;
-  --ok: #3f7a52;
+  --ok: #2f6b43;
   --ok-soft: #e8f2ea;
   --err: #a2402f;
   --err-soft: #f8e9e5;
@@ -27,7 +27,7 @@ html { -webkit-text-size-adjust: 100%; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
 a { color: inherit; }
 img { max-width: 100%; display: block; }
-code { font-family: var(--mono); font-size: .88em; background: var(--line-2); padding: .1em .35em; border-radius: 4px; }
+code { font-family: var(--mono); font-size: .88em; color: var(--ink-2); background: var(--line-2); padding: .1em .35em; border-radius: 4px; }
 hr { border: 0; border-top: 1px solid var(--line); margin: 20px 0; }
 .muted { color: var(--muted); }
 .hide-sm { }
@@ -92,7 +92,7 @@ legend { font-family: var(--serif); font-size: 19px; margin-bottom: 14px; paddin
 .badge .ic { width: 12px; height: 12px; }
 .badge-published { background: var(--ok-soft); color: var(--ok); }
 .badge-draft { background: #f4eee3; color: #8a6a35; }
-.badge-home { background: var(--accent-soft); color: var(--accent); margin-left: 6px; }
+.badge-home { background: var(--accent-soft); color: #6f5530; margin-left: 6px; }
 .badge-admin { background: #ece8f6; color: #5a4a8a; }
 
 /* ---------- auth pages ---------- */
@@ -340,7 +340,7 @@ details > summary.card-title { cursor: pointer; }
 
 /* ---------- inbox, menu, account, stats ---------- */
 .small { font-size: 12.5px; }
-.nav-count { margin-left: auto; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; display: inline-grid; place-items: center; }
+.nav-count { margin-left: auto; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px; background: #7d6238; color: #fff; font-size: 11px; font-weight: 700; display: inline-grid; place-items: center; }
 .empty-state { text-align: center; padding: 48px 26px; }
 .empty-state > .ic { width: 34px; height: 34px; color: var(--accent); margin-bottom: 8px; }
 .btn-row, .add-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
@@ -416,7 +416,8 @@ details > summary.card-title { cursor: pointer; }
 .top-lists { gap: 0 28px; }
 .toplist { list-style: none; padding: 0; margin: 0; font-size: 13.5px; }
 .toplist li { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-top: 1px solid var(--line-2); }
-.toplist li span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.toplist li span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.top-lists > * { min-width: 0; }
 
 /* editor: page password */
 .protect-field > span { display: flex !important; align-items: center; gap: 6px; }
@@ -746,3 +747,33 @@ input[type="file"] { max-width: 100%; }
 .footer-row__btn { width: 26px; height: 30px; font-size: 15px; }
 .footer-row__btn:disabled { opacity: .3; cursor: default; }
 .footer-row__del { font-size: 18px; }
+
+/* ---------- 1.6.1 visual QA ---------- */
+/* A6: action icons start from the left, so the same icon lines up on every row */
+.table td.t-right:has(.row-actions), .table:has(.row-actions) th.t-right { text-align: left; }
+/* A8: keyboard focus ring on checkboxes and radio buttons */
+input[type="checkbox"]:focus-visible, input[type="radio"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; box-shadow: none; }
+/* A3: the top bar shows a fade when more tabs are off to the side */
+.appnav.has-more { mask-image: linear-gradient(90deg, #000 calc(100% - 48px), transparent); -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 48px), transparent); }
+.appnav { scroll-padding-inline: 16px; }
+.appnav .nav-count { flex: none; }
+@media (max-width: 560px) {
+  /* A1: table rows become small cards: title on its own line, status and actions underneath */
+  .table thead { display: none; }
+  .table, .table tbody { display: block; }
+  .table tr { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 14px 16px; border-bottom: 1px solid var(--line-2); }
+  .table tr:last-child { border-bottom: 0; }
+  .table td { display: block; padding: 0; border: 0; min-width: 0; overflow-wrap: anywhere; }
+  .table td:first-child { flex: 1 0 100%; }
+  .table td.t-right { flex: 1 0 100%; margin-left: -10px; text-align: left; }
+  .table .hide-sm { display: none; }
+  /* A8: new post form stacks */
+  .news-new .add-row { flex-direction: column; align-items: stretch; }
+  /* A5: comfortable tap targets */
+  .icon-btn { width: 44px; height: 44px; }
+  .btn-sm { height: 44px; }
+  .appnav a { height: 44px; }
+  .avatar { width: 44px; height: 44px; }
+  .studio-foot a { display: inline-block; padding-block: 10px; }
+  label.check input[type="checkbox"], label.check input[type="radio"] { width: 18px; height: 18px; }
+}
