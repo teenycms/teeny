@@ -7,6 +7,20 @@ Never overwrite your `data/` and `uploads/` folders (or your own `config.php`).
 
 ---
 
+## 1.6.3 · 2026-11-28
+
+### Fixed
+- **Title size works with every theme.** In themes with very large titles, such as Studio, **L** and **XL** could look the same as **Auto**, especially on phones. Each size is now a clear step up, and titles still never break in the middle of a word.
+- **Big titles get room to breathe.** With **L** or **XL**, a hero with a picture beside it gives the title a wider column, and a hero without a picture lets the title use the full width.
+- If you installed the **Studio** theme before 1.6.2, update it from **Style** (the update notice shows at the top) so its titles follow Title size.
+
+### Files to upload
+```
+assets/site.css
+core/bootstrap.php
+```
+---
+
 ## 1.6.2 · 2026-11-28
 
 ### Added

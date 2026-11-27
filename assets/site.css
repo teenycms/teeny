@@ -680,7 +680,7 @@ body:has(.tc-scheme-toggle) .tc-popup--corner.tc-popup--right { bottom: 74px; } 
 :where(.tc-hero__title, .tc-profile__name, .tc-heading h1, .tc-heading h2, .tc-heading h3, .tc-split__title, .tc-cta__title,
   .tc-newsletter__title, .tc-rsvp__title, .tc-search__title, .tc-news__title, .tc-post-head__title, .tc-col__title, .tc-step__title,
   .tc-plan__name, .tc-member__name, .tc-product__name, .tc-event__title, .tc-table__title, .tc-callout__title) {
-  font-size: min(calc(var(--tc-t, 1em) * var(--ts, 1)), calc(var(--tc-cap, 100cqi) * min(var(--ts, 1), 1)));
+  font-size: min(calc(var(--tc-t, 1em) * var(--ts, 1)), calc(var(--tc-cap, 100cqi) * var(--tsc, 1)));
 }
 .tc-callout__title { --tc-t: 1em; }
 .tc-hero__title, .tc-profile__name, .tc-heading h1, .tc-heading h2, .tc-split__title, .tc-cta__title, .tc-post-head__title, .tc-news--page .tc-news__title { hyphens: auto; -webkit-hyphens: auto; }
@@ -692,6 +692,16 @@ body:has(.tc-scheme-toggle) .tc-popup--corner.tc-popup--right { bottom: 74px; } 
   .tc-hero__title, .tc-hero--side .tc-hero__title, .tc-heading h1 { --tc-cap: 14cqi; }
   .tc-split__title { --tc-cap: 10cqi; }
 }
-.tc-block.tc-ts-s { --ts: .8; }
-.tc-block.tc-ts-l { --ts: 1.25; }
-.tc-block.tc-ts-xl { --ts: 1.5; }
+/* --ts scales the title; --tsc lets L and XL go a little past the column limit, which still leaves room for normal words */
+.tc-block.tc-ts-s { --ts: .8; --tsc: .8; }
+.tc-block.tc-ts-l { --ts: 1.25; --tsc: 1.1; }
+.tc-block.tc-ts-xl { --ts: 1.5; --tsc: 1.2; }
+/* a large title may use the full width of its section */
+.tc-hero.tc-ts-l .tc-hero__content, .tc-hero.tc-ts-xl .tc-hero__content { max-width: none; }
+/* a hero with a picture beside it gives a big title a wider column, so words still fit */
+@container tc-main (min-width: 761px) {
+  .tc-hero--side.tc-ts-l .tc-hero__inner { grid-template-columns: 1.3fr 1fr; }
+  .tc-hero--side.tc-ts-xl .tc-hero__inner { grid-template-columns: 1.7fr 1fr; }
+  .tc-hero--side.tc-ts-l .tc-hero__title { --tc-cap: 9.8cqi; --tsc: 1; }
+  .tc-hero--side.tc-ts-xl .tc-hero__title { --tc-cap: 10.4cqi; --tsc: 1; }
+}
